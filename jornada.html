@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jornada | Ana Terra: Cronicas do Pampa</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  /* ---- Estilos complementares da jornada ---- */
+
+  .tela {
+    display: none;
+  }
+  .tela.ativa {
+    display: block;
+  }
+
+  /* Conector visual entre estacoes */
+  .estacao-conector {
+    width: 2px;
+    height: 20px;
+    background: var(--couro);
+    margin-left: 35px;
+    opacity: 0.3;
+  }
+
+  /* Carta de missao: palavra-chave em destaque */
+  .missao-numero {
+    font-family: var(--fonte-dados);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--texto-secundario);
+    text-transform: uppercase;
+    margin: 0 0 4px;
+  }
+
+  .missao-palavra {
+    font-family: var(--fonte-display);
+    font-weight: 700;
+    font-size: 34px;
+    color: var(--tinta);
+    margin: 0 0 20px;
+    line-height: 1.15;
+  }
+
+  /* Ornamento divisor */
+  .divisor {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+    opacity: 0.45;
+  }
+  .divisor::before,
+  .divisor::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--couro);
+  }
+  .divisor-icone {
+    font-size: 14px;
+    color: var(--couro);
+    letter-spacing: 4px;
+  }
+
+  /* Formulario de resposta */
+  .resposta-enviada {
+    background: var(--papel-claro);
+    border: 1px solid var(--couro);
+    border-radius: var(--raio-md);
+    padding: 16px;
+    margin-top: 16px;
+  }
+  .resposta-enviada-titulo {
+    font-family: var(--fonte-dados);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--texto-secundario);
+    margin: 0 0 8px;
+  }
+  .resposta-enviada-texto {
+    font-family: var(--fonte-corpo);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--tinta);
+    margin: 0;
+  }
+
+  /* Conquista animada */
+  .conquista-popup {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--verde-pampa);
+    color: var(--papel-claro);
+    padding: 14px 22px;
+    border-radius: var(--raio-lg);
+    border: 1px solid var(--dourado);
+    font-family: var(--fonte-display);
+    font-size: 15px;
+    font-weight: 600;
+    z-index: 100;
+    transition: transform 0.4s ease;
+    max-width: 340px;
+    text-align: center;
+  }
+  .conquista-popup.visivel {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Progresso coletivo */
+  .progresso-coletivo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--papel-medio);
+    border: 1px solid var(--couro);
+    border-radius: var(--raio-md);
+    padding: 12px 16px;
+    margin-bottom: 20px;
+  }
+  .progresso-coletivo-texto {
+    flex: 1;
+  }
+  .progresso-coletivo-titulo {
+    font-family: var(--fonte-display);
+    font-weight: 600;
+    font-size: 14px;
+    margin: 0 0 4px;
+  }
+  .progresso-coletivo-barra {
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(122, 85, 48, 0.2);
+    overflow: hidden;
+  }
+  .progresso-coletivo-fill {
+    height: 100%;
+    background: var(--dourado);
+    border-radius: 999px;
+    transition: width 0.4s ease;
+  }
+  .progresso-coletivo-numero {
+    font-family: var(--fonte-dados);
+    font-size: 22px;
+    color: var(--dourado);
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     HUD (fixo no topo)
+     ============================================================ -->
+<div class="hud" id="hud">
+  <div class="hud-avatar" id="hud-avatar"></div>
+  <div class="hud-info">
+    <div class="hud-nome" id="hud-nome">Carregando...</div>
+    <div class="hud-barra-fundo">
+      <div class="hud-barra-progresso" id="hud-barra" style="width:0%"></div>
+    </div>
+  </div>
+  <div class="hud-nivel" id="hud-nivel">Nv 1<br>0 XP</div>
+</div>
+
+<!-- ============================================================
+     TELA 1: FICHA DE PERSONAGEM (exibida uma vez, ao entrar)
+     ============================================================ -->
+<div class="tela ativa" id="tela-ficha">
+  <div class="container">
+    <div class="cartao" style="margin-top:24px;">
+      <p class="texto-pequeno texto-central" style="margin:0 0 16px;">Bem-vindo de volta, viajante</p>
+      <div class="ficha-personagem">
+        <div class="ficha-avatar" id="ficha-avatar"></div>
+        <div>
+          <h2 class="ficha-nome" id="ficha-nome-dupla">...</h2>
+          <p class="ficha-tema" id="ficha-arquetipo-tema">...</p>
+        </div>
+      </div>
+
+      <div class="divisor"><span class="divisor-icone">* * *</span></div>
+
+      <p class="texto-pequeno" id="ficha-integrantes" style="margin:0 0 4px;"></p>
+      <p class="texto-pequeno" id="ficha-turma" style="margin:0 0 16px;"></p>
+
+      <p class="cartao-descricao" style="margin:0;">
+        Sua missao aguarda. A jornada de Ana Terra se desdobra em 15 estacoes,
+        e a sua dupla e guardia de uma delas. Avance para o mapa e cumpra seu papel nesta cronica do pampa.
+      </p>
+
+      <button class="botao botao-dourado" onclick="mostrarTela('tela-mapa')">Ver o mapa da jornada</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     TELA 2: MAPA DA JORNADA
+     ============================================================ -->
+<div class="tela" id="tela-mapa">
+  <div class="container">
+
+    <div class="progresso-coletivo">
+      <div class="progresso-coletivo-texto">
+        <p class="progresso-coletivo-titulo">Progresso da turma</p>
+        <div class="progresso-coletivo-barra">
+          <div class="progresso-coletivo-fill" id="prog-fill" style="width:0%"></div>
+        </div>
+      </div>
+      <div class="progresso-coletivo-numero" id="prog-numero">0/15</div>
+    </div>
+
+    <div class="trilha-wrapper" id="trilha"></div>
+
+    <button class="botao botao-secundario" style="margin-top:0;" onclick="mostrarTela('tela-ficha')">Voltar para a ficha</button>
+  </div>
+</div>
+
+<!-- ============================================================
+     TELA 3: MISSAO (carta da dupla)
+     ============================================================ -->
+<div class="tela" id="tela-missao">
+  <div class="container">
+
+    <div class="cartao" id="cartao-missao">
+      <p class="missao-numero" id="missao-numero"></p>
+      <h2 class="missao-palavra" id="missao-palavra"></h2>
+
+      <div class="narrativa" id="missao-narrativa"></div>
+
+      <div class="divisor"><span class="divisor-icone">* * *</span></div>
+
+      <div class="pista-original">
+        <p class="pista-original-titulo">Pista</p>
+        <p style="margin:0;" id="missao-pista"></p>
+      </div>
+
+      <div class="divisor"><span class="divisor-icone">* * *</span></div>
+
+      <!-- Formulario de resposta (so visivel se ainda nao respondeu) -->
+      <div id="form-resposta">
+        <p class="cartao-titulo" style="font-size:17px;margin-bottom:4px;">Desafio</p>
+        <p class="cartao-descricao" id="missao-desafio"></p>
+
+        <label for="resp-objeto">Qual objeto eu represento?</label>
+        <input type="text" id="resp-objeto" placeholder="Nome do objeto">
+
+        <label for="resp-justificativa">Justificativa</label>
+        <textarea id="resp-justificativa" placeholder="Explique por que este objeto representa esta palavra-chave na obra de Erico Verissimo..."></textarea>
+
+        <button class="botao botao-dourado" onclick="enviarResposta()" id="btn-enviar">Enviar resposta</button>
+        <div id="msg-missao"></div>
+      </div>
+
+      <!-- Resposta ja enviada (exibida no lugar do formulario) -->
+      <div id="resposta-registrada" class="oculto">
+        <div class="mensagem mensagem-sucesso" style="margin-bottom:12px;">
+          Missao cumprida! Sua resposta foi registrada.
+        </div>
+        <div class="resposta-enviada">
+          <p class="resposta-enviada-titulo">Objeto identificado</p>
+          <p class="resposta-enviada-texto" id="resp-objeto-salvo"></p>
+        </div>
+        <div class="resposta-enviada" style="margin-top:8px;">
+          <p class="resposta-enviada-titulo">Justificativa</p>
+          <p class="resposta-enviada-texto" id="resp-justificativa-salva"></p>
+        </div>
+      </div>
+    </div>
+
+    <button class="botao botao-secundario" style="margin-top:0;" onclick="mostrarTela('tela-mapa')">Voltar para o mapa</button>
+
+  </div>
+</div>
+
+<!-- ============================================================
+     POPUP DE CONQUISTA
+     ============================================================ -->
+<div class="conquista-popup" id="conquista-popup"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/supabase-config.js"></script>
+<script src="assets/icons.js"></script>
+<script src="assets/cartas-data.js"></script>
+<script>
+
+/* ------------------------------------------------------------
+   Dados da sessao
+   ------------------------------------------------------------ */
+
+let DUPLA = null;
+let RESPOSTA_EXISTENTE = null;
+let TODAS_DUPLAS = [];
+
+/* ------------------------------------------------------------
+   Controle de telas
+   ------------------------------------------------------------ */
+
+function mostrarTela(idTela) {
+  document.querySelectorAll(".tela").forEach(t => t.classList.remove("ativa"));
+  document.getElementById(idTela).classList.add("ativa");
+  window.scrollTo(0, 0);
+}
+
+/* ------------------------------------------------------------
+   Inicializacao
+   ------------------------------------------------------------ */
+
+window.addEventListener("DOMContentLoaded", async () => {
+  const duplaId = sessionStorage.getItem("anaTerraDuplaId");
+  if (!duplaId) {
+    window.location.href = "index.html";
+    return;
+  }
+
+  await carregarDadosDupla(duplaId);
+  await carregarTodasDuplas();
+  await carregarRespostaExistente();
+
+  preencherFicha();
+  preencherHUD();
+  preencherMapa();
+  preencherMissao();
+  atualizarProgressoColetivo();
+});
+
+/* ------------------------------------------------------------
+   Carrega dados da dupla logada
+   ------------------------------------------------------------ */
+
+async function carregarDadosDupla(duplaId) {
+  const { data, error } = await supabaseClient
+    .from("duplas")
+    .select("id, nome_dupla, integrantes, turma, arquetipo, carta_numero, xp_total, nivel")
+    .eq("id", duplaId)
+    .single();
+
+  if (error || !data) {
+    sessionStorage.clear();
+    window.location.href = "index.html";
+    return;
+  }
+
+  DUPLA = data;
+}
+
+/* ------------------------------------------------------------
+   Carrega todas as duplas da mesma turma (para o mapa)
+   ------------------------------------------------------------ */
+
+async function carregarTodasDuplas() {
+  const { data } = await supabaseClient
+    .from("duplas")
+    .select("carta_numero, xp_total")
+    .eq("turma", DUPLA.turma);
+
+  TODAS_DUPLAS = data || [];
+}
+
+/* ------------------------------------------------------------
+   Carrega resposta ja enviada (se existir)
+   ------------------------------------------------------------ */
+
+async function carregarRespostaExistente() {
+  const { data } = await supabaseClient
+    .from("respostas")
+    .select("resposta_objeto, justificativa")
+    .eq("dupla_id", DUPLA.id)
+    .eq("carta_numero", DUPLA.carta_numero)
+    .maybeSingle();
+
+  RESPOSTA_EXISTENTE = data || null;
+}
+
+/* ------------------------------------------------------------
+   Preenche a ficha de personagem (tela 1)
+   ------------------------------------------------------------ */
+
+function preencherFicha() {
+  const arq = ARQUETIPOS.find(a => a.id === DUPLA.arquetipo);
+
+  document.getElementById("ficha-avatar").innerHTML = MEDALHOES[DUPLA.arquetipo] || "";
+  document.getElementById("ficha-nome-dupla").textContent = DUPLA.nome_dupla;
+  document.getElementById("ficha-arquetipo-tema").textContent = arq ? arq.nome + ": " + arq.tema : "";
+  document.getElementById("ficha-integrantes").textContent = "Integrantes: " + DUPLA.integrantes;
+  document.getElementById("ficha-turma").textContent = "Turma: " + DUPLA.turma;
+}
+
+/* ------------------------------------------------------------
+   Preenche o HUD
+   ------------------------------------------------------------ */
+
+function preencherHUD() {
+  document.getElementById("hud-avatar").innerHTML = MEDALHOES[DUPLA.arquetipo] || "";
+  document.getElementById("hud-nome").textContent = DUPLA.nome_dupla;
+
+  const xp = DUPLA.xp_total || 0;
+  const nivel = DUPLA.nivel || 1;
+  const xpProximo = nivel * 100;
+  const xpAtual = xp % 100;
+  const pct = Math.min(100, Math.round((xpAtual / 100) * 100));
+
+  document.getElementById("hud-barra").style.width = pct + "%";
+  document.getElementById("hud-nivel").innerHTML = "Nv " + nivel + "<br>" + xp + " XP";
+}
+
+/* ------------------------------------------------------------
+   Preenche o mapa da jornada (tela 2)
+   ------------------------------------------------------------ */
+
+function preencherMapa() {
+  const trilha = document.getElementById("trilha");
+  trilha.innerHTML = "";
+
+  CARTAS.forEach((carta, i) => {
+    const duplaDestaCarta = TODAS_DUPLAS.find(d => d.carta_numero === carta.numero);
+    const ehPropria = carta.numero === DUPLA.carta_numero;
+    const concluida = duplaDestaCarta && duplaDestaCarta.xp_total > 0;
+    const reivindicada = !!duplaDestaCarta;
+
+    let classeEstacao = "estacao";
+    let statusTexto = "Aguardando uma dupla";
+
+    if (ehPropria) {
+      classeEstacao += " estacao-propria";
+      statusTexto = RESPOSTA_EXISTENTE ? "Missao cumprida" : "Sua missao";
+    } else if (concluida) {
+      classeEstacao += " estacao-concluida";
+      statusTexto = "Concluida por outra dupla";
+    } else if (reivindicada) {
+      classeEstacao += " estacao-bloqueada";
+      statusTexto = "Missao em andamento";
+    } else {
+      classeEstacao += " estacao-bloqueada";
+    }
+
+    const btn = document.createElement("button");
+    btn.className = classeEstacao;
+
+    if (ehPropria) {
+      btn.onclick = () => mostrarTela("tela-missao");
+    }
+
+    btn.innerHTML = `
+      <div class="estacao-numero">${carta.ordem}</div>
+      <div class="estacao-info">
+        <p class="estacao-palavra">${carta.palavraChave}</p>
+        <p class="estacao-status">${statusTexto}</p>
+      </div>
+    `;
+
+    trilha.appendChild(btn);
+
+    if (i < CARTAS.length - 1) {
+      const conector = document.createElement("div");
+      conector.className = "estacao-conector";
+      trilha.appendChild(conector);
+    }
+  });
+}
+
+/* ------------------------------------------------------------
+   Preenche a tela de missao (tela 3)
+   ------------------------------------------------------------ */
+
+function preencherMissao() {
+  const carta = getCartaPorNumero(DUPLA.carta_numero);
+  if (!carta) return;
+
+  document.getElementById("missao-numero").textContent =
+    "Estacao " + carta.ordem + " de 15: Carta " + carta.numero;
+  document.getElementById("missao-palavra").textContent = carta.palavraChave;
+  document.getElementById("missao-narrativa").textContent = carta.narrativa;
+  document.getElementById("missao-pista").textContent = carta.pista;
+  document.getElementById("missao-desafio").textContent = carta.desafio;
+
+  if (RESPOSTA_EXISTENTE) {
+    document.getElementById("form-resposta").classList.add("oculto");
+    document.getElementById("resposta-registrada").classList.remove("oculto");
+    document.getElementById("resp-objeto-salvo").textContent = RESPOSTA_EXISTENTE.resposta_objeto;
+    document.getElementById("resp-justificativa-salva").textContent = RESPOSTA_EXISTENTE.justificativa;
+  }
+}
+
+/* ------------------------------------------------------------
+   Atualiza o progresso coletivo da turma no mapa
+   ------------------------------------------------------------ */
+
+function atualizarProgressoColetivo() {
+  const concluidas = TODAS_DUPLAS.filter(d => d.xp_total > 0).length;
+  const total = 15;
+  const pct = Math.round((concluidas / total) * 100);
+
+  document.getElementById("prog-fill").style.width = pct + "%";
+  document.getElementById("prog-numero").textContent = concluidas + "/" + total;
+}
+
+/* ------------------------------------------------------------
+   Envia a resposta do desafio
+   ------------------------------------------------------------ */
+
+async function enviarResposta() {
+  limparMensagem("msg-missao");
+
+  const objeto = document.getElementById("resp-objeto").value.trim();
+  const justificativa = document.getElementById("resp-justificativa").value.trim();
+
+  if (!objeto) {
+    exibirMensagem("msg-missao", "Informe o objeto que representa a palavra-chave.", "erro");
+    return;
+  }
+
+  if (justificativa.length < 20) {
+    exibirMensagem("msg-missao", "Escreva uma justificativa mais completa (pelo menos algumas frases).", "erro");
+    return;
+  }
+
+  const btn = document.getElementById("btn-enviar");
+  btn.disabled = true;
+  btn.textContent = "Enviando...";
+
+  const { data, error } = await supabaseClient.rpc("registrar_resposta", {
+    p_dupla_id: DUPLA.id,
+    p_carta_numero: DUPLA.carta_numero,
+    p_resposta_objeto: objeto,
+    p_justificativa: justificativa
+  });
+
+  btn.disabled = false;
+  btn.textContent = "Enviar resposta";
+
+  if (error) {
+    exibirMensagem("msg-missao", "Erro ao enviar. Tente novamente.", "erro");
+    return;
+  }
+
+  if (data === "ja_respondido") {
+    exibirMensagem("msg-missao", "Sua dupla ja enviou uma resposta para esta missao.", "info");
+    return;
+  }
+
+  if (data === "sem_permissao") {
+    exibirMensagem("msg-missao", "Esta carta nao pertence a sua dupla.", "erro");
+    return;
+  }
+
+  if (data === "ok") {
+    DUPLA.xp_total = (DUPLA.xp_total || 0) + 50;
+    DUPLA.nivel = Math.floor(DUPLA.xp_total / 100) + 1;
+    preencherHUD();
+
+    RESPOSTA_EXISTENTE = { resposta_objeto: objeto, justificativa };
+
+    document.getElementById("form-resposta").classList.add("oculto");
+    document.getElementById("resposta-registrada").classList.remove("oculto");
+    document.getElementById("resp-objeto-salvo").textContent = objeto;
+    document.getElementById("resp-justificativa-salva").textContent = justificativa;
+
+    exibirConquista("Missao cumprida! +50 XP conquistados nesta estacao da jornada.");
+
+    await carregarTodasDuplas();
+    preencherMapa();
+    atualizarProgressoColetivo();
+  }
+}
+
+/* ------------------------------------------------------------
+   Popup de conquista
+   ------------------------------------------------------------ */
+
+function exibirConquista(texto) {
+  const popup = document.getElementById("conquista-popup");
+  popup.textContent = texto;
+  popup.classList.add("visivel");
+  setTimeout(() => popup.classList.remove("visivel"), 4000);
+}
+
+/* ------------------------------------------------------------
+   Mensagens de feedback
+   ------------------------------------------------------------ */
+
+function exibirMensagem(idContainer, texto, tipo) {
+  document.getElementById(idContainer).innerHTML =
+    `<div class="mensagem mensagem-${tipo}">${texto}</div>`;
+}
+
+function limparMensagem(idContainer) {
+  document.getElementById(idContainer).innerHTML = "";
+}
+
+</script>
+</body>
+</html>

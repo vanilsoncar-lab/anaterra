@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel do Professor | Ana Terra: Cronicas do Pampa</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .resumo-grade {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .resumo-card {
+    background: var(--papel-medio);
+    border: 1px solid var(--couro);
+    border-radius: var(--raio-md);
+    padding: 14px;
+    text-align: center;
+  }
+  .resumo-numero {
+    font-family: var(--fonte-dados);
+    font-size: 28px;
+    color: var(--dourado);
+    display: block;
+  }
+  .resumo-label {
+    font-size: 12px;
+    font-style: italic;
+    color: var(--texto-secundario);
+  }
+
+  .filtro-turma {
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .filtro-turma label {
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  .badge-status {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-family: var(--fonte-dados);
+  }
+  .badge-concluida {
+    background: #dde6da;
+    color: var(--verde-pampa);
+    border: 1px solid #b9cdb2;
+  }
+  .badge-pendente {
+    background: #ecd9b8;
+    color: var(--terracota);
+    border: 1px solid #d8bd8a;
+  }
+  .badge-sem-carta {
+    background: var(--papel-medio);
+    color: var(--texto-secundario);
+    border: 1px solid var(--couro);
+  }
+
+  .resposta-bloco {
+    background: var(--papel-claro);
+    border: 1px solid var(--couro);
+    border-radius: var(--raio-md);
+    padding: 12px 14px;
+    margin-top: 6px;
+    font-size: 14px;
+    font-style: italic;
+    color: var(--tinta);
+    display: none;
+  }
+  .resposta-bloco.aberta {
+    display: block;
+  }
+
+  .btn-ver-resposta {
+    background: none;
+    border: none;
+    font-family: var(--fonte-corpo);
+    font-size: 13px;
+    font-style: italic;
+    color: var(--verde-pampa);
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+  }
+
+  .btn-desvincular {
+    background: none;
+    border: none;
+    font-family: var(--fonte-corpo);
+    font-size: 12px;
+    color: var(--terracota);
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+  }
+
+  .aba-nav {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .aba-btn {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid var(--couro);
+    border-radius: var(--raio-md);
+    background: var(--papel-claro);
+    font-family: var(--fonte-display);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--tinta);
+  }
+  .aba-btn.ativa {
+    background: var(--tinta);
+    color: var(--papel-claro);
+    border-color: var(--tinta);
+  }
+
+  .aba-conteudo {
+    display: none;
+  }
+  .aba-conteudo.ativa {
+    display: block;
+  }
+
+  table td {
+    vertical-align: top;
+  }
+
+  @media (max-width: 480px) {
+    .resumo-grade {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="pagina">
+
+  <!-- ============================================================
+       LOGIN DO PROFESSOR
+       ============================================================ -->
+  <div id="tela-login-prof" class="container" style="padding-top:40px;">
+    <div class="marca">
+      <h1 class="marca-titulo">Painel do Professor</h1>
+      <p class="marca-subtitulo">Ana Terra: Cronicas do Pampa</p>
+    </div>
+    <div class="cartao">
+      <h2 class="cartao-titulo">Acesso restrito</h2>
+      <p class="cartao-descricao">Informe suas credenciais para acessar o painel.</p>
+
+      <label for="prof-nome">Nome</label>
+      <input type="text" id="prof-nome" autocomplete="off">
+
+      <label for="prof-senha">Senha</label>
+      <input type="password" id="prof-senha" autocomplete="current-password">
+
+      <button class="botao botao-dourado" onclick="logarProfessor()" id="btn-login-prof">Entrar</button>
+      <div id="msg-login-prof"></div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       PAINEL PRINCIPAL
+       ============================================================ -->
+  <div id="tela-painel" class="oculto">
+
+    <div class="hud">
+      <div class="hud-info">
+        <div class="hud-nome">Painel do Professor</div>
+      </div>
+      <button onclick="sairProfessor()" style="background:none;border:none;color:var(--dourado-claro);font-family:var(--fonte-dados);font-size:13px;cursor:pointer;">Sair</button>
+    </div>
+
+    <div class="container-largo" style="padding-top:24px;">
+
+      <!-- Resumo geral -->
+      <div class="resumo-grade">
+        <div class="resumo-card">
+          <span class="resumo-numero" id="res-duplas">0</span>
+          <span class="resumo-label">Duplas cadastradas</span>
+        </div>
+        <div class="resumo-card">
+          <span class="resumo-numero" id="res-concluidas">0</span>
+          <span class="resumo-label">Missoes concluidas</span>
+        </div>
+        <div class="resumo-card">
+          <span class="resumo-numero" id="res-cartas">0/15</span>
+          <span class="resumo-label">Cartas registradas</span>
+        </div>
+      </div>
+
+      <!-- Abas -->
+      <div class="aba-nav">
+        <button class="aba-btn ativa" onclick="abrirAba('aba-duplas', this)">Duplas</button>
+        <button class="aba-btn" onclick="abrirAba('aba-respostas', this)">Respostas</button>
+        <button class="aba-btn" onclick="abrirAba('aba-cartas', this)">Cartas</button>
+      </div>
+
+      <!-- Aba: Duplas -->
+      <div class="aba-conteudo ativa" id="aba-duplas">
+        <div class="filtro-turma">
+          <label for="filtro-turma-input" style="margin-top:0;">Turma:</label>
+          <input type="text" id="filtro-turma-input" placeholder="Filtrar por turma" style="max-width:200px;padding:8px 12px;font-size:14px;" oninput="filtrarDuplas()">
+        </div>
+        <div style="overflow-x:auto;">
+          <table id="tabela-duplas">
+            <thead>
+              <tr>
+                <th>Dupla</th>
+                <th>Turma</th>
+                <th>Carta</th>
+                <th>Arquetipo</th>
+                <th>XP</th>
+                <th>Status</th>
+                <th>Acoes</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-duplas"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Aba: Respostas -->
+      <div class="aba-conteudo" id="aba-respostas">
+        <div style="overflow-x:auto;">
+          <table id="tabela-respostas">
+            <thead>
+              <tr>
+                <th>Dupla</th>
+                <th>Turma</th>
+                <th>Carta</th>
+                <th>Palavra-chave</th>
+                <th>Resposta / Justificativa</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-respostas"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Aba: Cartas (quais estao livres/ocupadas) -->
+      <div class="aba-conteudo" id="aba-cartas">
+        <div id="grade-cartas" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;"></div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/supabase-config.js"></script>
+<script src="assets/icons.js"></script>
+<script src="assets/cartas-data.js"></script>
+<script>
+
+let DUPLAS_DADOS = [];
+let RESPOSTAS_DADOS = [];
+
+/* ------------------------------------------------------------
+   Login do professor
+   ------------------------------------------------------------ */
+
+async function logarProfessor() {
+  const nome = document.getElementById("prof-nome").value.trim();
+  const senha = document.getElementById("prof-senha").value;
+  const msg = document.getElementById("msg-login-prof");
+  msg.innerHTML = "";
+
+  if (!nome || !senha) {
+    msg.innerHTML = '<div class="mensagem mensagem-erro">Preencha nome e senha.</div>';
+    return;
+  }
+
+  const btn = document.getElementById("btn-login-prof");
+  btn.disabled = true;
+  btn.textContent = "Verificando...";
+
+  const { data, error } = await supabaseClient.rpc("autenticar_professor", {
+    p_nome: nome,
+    p_senha: senha
+  });
+
+  btn.disabled = false;
+  btn.textContent = "Entrar";
+
+  if (error || !data) {
+    msg.innerHTML = '<div class="mensagem mensagem-erro">Nome ou senha incorretos.</div>';
+    return;
+  }
+
+  sessionStorage.setItem("anaTerraProf", "ok");
+  document.getElementById("tela-login-prof").classList.add("oculto");
+  document.getElementById("tela-painel").classList.remove("oculto");
+  await carregarDados();
+}
+
+function sairProfessor() {
+  sessionStorage.removeItem("anaTerraProf");
+  location.reload();
+}
+
+/* ------------------------------------------------------------
+   Carrega todos os dados
+   ------------------------------------------------------------ */
+
+async function carregarDados() {
+  const [duplas, respostas] = await Promise.all([
+    supabaseClient.from("duplas").select("id, nome_dupla, integrantes, turma, arquetipo, carta_numero, xp_total, nivel").order("turma"),
+    supabaseClient.from("respostas").select("dupla_id, carta_numero, resposta_objeto, justificativa, enviado_em")
+  ]);
+
+  DUPLAS_DADOS = duplas.data || [];
+  RESPOSTAS_DADOS = respostas.data || [];
+
+  atualizarResumo();
+  renderizarDuplas();
+  renderizarRespostas();
+  renderizarCartas();
+}
+
+/* ------------------------------------------------------------
+   Resumo geral
+   ------------------------------------------------------------ */
+
+function atualizarResumo() {
+  const concluidas = DUPLAS_DADOS.filter(d => d.xp_total > 0).length;
+  const comCarta = DUPLAS_DADOS.filter(d => d.carta_numero !== null).length;
+
+  document.getElementById("res-duplas").textContent = DUPLAS_DADOS.length;
+  document.getElementById("res-concluidas").textContent = concluidas;
+  document.getElementById("res-cartas").textContent = comCarta + "/15";
+}
+
+/* ------------------------------------------------------------
+   Aba: Duplas
+   ------------------------------------------------------------ */
+
+function renderizarDuplas(filtro) {
+  const tbody = document.getElementById("tbody-duplas");
+  tbody.innerHTML = "";
+
+  let lista = DUPLAS_DADOS;
+  if (filtro) {
+    lista = lista.filter(d => d.turma.toLowerCase().includes(filtro.toLowerCase()));
+  }
+
+  lista.forEach(d => {
+    const arq = ARQUETIPOS.find(a => a.id === d.arquetipo);
+    const carta = d.carta_numero ? getCartaPorNumero(d.carta_numero) : null;
+    const resp = RESPOSTAS_DADOS.find(r => r.dupla_id === d.id);
+
+    let badge;
+    if (!d.carta_numero) {
+      badge = '<span class="badge-status badge-sem-carta">Sem carta</span>';
+    } else if (resp) {
+      badge = '<span class="badge-status badge-concluida">Concluida</span>';
+    } else {
+      badge = '<span class="badge-status badge-pendente">Pendente</span>';
+    }
+
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>
+        <strong>${d.nome_dupla}</strong><br>
+        <span style="font-size:12px;font-style:italic;color:var(--texto-secundario);">${d.integrantes}</span>
+      </td>
+      <td>${d.turma}</td>
+      <td>${carta ? carta.numero + " (" + carta.palavraChave + ")" : "..."}</td>
+      <td style="font-size:13px;">${arq ? arq.nome : "..."}</td>
+      <td><span style="font-family:var(--fonte-dados);color:var(--dourado);">${d.xp_total || 0} XP</span></td>
+      <td>${badge}</td>
+      <td>
+        ${d.carta_numero ? `<button class="btn-desvincular" onclick="desvincularCarta('${d.id}', '${d.nome_dupla}')">Desvincular carta</button>` : ""}
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  if (lista.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;font-style:italic;color:var(--texto-secundario);">Nenhuma dupla encontrada.</td></tr>';
+  }
+}
+
+function filtrarDuplas() {
+  const val = document.getElementById("filtro-turma-input").value;
+  renderizarDuplas(val);
+}
+
+/* ------------------------------------------------------------
+   Aba: Respostas
+   ------------------------------------------------------------ */
+
+function renderizarRespostas() {
+  const tbody = document.getElementById("tbody-respostas");
+  tbody.innerHTML = "";
+
+  RESPOSTAS_DADOS.forEach(r => {
+    const dupla = DUPLAS_DADOS.find(d => d.id === r.dupla_id);
+    const carta = getCartaPorNumero(r.carta_numero);
+    const idBloco = "bloco-" + r.dupla_id;
+
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td><strong>${dupla ? dupla.nome_dupla : r.dupla_id}</strong></td>
+      <td>${dupla ? dupla.turma : ""}</td>
+      <td>${r.carta_numero}</td>
+      <td>${carta ? carta.palavraChave : ""}</td>
+      <td>
+        <strong style="font-size:14px;">${r.resposta_objeto}</strong>
+        <br>
+        <button class="btn-ver-resposta" onclick="toggleResposta('${idBloco}')">Ver / ocultar justificativa</button>
+        <div class="resposta-bloco" id="${idBloco}">${r.justificativa}</div>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  if (RESPOSTAS_DADOS.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;font-style:italic;color:var(--texto-secundario);">Nenhuma resposta enviada ainda.</td></tr>';
+  }
+}
+
+function toggleResposta(id) {
+  const bloco = document.getElementById(id);
+  bloco.classList.toggle("aberta");
+}
+
+/* ------------------------------------------------------------
+   Aba: Cartas (painel de status de cada carta)
+   ------------------------------------------------------------ */
+
+function renderizarCartas() {
+  const grade = document.getElementById("grade-cartas");
+  grade.innerHTML = "";
+
+  CARTAS.forEach(carta => {
+    const duplaComCarta = DUPLAS_DADOS.find(d => d.carta_numero === carta.numero);
+    const resp = duplaComCarta ? RESPOSTAS_DADOS.find(r => r.dupla_id === duplaComCarta.id) : null;
+
+    let cor = "var(--papel-medio)";
+    let statusTxt = "Livre";
+    if (duplaComCarta && resp) {
+      cor = "#dde6da";
+      statusTxt = "Concluida";
+    } else if (duplaComCarta) {
+      cor = "#ecd9b8";
+      statusTxt = "Em andamento";
+    }
+
+    const div = document.createElement("div");
+    div.className = "resumo-card";
+    div.style.background = cor;
+    div.style.textAlign = "left";
+    div.innerHTML = `
+      <p style="font-family:var(--fonte-dados);font-size:11px;color:var(--texto-secundario);margin:0 0 4px;text-transform:uppercase;letter-spacing:.06em;">Carta ${carta.numero}</p>
+      <p style="font-family:var(--fonte-display);font-weight:600;font-size:15px;margin:0 0 4px;">${carta.palavraChave}</p>
+      <p style="font-size:12px;font-style:italic;color:var(--texto-secundario);margin:0 0 6px;">${statusTxt}</p>
+      ${duplaComCarta ? `<p style="font-size:12px;margin:0;color:var(--tinta);">${duplaComCarta.nome_dupla}</p>` : ""}
+    `;
+    grade.appendChild(div);
+  });
+}
+
+/* ------------------------------------------------------------
+   Desvincular carta de uma dupla (em caso de erro)
+   ------------------------------------------------------------ */
+
+async function desvincularCarta(duplaId, nomeDupla) {
+  if (!confirm("Desvincular a carta da dupla \"" + nomeDupla + "\"? Esta acao tambem remove a resposta enviada por ela.")) return;
+
+  const { data, error } = await supabaseClient.rpc("desvincular_carta", {
+    p_dupla_id: duplaId
+  });
+
+  if (error || !data) {
+    alert("Erro ao desvincular. Tente novamente.");
+    return;
+  }
+
+  alert("Carta desvinculada com sucesso.");
+  await carregarDados();
+}
+
+/* ------------------------------------------------------------
+   Controle de abas
+   ------------------------------------------------------------ */
+
+function abrirAba(idAba, btnClicado) {
+  document.querySelectorAll(".aba-conteudo").forEach(a => a.classList.remove("ativa"));
+  document.querySelectorAll(".aba-btn").forEach(b => b.classList.remove("ativa"));
+  document.getElementById(idAba).classList.add("ativa");
+  btnClicado.classList.add("ativa");
+}
+
+/* ------------------------------------------------------------
+   Verificacao de sessao ao carregar
+   ------------------------------------------------------------ */
+
+window.addEventListener("DOMContentLoaded", () => {
+  if (sessionStorage.getItem("anaTerraProf") === "ok") {
+    document.getElementById("tela-login-prof").classList.add("oculto");
+    document.getElementById("tela-painel").classList.remove("oculto");
+    carregarDados();
+  }
+});
+
+</script>
+</body>
+</html>
