@@ -478,29 +478,4 @@ async function desvincularCarta(duplaId, nomeDupla) {
   });
 
   if (error || !data) {
-    alert("Erro ao desvincular. Tente novamente.");
-    return;
-  }
-
-  alert("Carta desvinculada com sucesso.");
-  await carregarDados();
-}
-
-function abrirAba(idAba, btnClicado) {
-  document.querySelectorAll(".aba-conteudo").forEach(a => a.classList.remove("ativa"));
-  document.querySelectorAll(".aba-btn").forEach(b => b.classList.remove("ativa"));
-  document.getElementById(idAba).classList.add("ativa");
-  btnClicado.classList.add("ativa");
-}
-
-window.addEventListener("DOMContentLoaded", () => {
-  if (sessionStorage.getItem("anaTerraProf") === "ok") {
-    document.getElementById("tela-login-prof").classList.add("oculto");
-    document.getElementById("tela-painel").classList.remove("oculto");
-    carregarDados();
-  }
-});
-
-</script>
-</body>
-</html>
+    alert("Erro
