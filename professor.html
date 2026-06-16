@@ -386,6 +386,7 @@ function renderizarDuplas(filtro) {
       <td>${badge}</td>
       <td>
         ${d.carta_número ? `<button class="btn-desvincular" onclick="desvincularCarta('${d.id}', '${d.nome_dupla}')">Desvincular carta</button>` : ""}
+        <button class="btn-desvincular" style="color:#8b1a1a;margin-top:4px;" onclick="deletarDupla('${d.id}', '${d.nome_dupla}')">&#128465; Excluir dupla</button>
       </td>
     `;
     tbody.appendChild(tr);
@@ -479,6 +480,22 @@ function renderizarCartas() {
 /* ------------------------------------------------------------
    Desvincular carta de uma dupla (em caso de erro)
    ------------------------------------------------------------ */
+
+async function deletarDupla(duplaId, nomeDupla) {
+  if (!confirm("Excluir completamente a dupla \"" + nomeDupla + "\"?\nEsta ação apaga o cadastro, a carta vinculada e todas as respostas. Não pode ser desfeita.")) return;
+
+  const { data, error } = await supabaseClient.rpc("deletar_dupla", {
+    p_dupla_id: duplaId
+  });
+
+  if (error || !data) {
+    alert("Erro ao excluir. Tente novamente.");
+    return;
+  }
+
+  alert("Dupla \"" + nomeDupla + "\" excluída com sucesso.");
+  await carregarDados();
+}
 
 async function desvincularCarta(duplaId, nomeDupla) {
   if (!confirm("Desvincular a carta da dupla \"" + nomeDupla + "\"? Esta ação também remove a resposta enviada por ela.")) return;
