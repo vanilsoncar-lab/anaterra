@@ -320,12 +320,18 @@ function sairProfessor() {
 
 async function carregarDados() {
   const [duplas, respostas] = await Promise.all([
-    supabaseClient.from("duplas").select("id, nome_dupla, integrantes, turma, arquetipo, carta_número, xp_total, nivel").order("turma"),
-    supabaseClient.from("respostas").select("dupla_id, carta_número, resposta_objeto, justificativa, enviado_em")
+    supabaseClient.rpc("listar_duplas_professor"),
+    supabaseClient.from("respostas").select("dupla_id, carta_numero, resposta_objeto, justificativa, enviado_em")
   ]);
 
   DUPLAS_DADOS = duplas.data || [];
   RESPOSTAS_DADOS = respostas.data || [];
+
+  // Normaliza campo carta_numero em duplas
+  DUPLAS_DADOS = DUPLAS_DADOS.map(d => ({
+    ...d,
+    carta_numero: d.carta_numero ?? d.carta_numero ?? null
+  }));
 
   atualizarResumo();
   renderizarDuplas();
@@ -339,7 +345,7 @@ async function carregarDados() {
 
 function atualizarResumo() {
   const concluídas = DUPLAS_DADOS.filter(d => d.xp_total > 0).length;
-  const comCarta = DUPLAS_DADOS.filter(d => d.carta_número !== null).length;
+  const comCarta = DUPLAS_DADOS.filter(d => d.carta_numero !== null).length;
 
   document.getElementById("res-duplas").textContent = DUPLAS_DADOS.length;
   document.getElementById("res-concluídas").textContent = concluídas;
@@ -361,11 +367,11 @@ function renderizarDuplas(filtro) {
 
   lista.forEach(d => {
     const arq = ARQUETIPOS.find(a => a.id === d.arquetipo);
-    const carta = d.carta_número ? getCartaPorNúmero(d.carta_número) : null;
+    const carta = d.carta_numero ? getCartaPorNúmero(d.carta_numero) : null;
     const resp = RESPOSTAS_DADOS.find(r => r.dupla_id === d.id);
 
     let badge;
-    if (!d.carta_número) {
+    if (!d.carta_numero) {
       badge = '<span class="badge-status badge-sem-carta">Sem carta</span>';
     } else if (resp) {
       badge = '<span class="badge-status badge-concluída">Concluída</span>';
@@ -385,7 +391,7 @@ function renderizarDuplas(filtro) {
       <td><span style="font-family:var(--fonte-dados);color:var(--dourado);">${d.xp_total || 0} XP</span></td>
       <td>${badge}</td>
       <td>
-        ${d.carta_número ? `<button class="btn-desvincular" onclick="desvincularCarta('${d.id}', '${d.nome_dupla}')">Desvincular carta</button>` : ""}
+        ${d.carta_numero ? `<button class="btn-desvincular" onclick="desvincularCarta('${d.id}', '${d.nome_dupla}')">Desvincular carta</button>` : ""}
         <button class="btn-desvincular" style="color:#8b1a1a;margin-top:4px;" onclick="deletarDupla('${d.id}', '${d.nome_dupla}')">&#128465; Excluir dupla</button>
       </td>
     `;
@@ -412,14 +418,14 @@ function renderizarRespostas() {
 
   RESPOSTAS_DADOS.forEach(r => {
     const dupla = DUPLAS_DADOS.find(d => d.id === r.dupla_id);
-    const carta = getCartaPorNúmero(r.carta_número);
+    const carta = getCartaPorNúmero(r.carta_numero);
     const idBloco = "bloco-" + r.dupla_id;
 
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td><strong>${dupla ? dupla.nome_dupla : r.dupla_id}</strong></td>
       <td>${dupla ? dupla.turma : ""}</td>
-      <td>${r.carta_número}</td>
+      <td>${r.carta_numero}</td>
       <td>${carta ? carta.palavraChave : ""}</td>
       <td>
         <strong style="font-size:14px;">${r.resposta_objeto}</strong>
@@ -450,7 +456,7 @@ function renderizarCartas() {
   grade.innerHTML = "";
 
   CARTAS.forEach(carta => {
-    const duplaComCarta = DUPLAS_DADOS.find(d => d.carta_número === carta.número);
+    const duplaComCarta = DUPLAS_DADOS.find(d => d.carta_numero === carta.número);
     const resp = duplaComCarta ? RESPOSTAS_DADOS.find(r => r.dupla_id === duplaComCarta.id) : null;
 
     let cor = "var(--papel-medio)";
