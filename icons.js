@@ -1,8 +1,9 @@
 /* ============================================================
-   ANA TERRA: CRONICAS DO PAMPA
+   O INVENTARIANTE DO TEMPO: A JORNADA DE ANA TERRA
    Medalhoes ornamentados dos 6 arquetipos de personagem
    Cada constante contem o SVG completo (240x240) como string,
    pronto para ser inserido via innerHTML.
+   Versão 5.0
    ============================================================ */
 
 const MEDALHOES = {
@@ -106,7 +107,7 @@ const MEDALHOES = {
 </svg>`,
 
   maneco_terra: `
-<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Medalhao de Maneco Terra">
+<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Medalhao de Maneco Terra - Tradicao, Patriarcado e Autoridade">
 <defs>
 <linearGradient id="skyManeco" x1="0" y1="0" x2="0" y2="1">
 <stop offset="0%" stop-color="#f3e3c3"/>
@@ -319,7 +320,7 @@ const MEDALHOES = {
 const ARQUETIPOS = [
   { id: "ana_terra", nome: "Ana Terra", tema: "Resistência feminina" },
   { id: "pedro_missioneiro", nome: "Pedro Missioneiro", tema: "Miscigenação e origem do povo gaúcho" },
-  { id: "maneco_terra", nome: "Maneco Terra", tema: "Autoridade patriarcal e tradição" },
+  { id: "maneco_terra", nome: "Maneco Terra", tema: "Tradição, Patriarcado e Autoridade" },
   { id: "henriqueta", nome: "Henriqueta", tema: "Preservação dos costumes" },
   { id: "horacio", nome: "Horácio", tema: "Conservadorismo social" },
   { id: "pedro_terra", nome: "Pedro Terra", tema: "Continuidade das gerações" }
