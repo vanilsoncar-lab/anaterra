@@ -1,142 +1,20 @@
-/* ============================================================
-   ANA TERRA: CRONICAS DO PAMPA
-   Dados das 15 cartas (estacoes da jornada)
-   Ordenadas pela ordem cronologica da trama (campo "ordem"),
-   o campo "numero" corresponde ao numero original do cartao
-   impresso na etapa analogica.
-   ============================================================ */
+-- ============================================================
+-- SEED: 15 cartas (NOVA ORDEM 2026)
+-- ============================================================
 
-const CARTAS = [
-  {
-    ordem: 1,
-    numero: 3,
-    palavraChave: "ORIGEM",
-    pista: "Represento o lugar onde Ana Terra nasceu e cresceu.",
-    desafio: "Qual objeto eu represento? Justifique sua resposta.",
-    narrativa: "Antes de Ana Terra, houve a terra. Vasta, dura, generosa. E dela que tudo nasce: o sangue, o sustento, a primeira lembranca de infancia sob o ceu aberto do pampa. Aqui comeca a historia, no chao onde os pes descalcos de Ana aprenderam a caminhar."
-  },
-  {
-    ordem: 2,
-    numero: 1,
-    palavraChave: "NARRATIVA",
-    pista: "Sou o inicio de tudo. Guardo personagens, conflitos e memorias.",
-    desafio: "Qual objeto eu represento? Justifique sua resposta.",
-    narrativa: "Toda jornada precisa de um lugar para guardar suas memorias. Personagens nascem, conflitos se acumulam, geracoes se sucedem, e tudo isso precisa de um fio condutor, algo que une o passado ao presente e da forma a historia que esta sendo contada."
-  },
-  {
-    ordem: 3,
-    numero: 14,
-    palavraChave: "TRADIÇÃO",
-    pista: "Represento costumes e habitos que fazem parte da identidade gaucha.",
-    desafio: "Qual objeto eu represento? Justifique sua resposta.",
-    narrativa: "Antes mesmo de Ana Terra existir, ja existiam os costumes que a formaram: o modo de viver, de se vestir, de receber visitas, de marcar o tempo. Sao esses habitos, transmitidos de geracao em geracao, que dao identidade a um povo e moldam quem Ana se tornara."
-  },
-  {
-    ordem: 4,
-    numero: 7,
-    palavraChave: "ENCONTRO",
-    pista: "Minha chegada transforma completamente o rumo da narrativa.",
-    desafio: "Qual objeto eu represento? Justifique sua resposta.",
-    narrativa: "Um dia, alguem chega. E nada mais e como antes. Esse encontro muda o rumo de tudo, nao apenas da vida de Ana, mas da propria narrativa. E o ponto sem volta, o momento em que a historia ganha um novo caminho."
-  },
-  {
-    ordem: 5,
-    numero: 9,
-    palavraChave: "AMOR",
-    pista: "Nasci da uniao de duas pessoas que desafiaram as regras de sua epoca.",
-    desafio: "Qual objeto eu represento? Justifique sua resposta.",
-    narrativa: "Entre duas pessoas que a sociedade dizia nao deverem se unir, nasce algo verdadeiro. Esse sentimento desafia regras, costumes e expectativas, e dele surge uma nova vida, fruto de uma escolha proibida pelo seu tempo."
-  },
-  {
-    ordem: 6,
-    numero: 15,
-    palavraChave: "CONFLITO",
-    pista: "Represento guerras, disputas territoriais e acontecimentos que influenciaram a formacao do Rio Grande do Sul.",
-    desafio: "Qual objeto eu represento? Justifique sua resposta.",
-    narrativa: "As terras do pampa nunca foram pacificas. Disputas territoriais, guerras e tensoes marcam a regiao onde Ana Terra vive, acontecimentos que moldaram a historia do Rio Grande do Sul e que atravessam, direta ou indiretamente, a vida da protagonista e de sua familia."
-  },
-  {
-    ordem: 7,
-    numero: 8,
-    palavraChave: "MUDANÇA",
-    pista: "Sou um personagem ligado a cultura indigena e ao amor proibido.",
-    desafio: "Qual objeto eu represento? Justifique sua resposta.",
-    narrativa: "Ha quem chegue para transformar tudo. Um personagem ligado a outra cultura, a outras tradicoes, envolvido em um amor que a epoca nao aceitava. Sua presenca muda o curso da narrativa e revela as tensoes entre diferentes mundos que convivem, e colidem, no pampa."
-  },
-  {
-    ordem: 8,
-    numero: 10,
-    palavraChave: "DOR",
-    pista: "Represento perdas, sofrimento, violencia e relacoes de poder.",
-    desafio: "Qual objeto eu represento? Justifique sua resposta.",
-    narrativa: "Depois da transformacao, vem o preco. Perdas, sofrimento, violencia, e relacoes de poder que pesam sobre quem tem menos voz. Ana Terra atravessa momentos de dor profunda, que marcam para sempre sua trajetoria."
-  },
-  {
-    ordem: 9,
-    numero: 4,
-    palavraChave: "SOBREVIVÊNCIA",
-    pista: "Sou resultado do trabalho diario e garanto o sustento da familia.",
-    desafio: "Qual objeto eu represento? Justifique sua resposta.",
-    narrativa: "Mesmo na dor, a vida continua, e ela exige trabalho. Dia apos dia, o sustento da familia depende do esforco sobre a terra. E essa labuta diaria, simples e essencial, que garante que Ana e os seus continuem de pe."
-  },
-  {
-    ordem: 10,
-    numero: 6,
-    palavraChave: "RESILIÊNCIA",
-    pista: "Represento uma mulher forte que enfrentou perdas, violencia e preconceitos sem desistir.",
-    desafio: "Qual objeto eu represento? Justifique sua resposta.",
-    narrativa: "Ana Terra e, antes de tudo, uma mulher que nao desiste. Perdas, violencia, preconceitos: nada disso a quebra por completo. Ela segue, carregando o peso do passado, mas seguindo em frente. Essa forca e o centro de quem ela e."
-  },
-  {
-    ordem: 11,
-    numero: 11,
-    palavraChave: "ESPERANÇA",
-    pista: "Mesmo apos tantas tragedias, simbolizo a continuidade da vida.",
-    desafio: "Qual objeto eu represento? Justifique sua resposta.",
-    narrativa: "Mesmo depois de tantas tragedias, a vida encontra um jeito de continuar. Um novo comeco se anuncia: pequeno, fragil, mas real. E a prova de que, mesmo em meio a dor, ainda ha motivo para seguir adiante."
-  },
-  {
-    ordem: 12,
-    numero: 12,
-    palavraChave: "RESISTÊNCIA",
-    pista: "Ajudo a enfrentar momentos dificeis e manter a esperanca.",
-    desafio: "Qual objeto eu represento? Justifique sua resposta.",
-    narrativa: "Nos momentos mais dificeis, e preciso algo a que se apegar. Algo que ajude a manter a fe, a forca e a esperanca, mesmo quando tudo parece perdido. E esse apoio, muitas vezes silencioso, que sustenta Ana Terra em sua travessia."
-  },
-  {
-    ordem: 13,
-    numero: 13,
-    palavraChave: "RECOMEÇO",
-    pista: "Abro caminhos para uma nova vida depois das perdas.",
-    desafio: "Qual objeto eu represento? Justifique sua resposta.",
-    narrativa: "Depois de tanto perder, e hora de abrir uma porta para o novo. Um caminho diferente se apresenta: a chance de reconstruir a vida, de comecar de novo em outro lugar, com outra perspectiva."
-  },
-  {
-    ordem: 14,
-    numero: 5,
-    palavraChave: "LIBERDADE",
-    pista: "Levo pessoas, mensagens e sonhos pelos pampas gauchos.",
-    desafio: "Qual objeto eu represento? Justifique sua resposta.",
-    narrativa: "Pelo pampa, seguem mensagens, sonhos e pessoas em movimento. Esse ir e vir constante representa a liberdade de seguir caminho, de levar consigo as historias vividas, e de buscar, em outro lugar, aquilo que falta."
-  },
-  {
-    ordem: 15,
-    numero: 2,
-    palavraChave: "DESTINO",
-    pista: "Acompanho os momentos mais importantes da vida da protagonista.",
-    desafio: "Qual objeto eu represento? Justifique sua resposta.",
-    narrativa: "No fim, olhamos para tras e vemos: cada momento importante da vida de Ana Terra estava conectado. Nascimento, amor, dor, recomeco: tudo fazia parte de um caminho maior. Esse e o destino: a soma de toda uma trajetoria, vista de uma so vez."
-  }
-];
-
-/* ------------------------------------------------------------
-   Funcoes auxiliares
-   ------------------------------------------------------------ */
-
-function getCartaPorNumero(numero) {
-  return CARTAS.find(c => c.numero === numero);
-}
-
-function getCartaPorOrdem(ordem) {
-  return CARTAS.find(c => c.ordem === ordem);
-}
+insert into cartas (numero, palavra_chave, pista, desafio, contexto_narrativo, ordem_cronologica) values
+(1,'NARRATIVA','Toda jornada começa comigo. Guardo personagens, conflitos, sonhos e memórias que atravessam gerações.','Identifique o objeto que representa o início desta aventura e explique sua importância para a história.','Antes de qualquer palavra ser escrita, antes mesmo de Ana Terra existir como personagem, já havia a narrativa. É ela quem guarda os conflitos, os sonhos, as memórias que atravessam gerações. Toda jornada começa aqui, no ato de contar, de registrar, de dar forma ao que seria apenas esquecimento.',1),
+(2,'DESTINO','Estou presente quando a vida muda de direção. Alguns me sentem antes mesmo de perceber o que está por vir.','Qual objeto simboliza os acontecimentos que transformam a vida da protagonista?','Há momentos em que a vida vira de cabeça para baixo. Um encontro, uma perda, uma escolha: tudo pode levar a um caminho novo. O destino não é algo que se escolhe, mas algo que acontece. Ana Terra sentiu sua chegada antes mesmo de saber o que ele trazia.',2),
+(3,'ORIGEM','Antes das viagens, das perdas e dos recomeços, existia um lugar onde tudo começou.','Descubra qual objeto representa as raízes da família Terra.','Antes de Ana Terra, houve a terra. Vasta, dura, generosa. Foi dela que tudo nasceu: o sangue, o sustento, a primeira lembrança de infância sob o céu aberto do pampa. As raízes da família Terra estão fincadas no chão onde os pés descalços de Ana aprenderam a caminhar.',3),
+(4,'SOBREVIVÊNCIA','Sou fruto do trabalho diário. Sem mim, a família não teria como enfrentar os desafios da fronteira.','Identifique o objeto que garante o sustento dos personagens.','Mesmo na dor, a vida continua, e ela exige trabalho. Dia após dia, o sustento da família depende do esforço sobre a terra. É essa labuta diária, simples e essencial, que garante que Ana e os seus continuem de pé, enfrentando os desafios da fronteira.',4),
+(5,'LIBERDADE','Levo pessoas por campos sem fim. Aproximo distâncias e abro caminhos para novas descobertas.','Qual objeto representa os caminhos dos pampas?','Pelo pampa, seguem mensagens, sonhos e pessoas em movimento. Esse ir e vir constante representa a liberdade de seguir caminho, de levar consigo as histórias vividas, e de buscar, em outro lugar, aquilo que falta. Pelos campos sem fim, a liberdade galopa.',5),
+(6,'RESILIÊNCIA','Mesmo diante da dor, continuo em frente. Minha força não está na ausência do sofrimento, mas na capacidade de superá-lo.','Encontre o objeto que representa a protagonista da história.','Ana Terra é, antes de tudo, uma mulher que não desiste. Perdas, violência, preconceitos: nada disso a quebra por completo. Ela segue, carregando o peso do passado, mas seguindo em frente. Sua força não está na ausência do sofrimento, mas na capacidade de superá-lo.',6),
+(7,'ENCONTRO','Minha chegada altera o rumo dos acontecimentos e inicia uma nova fase da narrativa.','Qual objeto representa a chegada de alguém que mudará tudo?','Um dia, alguém chega. E nada mais é como antes. Esse encontro muda o rumo de tudo, não apenas da vida de Ana, mas da própria narrativa. É o ponto sem volta, o momento em que a história ganha um novo caminho, uma nova fase.',7),
+(8,'MUDANÇA','Venho de um mundo diferente e carrego conhecimentos que transformam vidas.','Descubra o objeto ligado ao personagem que desafia os costumes da época.','Há quem chegue para transformar tudo. Alguém ligado a outra cultura, a outras tradições, envolto em um amor que a época não aceitava. Sua presença muda o curso da narrativa e revela as tensões entre diferentes mundos que convivem, e colidem, no pampa.',8),
+(9,'AMOR','Nasci da união de duas pessoas que enfrentaram barreiras e preconceitos para ficarem juntas.','Identifique o símbolo que representa esse sentimento.','Entre duas pessoas que a sociedade dizia não deverem se unir, nasce algo verdadeiro. Esse sentimento desafia regras, costumes e expectativas, e dele surge uma nova vida, fruto de uma escolha proibida pelo seu tempo. O amor que enfrenta barreiras.',9),
+(10,'DOR','Minha presença marca uma perda irreparável. Depois de mim, nada volta a ser como antes.','Qual objeto simboliza o sofrimento que mudou a vida da protagonista?','Depois da transformação, vem o preço. Perdas, sofrimento, violência, e relações de poder que pesam sobre quem tem menos voz. Ana Terra atravessa momentos de dor profunda, que marcam para sempre sua trajetória. Depois da dor, nada volta a ser como antes.',10),
+(11,'ESPERANÇA','Quando tudo parecia perdido, trouxe um motivo para continuar lutando.','Encontre o objeto que representa a continuidade da vida.','Mesmo depois de tantas tragédias, a vida encontra um jeito de continuar. Um novo começo se anuncia: pequeno, frágil, mas real. É a prova de que, mesmo em meio à dor, ainda há motivo para seguir adiante. A esperança que renasce.',11),
+(12,'RESISTÊNCIA','Ajudo a enfrentar o medo, a solidão e as dificuldades. Sou a força que impede a desistência.','Qual objeto representa a capacidade de seguir em frente apesar das adversidades?','Nos momentos mais difíceis, é preciso algo a que se apegar. Algo que ajude a manter a fé, a força e a esperança, mesmo quando tudo parece perdido. É esse apoio, muitas vezes silencioso, que sustenta Ana Terra em sua travessia. A resistência que impede a desistência.',12),
+(13,'CONFLITO','Represento invasões, ataques e disputas que destruíram lares e mudaram destinos.','Identifique os objetos ligados às guerras de fronteira.','As terras do pampa nunca foram pacíficas. Disputas territoriais, invasões, ataques e tensões marcam a região onde Ana Terra vive. Esses conflitos moldaram a história do Rio Grande do Sul e atravessam, direta ou indiretamente, a vida da protagonista e de sua família.',13),
+(14,'RECOMEÇO','Depois das perdas, é preciso encontrar coragem para abrir novos caminhos.','Qual objeto simboliza a construção de uma nova vida?','Depois de tanto perder, é hora de abrir uma porta para o novo. Um caminho diferente se apresenta: a chance de reconstruir a vida, de começar de novo em outro lugar, com outra perspectiva. É preciso encontrar coragem para abrir novos caminhos.',14),
+(15,'LEGADO','Sou aquilo que permanece quando uma geração se vai. Carrego memórias, valores e histórias que continuam vivas.','Descubra o objeto que representa a herança deixada por Ana Terra para o futuro.','No fim, olhamos para trás e vemos: cada momento importante da vida de Ana Terra estava conectado. Nascimento, amor, dor, recomeço: tudo fazia parte de um caminho maior. O que fica é o legado: memórias, valores e histórias que continuam vivas, atravessando gerações.',15);
