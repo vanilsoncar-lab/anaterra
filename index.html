@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ana Terra: Crônicas do Pampa</title>
-<link rel="stylesheet" href="assets/style.css?v=2.1">
+<link rel="stylesheet" href="assets/style.css?v=3.0">
 <style>
   .lista-nomes {
     display: grid;
@@ -48,7 +48,6 @@
   }
   .nome-selecionado-label.visivel { display: block; }
 
-  /* Preview do arquétipo */
   .preview-arquetipo {
     display: none;
     margin-top: 14px;
@@ -209,7 +208,6 @@
       <p class="texto-pequeno" style="margin-top:-2px;">Toque em um medalhão para conhecer o personagem. Depois confirme sua escolha.</p>
       <div class="grade-arquetipos" id="grade-arquetipos"></div>
 
-      <!-- Preview do arquétipo selecionado -->
       <div class="preview-arquetipo" id="preview-arquetipo">
         <button class="preview-fechar" onclick="fecharPreview()" title="Fechar">&#x2715;</button>
         <div class="preview-header">
@@ -223,7 +221,6 @@
         <button class="botao botao-dourado" style="margin-top:0;" onclick="confirmarArquetipo()">Escolher este arquétipo</button>
       </div>
 
-      <!-- Confirmação do arquétipo escolhido -->
       <div class="arquetipo-confirmado" id="arquetipo-confirmado"></div>
 
       <button class="botao botao-dourado" onclick="registrarCartaEArquetipo()" id="btn-registrar">Confirmar e iniciar jornada</button>
@@ -241,13 +238,11 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="assets/supabase-config.js?v=2.1"></script>
-<script src="assets/icons.js?v=2.1"></script>
+<script src="assets/supabase-config.js?v=3.0"></script>
+<script src="assets/icons.js?v=3.0"></script>
+<script src="assets/cartas-data.js?v=3.0"></script>
 <script>
 
-/* ------------------------------------------------------------
-   Descrições dos arquétipos (para o preview)
-   ------------------------------------------------------------ */
 const DESCRICOES_ARQUETIPOS = {
   ana_terra: "Mulher que enfrenta perdas, violência e preconceitos sem se deixar vencer. Representa a força de quem segue em frente mesmo diante das maiores adversidades. Ana Terra é o coração desta história.",
   pedro_missioneiro: "Filho do encontro entre culturas diferentes, carrega em si as raízes indígenas e a formação de um novo povo. Representa a mistura que dá origem à identidade gaúcha.",
@@ -257,9 +252,6 @@ const DESCRICOES_ARQUETIPOS = {
   pedro_terra: "Representa a passagem do tempo entre gerações, o elo entre o que foi vivido pelos antepassados e o que ainda está por vir. Simboliza a continuidade da família e da história."
 };
 
-/* ------------------------------------------------------------
-   Lista de nomes de dupla
-   ------------------------------------------------------------ */
 const NOMES_DUPLA = [
   "Filhos da Terra", "Vozes do Pampa", "Herdeiros do Vento",
   "Raízes do Sul", "Sangue e Campo", "Guardiões da Memória",
@@ -293,9 +285,6 @@ function selecionarNome(nome, containerId, labelId, inputHiddenId) {
   document.getElementById(inputHiddenId).value = nome;
 }
 
-/* ------------------------------------------------------------
-   Controle de blocos
-   ------------------------------------------------------------ */
 function mostrarBloco(idBloco) {
   ["bloco-escolha","bloco-cadastro","bloco-login","bloco-registro"].forEach(id => {
     document.getElementById(id).classList.add("oculto");
@@ -306,9 +295,6 @@ function mostrarBloco(idBloco) {
   }
 }
 
-/* ------------------------------------------------------------
-   Mensagens
-   ------------------------------------------------------------ */
 function exibirMensagem(idContainer, texto, tipo) {
   document.getElementById(idContainer).innerHTML =
     `<div class="mensagem mensagem-${tipo}">${texto}</div>`;
@@ -320,9 +306,6 @@ function salvarSessao(duplaId) {
   sessionStorage.setItem("anaTerraDuplaId", duplaId);
 }
 
-/* ------------------------------------------------------------
-   Cadastro
-   ------------------------------------------------------------ */
 async function cadastrarDupla() {
   limparMensagem("msg-cadastro");
   const nomeDupla = document.getElementById("cad-nome-dupla").value.trim();
@@ -353,9 +336,6 @@ async function cadastrarDupla() {
   await prosseguirAposAutenticacao(data);
 }
 
-/* ------------------------------------------------------------
-   Login
-   ------------------------------------------------------------ */
 async function entrarDupla() {
   limparMensagem("msg-login");
   const email = document.getElementById("login-email").value.trim().toLowerCase();
@@ -379,9 +359,6 @@ async function entrarDupla() {
   await prosseguirAposAutenticacao(data);
 }
 
-/* ------------------------------------------------------------
-   Pós-autenticação
-   ------------------------------------------------------------ */
 async function prosseguirAposAutenticacao(duplaId) {
   const { data, error } = await supabaseClient
     .rpc("buscar_dupla", { p_dupla_id: duplaId });
@@ -395,9 +372,6 @@ async function prosseguirAposAutenticacao(duplaId) {
   mostrarBloco("bloco-registro");
 }
 
-/* ------------------------------------------------------------
-   Grade de arquétipos com preview
-   ------------------------------------------------------------ */
 let arquetipoSelecionado = null;
 let arquetipoEmPreview = null;
 
@@ -447,9 +421,6 @@ function confirmarArquetipo() {
   fecharPreview();
 }
 
-/* ------------------------------------------------------------
-   Registro de carta e arquétipo
-   ------------------------------------------------------------ */
 async function registrarCartaEArquetipo() {
   limparMensagem("msg-registro");
   const duplaId = sessionStorage.getItem("anaTerraDuplaId");
@@ -480,9 +451,6 @@ async function registrarCartaEArquetipo() {
   setTimeout(() => { window.location.href = "jornada.html"; }, 800);
 }
 
-/* ------------------------------------------------------------
-   Ao carregar
-   ------------------------------------------------------------ */
 window.addEventListener("DOMContentLoaded", async () => {
   const duplaId = sessionStorage.getItem("anaTerraDuplaId");
   if (duplaId) await prosseguirAposAutenticacao(duplaId);
