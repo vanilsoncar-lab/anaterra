@@ -50,9 +50,7 @@
     display: block;
   }
   @media (max-width: 380px) {
-    .lista-nomes {
-      grid-template-columns: 1fr;
-    }
+    .lista-nomes { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -65,31 +63,30 @@
       <p class="marca-subtitulo">Uma jornada pelo pampa gaúcho, carta a carta</p>
     </div>
 
-    <!-- ============================================================
-         BLOCO 1: ESCOLHA ENTRE CADASTRO E LOGIN
-         ============================================================ -->
+    <!-- BLOCO 1: ESCOLHA -->
     <div class="cartao" id="bloco-escolha">
       <h2 class="cartao-titulo">Sua dupla já existe?</h2>
-      <p class="cartao-descricao">Se sua dupla já foi cadastrada nesta jornada, entre com o nome e a senha. Se é a primeira vez, cadastre sua dupla.</p>
+      <p class="cartao-descricao">Se sua dupla já foi cadastrada nesta jornada, entre com o e-mail e a senha. Se é a primeira vez, cadastre sua dupla.</p>
       <button class="botao botao-dourado" onclick="mostrarBloco('bloco-login')">Já tenho cadastro (entrar)</button>
       <button class="botao botao-secundario" onclick="mostrarBloco('bloco-cadastro')">Primeira vez (cadastrar dupla)</button>
     </div>
 
-    <!-- ============================================================
-         BLOCO 2: CADASTRO DE NOVA DUPLA
-         ============================================================ -->
+    <!-- BLOCO 2: CADASTRO -->
     <div class="cartao oculto" id="bloco-cadastro">
       <h2 class="cartao-titulo">Cadastrar dupla</h2>
-      <p class="cartao-descricao">Escolha um nome para sua dupla na lista abaixo e preencha os demais dados para iniciar a jornada.</p>
+      <p class="cartao-descricao">Escolha um nome para sua dupla e preencha os demais dados para iniciar a jornada.</p>
 
       <label>Escolha o nome da dupla</label>
-      <p class="texto-pequeno" style="margin-top:-2px;margin-bottom:8px;">Toque em um nome para selecioná-lo. Duplas diferentes podem ter o mesmo nome.</p>
+      <p class="texto-pequeno" style="margin-top:-2px;margin-bottom:8px;">Toque em um nome para selecioná-lo.</p>
       <div class="lista-nomes" id="lista-nomes"></div>
       <div class="nome-selecionado-label" id="nome-selecionado-label"></div>
       <input type="hidden" id="cad-nome-dupla">
 
       <label for="cad-integrantes">Nomes dos integrantes</label>
       <input type="text" id="cad-integrantes" placeholder="Ex: Maria e João" autocomplete="off">
+
+      <label for="cad-email">E-mail de um dos integrantes</label>
+      <input type="email" id="cad-email" placeholder="seuemail@gmail.com" autocomplete="off">
 
       <label for="cad-turma">Turma</label>
       <input type="text" id="cad-turma" placeholder="Ex: 9º ano A" autocomplete="off">
@@ -98,38 +95,27 @@
       <input type="password" id="cad-senha" placeholder="Senha simples para a dupla" autocomplete="new-password">
 
       <button class="botao botao-dourado" onclick="cadastrarDupla()" id="btn-cadastrar">Cadastrar e continuar</button>
-
       <div id="msg-cadastro"></div>
-
       <button class="link-discreto" onclick="mostrarBloco('bloco-escolha')" style="border:none;background:none;cursor:pointer;width:100%;">Voltar</button>
     </div>
 
-    <!-- ============================================================
-         BLOCO 3: LOGIN DE DUPLA EXISTENTE
-         ============================================================ -->
+    <!-- BLOCO 3: LOGIN -->
     <div class="cartao oculto" id="bloco-login">
       <h2 class="cartao-titulo">Entrar</h2>
-      <p class="cartao-descricao">Informe o nome da dupla e a senha cadastrada.</p>
+      <p class="cartao-descricao">Informe o e-mail e a senha cadastrados pela sua dupla.</p>
 
-      <label>Nome da dupla</label>
-      <p class="texto-pequeno" style="margin-top:-2px;margin-bottom:8px;">Selecione o mesmo nome escolhido no cadastro.</p>
-      <div class="lista-nomes" id="lista-nomes-login"></div>
-      <div class="nome-selecionado-label" id="nome-selecionado-label-login"></div>
-      <input type="hidden" id="login-nome-dupla">
+      <label for="login-email">E-mail</label>
+      <input type="email" id="login-email" placeholder="seuemail@gmail.com" autocomplete="off">
 
       <label for="login-senha">Senha</label>
       <input type="password" id="login-senha" placeholder="Senha da dupla" autocomplete="current-password">
 
       <button class="botao botao-dourado" onclick="entrarDupla()" id="btn-entrar">Entrar</button>
-
       <div id="msg-login"></div>
-
       <button class="link-discreto" onclick="mostrarBloco('bloco-escolha')" style="border:none;background:none;cursor:pointer;width:100%;">Voltar</button>
     </div>
 
-    <!-- ============================================================
-         BLOCO 4: REGISTRO DA CARTA SORTEADA E ARQUÉTIPO
-         ============================================================ -->
+    <!-- BLOCO 4: REGISTRO DE CARTA E ARQUÉTIPO -->
     <div class="cartao oculto" id="bloco-registro">
       <h2 class="cartao-titulo">Registrar sua carta</h2>
       <p class="cartao-descricao">Cada dupla sorteou uma carta na sala de aula. Informe o número da carta que sua dupla recebeu (de 1 a 15).</p>
@@ -142,7 +128,6 @@
       <div class="grade-arquetipos" id="grade-arquetipos"></div>
 
       <button class="botao botao-dourado" onclick="registrarCartaEArquetipo()" id="btn-registrar">Confirmar e iniciar jornada</button>
-
       <div id="msg-registro"></div>
     </div>
 
@@ -153,10 +138,6 @@
 <script src="assets/supabase-config.js"></script>
 <script src="assets/icons.js"></script>
 <script>
-
-/* ------------------------------------------------------------
-   Lista de nomes de dupla (baseados no enredo de Ana Terra)
-   ------------------------------------------------------------ */
 
 const NOMES_DUPLA = [
   "Filhos da Terra",
@@ -181,14 +162,9 @@ const NOMES_DUPLA = [
   "Guardiões do Pampa"
 ];
 
-/* ------------------------------------------------------------
-   Monta a lista de nomes clicáveis
-   ------------------------------------------------------------ */
-
 function montarListaNomes(containerId, labelId, inputHiddenId) {
   const container = document.getElementById(containerId);
   container.innerHTML = "";
-
   NOMES_DUPLA.forEach(nome => {
     const btn = document.createElement("button");
     btn.type = "button";
@@ -209,177 +185,102 @@ function selecionarNome(nome, containerId, labelId, inputHiddenId) {
   document.getElementById(inputHiddenId).value = nome;
 }
 
-/* ------------------------------------------------------------
-   Controle de blocos visíveis
-   ------------------------------------------------------------ */
-
 function mostrarBloco(idBloco) {
-  const blocos = ["bloco-escolha", "bloco-cadastro", "bloco-login", "bloco-registro"];
-  blocos.forEach(id => {
+  ["bloco-escolha","bloco-cadastro","bloco-login","bloco-registro"].forEach(id => {
     document.getElementById(id).classList.add("oculto");
   });
   document.getElementById(idBloco).classList.remove("oculto");
-
   if (idBloco === "bloco-cadastro") {
     montarListaNomes("lista-nomes", "nome-selecionado-label", "cad-nome-dupla");
   }
-  if (idBloco === "bloco-login") {
-    montarListaNomes("lista-nomes-login", "nome-selecionado-label-login", "login-nome-dupla");
-  }
 }
-
-/* ------------------------------------------------------------
-   Mensagens de feedback
-   ------------------------------------------------------------ */
 
 function exibirMensagem(idContainer, texto, tipo) {
   document.getElementById(idContainer).innerHTML =
     `<div class="mensagem mensagem-${tipo}">${texto}</div>`;
 }
-
 function limparMensagem(idContainer) {
   document.getElementById(idContainer).innerHTML = "";
 }
 
-/* ------------------------------------------------------------
-   Sessão local
-   ------------------------------------------------------------ */
-
-function salvarSessao(duplaId, nomeDupla) {
+function salvarSessao(duplaId) {
   sessionStorage.setItem("anaTerraDuplaId", duplaId);
-  sessionStorage.setItem("anaTerraNomeDupla", nomeDupla);
 }
-
-/* ------------------------------------------------------------
-   Cadastro de nova dupla
-   ------------------------------------------------------------ */
 
 async function cadastrarDupla() {
   limparMensagem("msg-cadastro");
-
   const nomeDupla = document.getElementById("cad-nome-dupla").value.trim();
   const integrantes = document.getElementById("cad-integrantes").value.trim();
+  const email = document.getElementById("cad-email").value.trim().toLowerCase();
   const turma = document.getElementById("cad-turma").value.trim();
   const senha = document.getElementById("cad-senha").value;
 
   if (!nomeDupla) {
-    exibirMensagem("msg-cadastro", "Selecione um nome para a dupla.", "erro");
-    return;
+    exibirMensagem("msg-cadastro", "Selecione um nome para a dupla.", "erro"); return;
   }
-
-  if (!integrantes || !turma || !senha) {
-    exibirMensagem("msg-cadastro", "Preencha todos os campos para continuar.", "erro");
-    return;
+  if (!integrantes || !email || !turma || !senha) {
+    exibirMensagem("msg-cadastro", "Preencha todos os campos para continuar.", "erro"); return;
   }
-
+  if (!email.includes("@")) {
+    exibirMensagem("msg-cadastro", "Informe um e-mail válido.", "erro"); return;
+  }
   if (senha.length < 4) {
-    exibirMensagem("msg-cadastro", "A senha deve ter pelo menos 4 caracteres.", "erro");
-    return;
+    exibirMensagem("msg-cadastro", "A senha deve ter pelo menos 4 caracteres.", "erro"); return;
   }
 
   const btn = document.getElementById("btn-cadastrar");
-  btn.disabled = true;
-  btn.textContent = "Cadastrando...";
-
-  // Como nomes podem repetir, adicionamos turma ao nome para garantir unicidade no banco
-  const nomeUnico = nomeDupla + " [" + turma + "]";
+  btn.disabled = true; btn.textContent = "Cadastrando...";
 
   const { data, error } = await supabaseClient.rpc("cadastrar_dupla", {
-    p_nome_dupla: nomeUnico,
+    p_nome_dupla: nomeDupla,
     p_integrantes: integrantes,
+    p_email: email,
     p_turma: turma,
     p_senha: senha
   });
 
-  btn.disabled = false;
-  btn.textContent = "Cadastrar e continuar";
+  btn.disabled = false; btn.textContent = "Cadastrar e continuar";
 
   if (error) {
-    exibirMensagem("msg-cadastro", "Erro ao cadastrar. Tente novamente.", "erro");
-    return;
+    exibirMensagem("msg-cadastro", "Erro ao cadastrar: " + error.message, "erro"); return;
   }
-
   if (data === null) {
-    exibirMensagem("msg-cadastro", "Já existe uma dupla com este nome nesta turma. Escolha outro nome ou informe os nomes dos integrantes de forma diferente.", "erro");
-    return;
+    exibirMensagem("msg-cadastro", "Este e-mail já está cadastrado. Use outro e-mail ou faça login.", "erro"); return;
   }
 
-  salvarSessao(data, nomeUnico);
-  exibirMensagem("msg-cadastro", "Dupla cadastrada com sucesso!", "sucesso");
+  salvarSessao(data);
   await prosseguirAposAutenticacao(data);
 }
 
-/* ------------------------------------------------------------
-   Login de dupla existente
-   ------------------------------------------------------------ */
-
 async function entrarDupla() {
   limparMensagem("msg-login");
-
-  const nomeDupla = document.getElementById("login-nome-dupla").value.trim();
-  const turma = document.getElementById("login-senha").value; // usado só para compor
+  const email = document.getElementById("login-email").value.trim().toLowerCase();
   const senha = document.getElementById("login-senha").value;
 
-  const nomeBase = nomeDupla;
-
-  if (!nomeBase) {
-    exibirMensagem("msg-login", "Selecione o nome da dupla.", "erro");
-    return;
+  if (!email || !senha) {
+    exibirMensagem("msg-login", "Informe o e-mail e a senha.", "erro"); return;
   }
 
-  if (!senha) {
-    exibirMensagem("msg-login", "Informe a senha.", "erro");
-    return;
-  }
-
-  // Tenta encontrar a dupla pelo nome base + turma (combinações possíveis)
-  // Como o nome único é "Nome [Turma]", precisamos buscar pelo padrão
   const btn = document.getElementById("btn-entrar");
-  btn.disabled = true;
-  btn.textContent = "Entrando...";
+  btn.disabled = true; btn.textContent = "Entrando...";
 
-  // Busca todas as duplas com nome começando pelo nome selecionado
-  const { data: duplas, error: erroBusca } = await supabaseClient
-    .from("duplas")
-    .select("nome_dupla")
-    .like("nome_dupla", nomeBase + " [%]");
+  const { data, error } = await supabaseClient.rpc("autenticar_dupla", {
+    p_email: email,
+    p_senha: senha
+  });
 
-  if (erroBusca || !duplas || duplas.length === 0) {
-    btn.disabled = false;
-    btn.textContent = "Entrar";
-    exibirMensagem("msg-login", "Nenhuma dupla encontrada com este nome. Verifique o nome e tente novamente.", "erro");
-    return;
+  btn.disabled = false; btn.textContent = "Entrar";
+
+  if (error) {
+    exibirMensagem("msg-login", "Erro ao entrar: " + error.message, "erro"); return;
+  }
+  if (data === null) {
+    exibirMensagem("msg-login", "E-mail ou senha incorretos.", "erro"); return;
   }
 
-  // Se houver mais de uma dupla com o mesmo nome (turmas diferentes),
-  // tenta autenticar com cada uma e usa a que der certo
-  let duplaAutenticada = null;
-  for (const d of duplas) {
-    const { data: id } = await supabaseClient.rpc("autenticar_dupla", {
-      p_nome_dupla: d.nome_dupla,
-      p_senha: senha
-    });
-    if (id) {
-      duplaAutenticada = { id, nome: d.nome_dupla };
-      break;
-    }
-  }
-
-  btn.disabled = false;
-  btn.textContent = "Entrar";
-
-  if (!duplaAutenticada) {
-    exibirMensagem("msg-login", "Nome da dupla ou senha incorretos.", "erro");
-    return;
-  }
-
-  salvarSessao(duplaAutenticada.id, duplaAutenticada.nome);
-  await prosseguirAposAutenticacao(duplaAutenticada.id);
+  salvarSessao(data);
+  await prosseguirAposAutenticacao(data);
 }
-
-/* ------------------------------------------------------------
-   Após cadastro/login: verifica carta vinculada
-   ------------------------------------------------------------ */
 
 async function prosseguirAposAutenticacao(duplaId) {
   const { data, error } = await supabaseClient
@@ -389,29 +290,20 @@ async function prosseguirAposAutenticacao(duplaId) {
     .single();
 
   if (error) {
-    exibirMensagem("msg-login", "Erro ao verificar dados da dupla.", "erro");
-    return;
+    exibirMensagem("msg-login", "Erro ao verificar dados da dupla: " + error.message, "erro"); return;
   }
-
   if (data.carta_numero !== null) {
-    window.location.href = "jornada.html";
-    return;
+    window.location.href = "jornada.html"; return;
   }
-
   montarGradeArquetipos();
   mostrarBloco("bloco-registro");
 }
-
-/* ------------------------------------------------------------
-   Grade de arquétipos
-   ------------------------------------------------------------ */
 
 let arquetipoSelecionado = null;
 
 function montarGradeArquetipos() {
   const grade = document.getElementById("grade-arquetipos");
   grade.innerHTML = "";
-
   ARQUETIPOS.forEach(arq => {
     const opcao = document.createElement("div");
     opcao.className = "opcao-arquetipo";
@@ -429,29 +321,20 @@ function selecionarArquetipo(id) {
   });
 }
 
-/* ------------------------------------------------------------
-   Registro da carta sorteada e arquétipo
-   ------------------------------------------------------------ */
-
 async function registrarCartaEArquetipo() {
   limparMensagem("msg-registro");
-
   const duplaId = sessionStorage.getItem("anaTerraDuplaId");
   const numeroCarta = parseInt(document.getElementById("reg-carta").value, 10);
 
   if (!numeroCarta || numeroCarta < 1 || numeroCarta > 15) {
-    exibirMensagem("msg-registro", "Informe um número de carta válido, entre 1 e 15.", "erro");
-    return;
+    exibirMensagem("msg-registro", "Informe um número de carta válido, entre 1 e 15.", "erro"); return;
   }
-
   if (!arquetipoSelecionado) {
-    exibirMensagem("msg-registro", "Escolha um arquétipo para sua dupla.", "erro");
-    return;
+    exibirMensagem("msg-registro", "Escolha um arquétipo para sua dupla.", "erro"); return;
   }
 
   const btn = document.getElementById("btn-registrar");
-  btn.disabled = true;
-  btn.textContent = "Registrando...";
+  btn.disabled = true; btn.textContent = "Registrando...";
 
   const { data, error } = await supabaseClient.rpc("registrar_carta_e_arquetipo", {
     p_dupla_id: duplaId,
@@ -459,44 +342,28 @@ async function registrarCartaEArquetipo() {
     p_arquetipo: arquetipoSelecionado
   });
 
-  btn.disabled = false;
-  btn.textContent = "Confirmar e iniciar jornada";
+  btn.disabled = false; btn.textContent = "Confirmar e iniciar jornada";
 
   if (error) {
-    exibirMensagem("msg-registro", "Erro ao registrar. Tente novamente.", "erro");
-    return;
+    exibirMensagem("msg-registro", "Erro ao registrar: " + error.message, "erro"); return;
   }
-
   if (data === "carta_ocupada") {
-    exibirMensagem("msg-registro", "Esta carta já foi registrada por outra dupla. Confira o número com o professor.", "erro");
-    return;
+    exibirMensagem("msg-registro", "Esta carta já foi registrada por outra dupla. Confira o número com o professor.", "erro"); return;
   }
-
   if (data === "ja_registrado") {
-    window.location.href = "jornada.html";
-    return;
+    window.location.href = "jornada.html"; return;
   }
-
   if (data === "invalido") {
-    exibirMensagem("msg-registro", "Número de carta ou arquétipo inválido.", "erro");
-    return;
+    exibirMensagem("msg-registro", "Número de carta ou arquétipo inválido.", "erro"); return;
   }
 
   exibirMensagem("msg-registro", "Carta registrada! Iniciando sua jornada...", "sucesso");
-  setTimeout(() => {
-    window.location.href = "jornada.html";
-  }, 800);
+  setTimeout(() => { window.location.href = "jornada.html"; }, 800);
 }
-
-/* ------------------------------------------------------------
-   Ao carregar a página
-   ------------------------------------------------------------ */
 
 window.addEventListener("DOMContentLoaded", async () => {
   const duplaId = sessionStorage.getItem("anaTerraDuplaId");
-  if (duplaId) {
-    await prosseguirAposAutenticacao(duplaId);
-  }
+  if (duplaId) await prosseguirAposAutenticacao(duplaId);
 });
 
 </script>
