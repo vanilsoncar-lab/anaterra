@@ -330,7 +330,7 @@ async function carregarDados() {
   // Normaliza campo carta_numero em duplas
   DUPLAS_DADOS = DUPLAS_DADOS.map(d => ({
     ...d,
-    carta_numero: d.carta_numero ?? d.carta_numero ?? null
+    carta_numero: d.carta_numero ?? null
   }));
 
   atualizarResumo();
@@ -367,7 +367,7 @@ function renderizarDuplas(filtro) {
 
   lista.forEach(d => {
     const arq = ARQUETIPOS.find(a => a.id === d.arquetipo);
-    const carta = d.carta_numero ? getCartaPorNúmero(d.carta_numero) : null;
+    const carta = d.carta_numero ? getCartaPorNumero(d.carta_numero) : null;
     const resp = RESPOSTAS_DADOS.find(r => r.dupla_id === d.id);
 
     let badge;
@@ -386,7 +386,7 @@ function renderizarDuplas(filtro) {
         <span style="font-size:12px;font-style:italic;color:var(--texto-secundario);">${d.integrantes}</span>
       </td>
       <td>${d.turma}</td>
-      <td>${carta ? carta.número + " (" + carta.palavraChave + ")" : "..."}</td>
+      <td>${carta ? carta.numero + " (" + carta.palavraChave + ")" : "..."}</td>
       <td style="font-size:13px;">${arq ? arq.nome : "..."}</td>
       <td><span style="font-family:var(--fonte-dados);color:var(--dourado);">${d.xp_total || 0} XP</span></td>
       <td>${badge}</td>
@@ -418,7 +418,7 @@ function renderizarRespostas() {
 
   RESPOSTAS_DADOS.forEach(r => {
     const dupla = DUPLAS_DADOS.find(d => d.id === r.dupla_id);
-    const carta = getCartaPorNúmero(r.carta_numero);
+    const carta = getCartaPorNumero(r.carta_numero);
     const idBloco = "bloco-" + r.dupla_id;
 
     const tr = document.createElement("tr");
@@ -456,7 +456,7 @@ function renderizarCartas() {
   grade.innerHTML = "";
 
   CARTAS.forEach(carta => {
-    const duplaComCarta = DUPLAS_DADOS.find(d => d.carta_numero === carta.número);
+    const duplaComCarta = DUPLAS_DADOS.find(d => d.carta_numero === carta.numero);
     const resp = duplaComCarta ? RESPOSTAS_DADOS.find(r => r.dupla_id === duplaComCarta.id) : null;
 
     let cor = "var(--papel-medio)";
@@ -474,7 +474,7 @@ function renderizarCartas() {
     div.style.background = cor;
     div.style.textAlign = "left";
     div.innerHTML = `
-      <p style="font-family:var(--fonte-dados);font-size:11px;color:var(--texto-secundario);margin:0 0 4px;text-transform:uppercase;letter-spacing:.06em;">Carta ${carta.número}</p>
+      <p style="font-family:var(--fonte-dados);font-size:11px;color:var(--texto-secundario);margin:0 0 4px;text-transform:uppercase;letter-spacing:.06em;">Carta ${carta.numero}</p>
       <p style="font-family:var(--fonte-display);font-weight:600;font-size:15px;margin:0 0 4px;">${carta.palavraChave}</p>
       <p style="font-size:12px;font-style:italic;color:var(--texto-secundario);margin:0 0 6px;">${statusTxt}</p>
       ${duplaComCarta ? `<p style="font-size:12px;margin:0;color:var(--tinta);">${duplaComCarta.nome_dupla}</p>` : ""}
