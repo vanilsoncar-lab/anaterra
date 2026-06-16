@@ -8,226 +8,245 @@
 <style>
   .tela { display: none; }
   .tela.ativa { display: block; }
-
   .estacao-conector { width: 2px; height: 20px; background: var(--couro); margin-left: 35px; opacity: 0.3; }
-
   .missao-numero { font-family: var(--fonte-dados); font-size: 12px; letter-spacing: 0.1em; color: var(--texto-secundario); text-transform: uppercase; margin: 0 0 4px; }
   .missao-palavra { font-family: var(--fonte-display); font-weight: 700; font-size: 34px; color: var(--tinta); margin: 0 0 20px; line-height: 1.15; }
-
   .divisor { display: flex; align-items: center; gap: 10px; margin: 20px 0; opacity: 0.45; }
   .divisor::before, .divisor::after { content: ""; flex: 1; height: 1px; background: var(--couro); }
   .divisor-icone { font-size: 14px; color: var(--couro); letter-spacing: 4px; }
-
-  .missoes-aba-nav {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-  }
-  .missoes-aba-btn {
-    flex: 1;
-    min-width: 100px;
-    padding: 10px 8px;
-    border: 1px solid var(--couro);
-    border-radius: var(--raio-md);
-    background: var(--papel-claro);
-    font-family: var(--fonte-display);
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    color: var(--tinta);
-    text-align: center;
-    transition: all 0.2s ease;
-  }
-  .missoes-aba-btn.concluida {
-    background: var(--verde-pampa);
-    color: var(--papel-claro);
-    border-color: var(--verde-pampa);
-  }
-  .missoes-aba-btn.ativa {
-    background: var(--dourado);
-    color: var(--tinta);
-    border-color: var(--dourado);
-  }
-  .missoes-aba-btn.bloqueada {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-  .missoes-aba-conteudo {
-    display: none;
-    animation: fadeInUp 0.2s ease;
-  }
-  .missoes-aba-conteudo.ativa {
-    display: block;
-  }
-
-  .alternativas-lista {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin: 16px 0;
-  }
-  .alternativa-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-    border: 1px solid var(--couro);
-    border-radius: var(--raio-md);
-    background: var(--papel-claro);
-    cursor: pointer;
-    transition: all 0.15s ease;
-  }
-  .alternativa-item:hover {
-    background: rgba(192, 138, 62, 0.08);
-    border-color: var(--dourado);
-  }
-  .alternativa-item.selecionada {
-    background: rgba(192, 138, 62, 0.2);
-    border-color: var(--dourado);
-    box-shadow: 0 0 0 2px rgba(192, 138, 62, 0.25);
-  }
-  .alternativa-radio {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 2px solid var(--couro);
-    background: white;
-    flex-shrink: 0;
-  }
-  .alternativa-item.selecionada .alternativa-radio {
-    background: var(--dourado);
-    border-color: var(--dourado);
-    box-shadow: inset 0 0 0 3px white;
-  }
-  .alternativa-texto {
-    font-family: var(--fonte-corpo);
-    font-size: 16px;
-    color: var(--tinta);
-  }
-
-  .fragmento-container {
-    background: linear-gradient(135deg, var(--papel-medio) 0%, var(--papel-escuro) 100%);
-    border: 2px solid var(--dourado);
-    border-radius: var(--raio-lg);
-    padding: 20px;
-    margin: 16px 0;
-    position: relative;
-  }
-  .fragmento-titulo {
-    font-family: var(--fonte-dados);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--dourado);
-    margin: 0 0 12px;
-  }
-  .fragmento-texto {
-    font-family: var(--fonte-corpo);
-    font-style: italic;
-    font-size: 16px;
-    line-height: 1.7;
-    color: var(--tinta);
-    margin: 0;
-  }
-  .fragmento-selo {
-    position: absolute;
-    bottom: 10px;
-    right: 15px;
-    font-size: 32px;
-    opacity: 0.3;
-  }
-
-  .progresso-carta {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 20px;
-    padding: 12px;
-    background: var(--papel-claro);
-    border-radius: var(--raio-md);
-    border: 1px solid var(--couro);
-  }
-  .progresso-carta-item {
-    flex: 1;
-    text-align: center;
-    font-size: 12px;
-    font-family: var(--fonte-dados);
-    color: var(--texto-secundario);
-  }
-  .progresso-carta-item.concluido {
-    color: var(--verde-pampa);
-  }
-  .progresso-carta-item.concluido::before {
-    content: "✓ ";
-    color: var(--verde-pampa);
-  }
-
-  .resposta-enviada {
-    background: var(--papel-claro);
-    border: 1px solid var(--couro);
-    border-radius: var(--raio-md);
-    padding: 16px;
-    margin-top: 16px;
-  }
-  .resposta-enviada-titulo {
-    font-family: var(--fonte-dados);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--texto-secundario);
-    margin: 0 0 8px;
-  }
-  .resposta-enviada-texto {
-    font-family: var(--fonte-corpo);
-    font-style: italic;
-    font-size: 16px;
-    color: var(--tinta);
-    margin: 0;
-  }
-
-  .conquista-popup {
-    position: fixed;
-    bottom: 32px;
-    left: 50%;
-    transform: translateX(-50%) translateY(120px);
-    background: var(--verde-pampa);
-    color: var(--papel-claro);
-    padding: 16px 24px;
-    border-radius: var(--raio-lg);
-    border: 2px solid var(--dourado);
-    font-family: var(--fonte-display);
-    font-size: 15px;
-    font-weight: 600;
-    z-index: 999;
-    transition: transform 0.4s ease, opacity 0.4s ease;
-    max-width: 320px;
-    width: calc(100vw - 48px);
-    text-align: center;
-    opacity: 0;
-    box-shadow: 0 4px 20px rgba(31, 46, 35, 0.35);
-  }
-  .conquista-popup.visivel {
-    transform: translateX(-50%) translateY(0);
-    opacity: 1;
-  }
-
-  .progresso-coletivo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: var(--papel-medio);
-    border: 1px solid var(--couro);
-    border-radius: var(--raio-md);
-    padding: 12px 16px;
-    margin-bottom: 20px;
-  }
+  .missoes-aba-nav { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+  .missoes-aba-btn { flex: 1; min-width: 100px; padding: 10px 8px; border: 1px solid var(--couro); border-radius: var(--raio-md); background: var(--papel-claro); font-family: var(--fonte-display); font-size: 13px; font-weight: 600; cursor: pointer; color: var(--tinta); text-align: center; transition: all 0.2s ease; }
+  .missoes-aba-btn.concluida { background: var(--verde-pampa); color: var(--papel-claro); border-color: var(--verde-pampa); }
+  .missoes-aba-btn.ativa { background: var(--dourado); color: var(--tinta); border-color: var(--dourado); }
+  .missoes-aba-btn.bloqueada { opacity: 0.5; cursor: not-allowed; }
+  .missoes-aba-conteudo { display: none; animation: fadeInUp 0.2s ease; }
+  .missoes-aba-conteudo.ativa { display: block; }
+  .alternativas-lista { display: flex; flex-direction: column; gap: 12px; margin: 16px 0; }
+  .alternativa-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border: 1px solid var(--couro); border-radius: var(--raio-md); background: var(--papel-claro); cursor: pointer; transition: all 0.15s ease; }
+  .alternativa-item:hover { background: rgba(192, 138, 62, 0.08); border-color: var(--dourado); }
+  .alternativa-item.selecionada { background: rgba(192, 138, 62, 0.2); border-color: var(--dourado); box-shadow: 0 0 0 2px rgba(192, 138, 62, 0.25); }
+  .alternativa-radio { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--couro); background: white; flex-shrink: 0; }
+  .alternativa-item.selecionada .alternativa-radio { background: var(--dourado); border-color: var(--dourado); box-shadow: inset 0 0 0 3px white; }
+  .alternativa-texto { font-family: var(--fonte-corpo); font-size: 16px; color: var(--tinta); }
+  .fragmento-container { background: linear-gradient(135deg, var(--papel-medio) 0%, var(--papel-escuro) 100%); border: 2px solid var(--dourado); border-radius: var(--raio-lg); padding: 20px; margin: 16px 0; position: relative; }
+  .fragmento-titulo { font-family: var(--fonte-dados); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dourado); margin: 0 0 12px; }
+  .fragmento-texto { font-family: var(--fonte-corpo); font-style: italic; font-size: 16px; line-height: 1.7; color: var(--tinta); margin: 0; }
+  .fragmento-selo { position: absolute; bottom: 10px; right: 15px; font-size: 32px; opacity: 0.3; }
+  .progresso-carta { display: flex; align-items: center; gap: 8px; margin-bottom: 20px; padding: 12px; background: var(--papel-claro); border-radius: var(--raio-md); border: 1px solid var(--couro); }
+  .progresso-carta-item { flex: 1; text-align: center; font-size: 12px; font-family: var(--fonte-dados); color: var(--texto-secundario); }
+  .progresso-carta-item.concluido { color: var(--verde-pampa); }
+  .progresso-carta-item.concluido::before { content: "✓ "; color: var(--verde-pampa); }
+  .resposta-enviada { background: var(--papel-claro); border: 1px solid var(--couro); border-radius: var(--raio-md); padding: 16px; margin-top: 16px; }
+  .resposta-enviada-titulo { font-family: var(--fonte-dados); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--texto-secundario); margin: 0 0 8px; }
+  .resposta-enviada-texto { font-family: var(--fonte-corpo); font-style: italic; font-size: 16px; color: var(--tinta); margin: 0; }
+  .conquista-popup { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(120px); background: var(--verde-pampa); color: var(--papel-claro); padding: 16px 24px; border-radius: var(--raio-lg); border: 2px solid var(--dourado); font-family: var(--fonte-display); font-size: 15px; font-weight: 600; z-index: 999; transition: transform 0.4s ease, opacity 0.4s ease; max-width: 320px; width: calc(100vw - 48px); text-align: center; opacity: 0; box-shadow: 0 4px 20px rgba(31, 46, 35, 0.35); }
+  .conquista-popup.visivel { transform: translateX(-50%) translateY(0); opacity: 1; }
+  .progresso-coletivo { display: flex; align-items: center; gap: 12px; background: var(--papel-medio); border: 1px solid var(--couro); border-radius: var(--raio-md); padding: 12px 16px; margin-bottom: 20px; }
   .progresso-coletivo-texto { flex: 1; }
   .progresso-coletivo-titulo { font-family: var(--fonte-display); font-weight: 600; font-size: 14px; margin: 0 0 4px; }
   .progresso-coletivo-barra { height: 6px; border-radius: 999px; background: rgba(122, 85, 48, 0.2); overflow: hidden; }
   .progresso-coletivo-fill { height: 100%; background: var(--dourado); border-radius: 999px; transition: width 0.4s ease; }
   .progresso-coletivo-numero { font-family: var(--fonte-dados); font-size: 22px; color: var(--dourado); white-space: nowrap; }
-
   .menu-btn { background: none; border: none; cursor: pointer; color: var(--papel-claro); font-size: 22px; padding: 4px 8px; line-height: 1; flex-shrink: 0; }
   .menu-btn:hover { opacity: 0.8; }
-  .menu-overlay
+  .menu-overlay { display: none; position: fixed; inset: 0; background: rgba(31, 46, 35, 0.5); z-index: 200; }
+  .menu-overlay.aberto { display: block; }
+  .menu-lateral { position: fixed; top: 0; right: -280px; width: 260px; height: 100vh; background: var(--papel-medio); border-left: 2px solid var(--couro); z-index: 201; transition: right 0.3s ease; display: flex; flex-direction: column; overflow-y: auto; }
+  .menu-lateral.aberto { right: 0; }
+  .menu-header { background: var(--verde-pampa); color: var(--papel-claro); padding: 18px 20px 14px; border-bottom: 2px solid var(--couro); }
+  .menu-header-titulo { font-family: var(--fonte-display); font-size: 17px; font-weight: 600; margin: 0 0 2px; }
+  .menu-header-versao { font-family: var(--fonte-dados); font-size: 11px; color: var(--dourado-claro); margin: 0; }
+  .menu-secao { padding: 16px 20px 8px; }
+  .menu-secao-titulo { font-family: var(--fonte-dados); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--texto-secundario); margin: 0 0 10px; }
+  .menu-item { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 0; border: none; border-bottom: 1px solid rgba(122, 85, 48, 0.2); background: none; cursor: pointer; font-family: var(--fonte-corpo); font-size: 16px; color: var(--tinta); text-align: left; }
+  .menu-item:last-child { border-bottom: none; }
+  .menu-item:hover { color: var(--verde-pampa); }
+  .menu-item-icone { font-size: 18px; width: 24px; text-align: center; flex-shrink: 0; }
+  .menu-item-vermelho { color: var(--terracota); }
+  .menu-item-vermelho:hover { color: #7a2e10; }
+  .menu-rodape { margin-top: auto; padding: 16px 20px; border-top: 1px solid rgba(122, 85, 48, 0.2); font-family: var(--fonte-dados); font-size: 11px; color: var(--texto-secundario); text-align: center; }
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .fragmentos-coletados { background: var(--papel-escuro); border-radius: var(--raio-md); padding: 8px 12px; margin-bottom: 16px; text-align: center; font-family: var(--fonte-dados); font-size: 12px; color: var(--tinta); }
+  .fragmentos-coletados strong { color: var(--dourado); font-size: 18px; }
+</style>
+</head>
+<body>
+
+<div class="hud" id="hud">
+  <div class="hud-avatar" id="hud-avatar"></div>
+  <div class="hud-info">
+    <div class="hud-nome" id="hud-nome">Carregando...</div>
+    <div class="hud-barra-fundo">
+      <div class="hud-barra-progresso" id="hud-barra" style="width:0%"></div>
+    </div>
+  </div>
+  <div class="hud-nivel" id="hud-nivel">Nv 1<br>0 XP</div>
+  <button class="menu-btn" onclick="toggleMenu()" title="Menu" aria-label="Abrir menu">&#9776;</button>
+</div>
+
+<div class="menu-overlay" id="menu-overlay" onclick="fecharMenu()"></div>
+<nav class="menu-lateral" id="menu-lateral" aria-label="Menu de navegação">
+  <div class="menu-header">
+    <p class="menu-header-titulo">O Inventariante do Tempo</p>
+    <p class="menu-header-versao">A Jornada de Ana Terra &nbsp;|&nbsp; PIBID Letras</p>
+  </div>
+  <div class="menu-secao">
+    <p class="menu-secao-titulo">Navegação</p>
+    <button class="menu-item" onclick="irPara('tela-ficha')"><span class="menu-item-icone">&#128100;</span> Minha ficha</button>
+    <button class="menu-item" onclick="irPara('tela-mapa')"><span class="menu-item-icone">&#128506;</span> Mapa da jornada</button>
+    <button class="menu-item" onclick="irPara('tela-missao')"><span class="menu-item-icone">&#9876;</span> Minha missão</button>
+  </div>
+  <div class="menu-secao">
+    <p class="menu-secao-titulo">Informações</p>
+    <button class="menu-item" onclick="mostrarSobre()"><span class="menu-item-icone">&#9432;</span> Sobre o projeto</button>
+    <button class="menu-item" onclick="mostrarAjuda()"><span class="menu-item-icone">&#10067;</span> Como funciona</button>
+  </div>
+  <div class="menu-secao">
+    <p class="menu-secao-titulo">Sessão</p>
+    <button class="menu-item menu-item-vermelho" onclick="confirmarSair()"><span class="menu-item-icone">&#8594;</span> Sair</button>
+  </div>
+  <div class="menu-rodape">Escola Municipal Fundamental Estado do Amazonas<br>9º ano de Língua Portuguesa</div>
+</nav>
+
+<div class="menu-overlay" id="modal-sobre-overlay" onclick="fecharModal('modal-sobre')" style="z-index:300;"></div>
+<div id="modal-sobre" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--papel-medio);border:1px solid var(--couro);border-radius:var(--raio-lg);padding:24px;max-width:420px;width:90%;z-index:301;box-shadow:0 4px 24px rgba(31,46,35,0.25);">
+  <h2 style="font-family:var(--fonte-display);font-size:19px;margin:0 0 12px;">Sobre o projeto</h2>
+  <p style="font-family:var(--fonte-corpo);font-size:15px;line-height:1.7;margin:0 0 10px;">O Inventariante do Tempo: A Jornada de Ana Terra é um objeto digital de aprendizagem desenvolvido no contexto do PIBID Letras da UNIJUÍ, sob supervisão docente na Escola Municipal Fundamental Estado do Amazonas.</p>
+  <p style="font-family:var(--fonte-corpo);font-size:15px;line-height:1.7;margin:0 0 16px;">A atividade integra a obra <em>Ana Terra</em>, de Érico Veríssimo, com uma jornada gamificada em que cada dupla explora uma palavra-chave da narrativa através de 4 missões, utilizando fragmentos reais do livro.</p>
+  <p style="font-family:var(--fonte-dados);font-size:12px;color:var(--texto-secundario);margin:0;">Versão 5.0 - Com citações do livro original</p>
+  <button class="botao botao-secundario" style="margin-top:14px;" onclick="fecharModal('modal-sobre')">Fechar</button>
+</div>
+
+<div class="menu-overlay" id="modal-ajuda-overlay" onclick="fecharModal('modal-ajuda')" style="z-index:300;"></div>
+<div id="modal-ajuda" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--papel-medio);border:1px solid var(--couro);border-radius:var(--raio-lg);padding:24px;max-width:420px;width:90%;z-index:301;box-shadow:0 4px 24px rgba(31,46,35,0.25);">
+  <h2 style="font-family:var(--fonte-display);font-size:19px;margin:0 0 12px;">Como funciona</h2>
+  <p style="font-family:var(--fonte-corpo);font-size:15px;line-height:1.7;margin:0 0 8px;"><strong>🎲 Missão 1 - Descoberta:</strong> Escolha o objeto correto entre as alternativas.</p>
+  <p style="font-family:var(--fonte-corpo);font-size:15px;line-height:1.7;margin:0 0 8px;"><strong>📝 Missão 2 - Justificativa:</strong> Escreva por que este objeto representa a palavra-chave (mínimo 25 palavras).</p>
+  <p style="font-family:var(--fonte-corpo);font-size:15px;line-height:1.7;margin:0 0 8px;"><strong>📖 Missão 3 - Conexão:</strong> Relacione o objeto a um acontecimento da obra.</p>
+  <p style="font-family:var(--fonte-corpo);font-size:15px;line-height:1.7;margin:0 0 16px;"><strong>🏆 Missão 4 - Fragmento:</strong> Libere um fragmento REAL do livro. Ao reunir os 15 fragmentos, você reconstrói toda a trajetória de Ana Terra!</p>
+  <button class="botao botao-secundario" style="margin-top:0;" onclick="fecharModal('modal-ajuda')">Fechar</button>
+</div>
+
+<!-- TELA 1: FICHA -->
+<div class="tela ativa" id="tela-ficha">
+  <div class="container">
+    <div class="cartao" style="margin-top:24px;">
+      <p class="texto-pequeno texto-central" style="margin:0 0 16px;">Bem-vindo de volta, viajante</p>
+      <div class="ficha-personagem">
+        <div class="ficha-avatar" id="ficha-avatar"></div>
+        <div>
+          <h2 class="ficha-nome" id="ficha-nome-dupla">...</h2>
+          <p class="ficha-tema" id="ficha-arquetipo-tema">...</p>
+        </div>
+      </div>
+      <div class="divisor"><span class="divisor-icone">* * *</span></div>
+      <p class="texto-pequeno" id="ficha-integrantes" style="margin:0 0 4px;"></p>
+      <p class="texto-pequeno" id="ficha-turma" style="margin:0 0 16px;"></p>
+      <div id="fragmentos-resumo" class="fragmentos-coletados" style="display:none;"></div>
+      <p class="cartao-descricao" style="margin:0;">Sua missão aguarda. Complete as 4 missões da sua carta, conquiste os fragmentos reais do livro e reconstrua a história de Ana Terra!</p>
+      <button class="botao botao-dourado" onclick="mostrarTela('tela-mapa')">Ver o mapa da jornada</button>
+    </div>
+  </div>
+</div>
+
+<!-- TELA 2: MAPA -->
+<div class="tela" id="tela-mapa">
+  <div class="container">
+    <div class="progresso-coletivo">
+      <div class="progresso-coletivo-texto">
+        <p class="progresso-coletivo-titulo">Progresso da turma</p>
+        <div class="progresso-coletivo-barra"><div class="progresso-coletivo-fill" id="prog-fill" style="width:0%"></div></div>
+      </div>
+      <div class="progresso-coletivo-numero" id="prog-numero">0/15</div>
+    </div>
+    <div class="trilha-wrapper" id="trilha"></div>
+    <button class="botao botao-secundario" style="margin-top:0;" onclick="mostrarTela('tela-ficha')">Voltar para a ficha</button>
+  </div>
+</div>
+
+<!-- TELA 3: MISSAO -->
+<div class="tela" id="tela-missao">
+  <div class="container">
+    <div class="cartao" id="cartao-missao">
+      <p class="missao-numero" id="missao-numero"></p>
+      <h2 class="missao-palavra" id="missao-palavra"></h2>
+
+      <div class="narrativa" id="missao-narrativa"></div>
+      <div class="pista-original">
+        <p class="pista-original-titulo">Pista</p>
+        <p style="margin:0;" id="missao-pista"></p>
+      </div>
+
+      <div class="divisor"><span class="divisor-icone">* * *</span></div>
+
+      <div class="progresso-carta" id="progresso-carta">
+        <div class="progresso-carta-item" id="missao1-status">🔍 Descoberta</div>
+        <div class="progresso-carta-item" id="missao2-status">📝 Justificativa</div>
+        <div class="progresso-carta-item" id="missao3-status">📖 Conexão</div>
+        <div class="progresso-carta-item" id="missao4-status">🏆 Fragmento</div>
+      </div>
+
+      <div class="missoes-aba-nav" id="missoes-aba-nav"></div>
+
+      <!-- MISSÃO 1 -->
+      <div class="missoes-aba-conteudo" id="missao1-conteudo">
+        <p class="cartao-titulo" style="font-size:17px;margin-bottom:8px;">🔍 Missão 1: Descoberta</p>
+        <p class="cartao-descricao" style="margin-bottom:16px;">Qual objeto representa esta palavra-chave?</p>
+        <div class="alternativas-lista" id="alternativas-lista"></div>
+        <button class="botao botao-dourado" onclick="enviarMissao1()" id="btn-missao1">Confirmar resposta</button>
+        <div id="msg-missao1"></div>
+      </div>
+
+      <!-- MISSÃO 2 -->
+      <div class="missoes-aba-conteudo" id="missao2-conteudo">
+        <p class="cartao-titulo" style="font-size:17px;margin-bottom:8px;">📝 Missão 2: Justificativa</p>
+        <p class="cartao-descricao" style="margin-bottom:16px;">Explique por que este objeto representa a palavra-chave na obra de Érico Veríssimo. <strong>Mínimo de 25 palavras.</strong></p>
+        <textarea id="justificativa-texto" placeholder="Escreva sua justificativa aqui (mínimo 25 palavras)..." rows="5" style="width:100%;"></textarea>
+        <button class="botao botao-dourado" onclick="enviarMissao2()" id="btn-missao2">Enviar justificativa</button>
+        <div id="msg-missao2"></div>
+      </div>
+
+      <!-- MISSÃO 3 -->
+      <div class="missoes-aba-conteudo" id="missao3-conteudo">
+        <p class="cartao-titulo" style="font-size:17px;margin-bottom:8px;">📖 Missão 3: Conexão</p>
+        <p class="cartao-descricao" id="missao3-pergunta" style="margin-bottom:16px;"></p>
+        <textarea id="conexao-texto" placeholder="Relacione o objeto a um acontecimento da história de Ana Terra..." rows="5" style="width:100%;"></textarea>
+        <button class="botao botao-dourado" onclick="enviarMissao3()" id="btn-missao3">Enviar conexão</button>
+        <div id="msg-missao3"></div>
+      </div>
+
+      <!-- MISSÃO 4 -->
+      <div class="missoes-aba-conteudo" id="missao4-conteudo">
+        <p class="cartao-titulo" style="font-size:17px;margin-bottom:8px;">🏆 Missão 4: Fragmento da História</p>
+        <p class="cartao-descricao" style="margin-bottom:16px;">Parabéns! Você completou as missões anteriores. Agora conquiste o fragmento REAL do livro "Ana Terra".</p>
+        <div id="fragmento-container"></div>
+        <button class="botao botao-dourado" onclick="conquistarFragmento()" id="btn-missao4">Conquistar fragmento</button>
+        <div id="msg-missao4"></div>
+      </div>
+
+      <div id="carta-completa" style="display:none;">
+        <div class="mensagem mensagem-sucesso" style="margin-top:16px;">🎉 Carta completa! Você conquistou um fragmento real do livro! 🎉</div>
+      </div>
+
+    </div>
+    <button class="botao botao-secundario" style="margin-top:0;" onclick="mostrarTela('tela-mapa')">Voltar para o mapa</button>
+  </div>
+</div>
+
+<div class="conquista-popup" id="conquista-popup"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// ============================================================
+// SUPABASE CONFIG
+// ============================================================
+const SUPABASE_URL = "https://betfuvirdfikkhcuyweg.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJldGZ1dmlyZGZpa2toY3V5d2VnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1NTY2MjMsImV4cCI6MjA5NzEzMjYyM30.ymiJTQ3mQDYCdu7ShW4_7x2yH95wyS-L30uxzlH9Fxw";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// ============================================================
+// ICONS - MEDALHOES DOS ARQUETIPOS
+// ============================================================
+const MEDALHOES = {
+  ana_terra: `<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="skyAna" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f3e3c3"/><stop offset="100%" stop-color="#e8cfa0"/></linearGradient><clipPath id="clipAna"><circle cx="120" cy="120" r="94"/></clipPath></defs><rect width="240" height="240" fill="#f3e3c3"/><g stroke="#7a5530" stroke-width="1" fill="none" opacity="0.55"><path d="M14 14 q12 0 12 12"/><path d="M14 14 q0 12 12 12"/><circle cx="20" cy="20" r="3"/><path d="M226 14 q-12 0 -12 12"/><path d="M226 14 q0 12 -12 12"/><circle cx="220" cy="20" r="3"/><path d="M14 226 q12 0 12 -12"/><path d="M14 226 q0 -12 12 -12"/><circle cx="20" cy="220" r="3"/><path d="M226 226 q-12 0 -12 -12"/><path d="M226 226 q0 -12 -12 -12"/><circle cx="220" cy="220" r="3"/></g><circle cx="120" cy="120" r="104" fill="url(#skyAna)" stroke="#7a5530" stroke-width="3"/><circle cx="120" cy="120" r="94" fill="none" stroke="#c08a3e" stroke-width="1.5"/><circle cx="120" cy="120" r="100" fill="none" stroke="#a9784f" stroke-width="0.5" stroke-dasharray="2 3"/><g clip-path="url(#clipAna)"><path d="M0 175 Q60 155 120 172 Q180 188 240 168 L240 240 L0 240 Z" fill="#b08858" opacity="0.55"/><path d="M0 195 Q70 180 130 195 Q190 208 240 192 L240 240 L0 240 Z" fill="#8c6239" opacity="0.7"/><g transform="translate(120,108)"><path d="M-2 -58 L-2 18" stroke="#6b4226" stroke-width="3" stroke-linecap="round"/><path d="M-2 -52 C 30 -56, 52 -38, 50 -10 C 48 18, 14 30, -10 12 C -28 -2, -22 -34, -2 -52 Z" fill="#caa467" stroke="#7a5530" stroke-width="1.2"/><path d="M-2 -52 C -34 -44, -42 -14, -22 8 C -10 20, 14 16, 22 -2" fill="none" stroke="#9c7846" stroke-width="0.8" opacity="0.6"/><path d="M6 -46 C 26 -42, 40 -24, 36 -2" fill="none" stroke="#9c7846" stroke-width="0.8" opacity="0.6"/><line x1="-2" x2="-2" y1="16" y2="34" stroke="#6b4226" stroke-width="3" stroke-linecap="round"/></g><g opacity="0.5"><line x1="40" y1="60" x2="40" y2="92" stroke="#7a5530" stroke-width="1"/><ellipse cx="34" cy="58" rx="9" ry="4" fill="none" stroke="#7a5530" stroke-width="1"/><ellipse cx="46" cy="58" rx="9" ry="4" fill="none" stroke="#7a5530" stroke-width="1"/><line x1="200" y1="70" x2="200" y2="100" stroke="#7a5530" stroke-width="1"/><ellipse cx="194" cy="68" rx="8" ry="3.5" fill="none" stroke="#7a5530" stroke-width="1"/><ellipse cx="206" cy="68" rx="8" ry="3.5" fill="none" stroke="#7a5530" stroke-width="1"/></g></g></svg>`,
+  pedro_missioneiro: `<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="skyPedroM" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f3e3c3"/><stop offset="100%" stop-color="#e8cfa0"/></linearGradient><clipPath id="clipPedroM"><circle cx="120" cy="120" r="94"/></clipPath></defs><rect width="240" height="240" fill="#f3e3c3"/><g stroke="#7a5530" stroke-width="1" fill="none" opacity="0.55"><path d="M14 14 q12 0 12 12"/><path d="M14 14 q0 12 12 12"/><circle cx="20" cy="20" r="3"/><path d="M226 14 q-12 0 -12 12"/><path d="M226 14 q0 12 -12 12"/><circle cx="220" cy="20" r="3"/><path d="M14 226 q12 0 12 -12"/><path d="M14 226 q0 -12 12 -12"/><circle cx="20" cy="220" r="3"/><path d="M226 226 q-12 0 -12 -12"/><path d="M226 226 q0 -12 -12 -12"/><circle cx="220" cy="220" r="3"/></g><circle
