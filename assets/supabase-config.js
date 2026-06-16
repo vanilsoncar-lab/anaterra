@@ -1,6 +1,7 @@
 /* ============================================================
-   ANA TERRA: CRONICAS DO PAMPA
+   O INVENTARIANTE DO TEMPO: A JORNADA DE ANA TERRA
    Configuracao de conexao com o Supabase
+   Versão 5.0
    ============================================================ */
 
 const SUPABASE_URL = "https://betfuvirdfikkhcuyweg.supabase.co";
