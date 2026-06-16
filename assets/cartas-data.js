@@ -26,7 +26,7 @@ const CARTAS = [
   {
     ordem: 3,
     numero: 14,
-    palavraChave: "TRADICAO",
+    palavraChave: "TRADIÇÃO",
     pista: "Represento costumes e habitos que fazem parte da identidade gaucha.",
     desafio: "Qual objeto eu represento? Justifique sua resposta.",
     narrativa: "Antes mesmo de Ana Terra existir, ja existiam os costumes que a formaram: o modo de viver, de se vestir, de receber visitas, de marcar o tempo. Sao esses habitos, transmitidos de geracao em geracao, que dao identidade a um povo e moldam quem Ana se tornara."
@@ -58,7 +58,7 @@ const CARTAS = [
   {
     ordem: 7,
     numero: 8,
-    palavraChave: "MUDANCA",
+    palavraChave: "MUDANÇA",
     pista: "Sou um personagem ligado a cultura indigena e ao amor proibido.",
     desafio: "Qual objeto eu represento? Justifique sua resposta.",
     narrativa: "Ha quem chegue para transformar tudo. Um personagem ligado a outra cultura, a outras tradicoes, envolvido em um amor que a epoca nao aceitava. Sua presenca muda o curso da narrativa e revela as tensoes entre diferentes mundos que convivem, e colidem, no pampa."
@@ -74,7 +74,7 @@ const CARTAS = [
   {
     ordem: 9,
     numero: 4,
-    palavraChave: "SOBREVIVENCIA",
+    palavraChave: "SOBREVIVÊNCIA",
     pista: "Sou resultado do trabalho diario e garanto o sustento da familia.",
     desafio: "Qual objeto eu represento? Justifique sua resposta.",
     narrativa: "Mesmo na dor, a vida continua, e ela exige trabalho. Dia apos dia, o sustento da familia depende do esforco sobre a terra. E essa labuta diaria, simples e essencial, que garante que Ana e os seus continuem de pe."
@@ -82,7 +82,7 @@ const CARTAS = [
   {
     ordem: 10,
     numero: 6,
-    palavraChave: "RESILIENCIA",
+    palavraChave: "RESILIÊNCIA",
     pista: "Represento uma mulher forte que enfrentou perdas, violencia e preconceitos sem desistir.",
     desafio: "Qual objeto eu represento? Justifique sua resposta.",
     narrativa: "Ana Terra e, antes de tudo, uma mulher que nao desiste. Perdas, violencia, preconceitos: nada disso a quebra por completo. Ela segue, carregando o peso do passado, mas seguindo em frente. Essa forca e o centro de quem ela e."
@@ -90,7 +90,7 @@ const CARTAS = [
   {
     ordem: 11,
     numero: 11,
-    palavraChave: "ESPERANCA",
+    palavraChave: "ESPERANÇA",
     pista: "Mesmo apos tantas tragedias, simbolizo a continuidade da vida.",
     desafio: "Qual objeto eu represento? Justifique sua resposta.",
     narrativa: "Mesmo depois de tantas tragedias, a vida encontra um jeito de continuar. Um novo comeco se anuncia: pequeno, fragil, mas real. E a prova de que, mesmo em meio a dor, ainda ha motivo para seguir adiante."
@@ -98,7 +98,7 @@ const CARTAS = [
   {
     ordem: 12,
     numero: 12,
-    palavraChave: "RESISTENCIA",
+    palavraChave: "RESISTÊNCIA",
     pista: "Ajudo a enfrentar momentos dificeis e manter a esperanca.",
     desafio: "Qual objeto eu represento? Justifique sua resposta.",
     narrativa: "Nos momentos mais dificeis, e preciso algo a que se apegar. Algo que ajude a manter a fe, a forca e a esperanca, mesmo quando tudo parece perdido. E esse apoio, muitas vezes silencioso, que sustenta Ana Terra em sua travessia."
@@ -106,7 +106,7 @@ const CARTAS = [
   {
     ordem: 13,
     numero: 13,
-    palavraChave: "RECOMECO",
+    palavraChave: "RECOMEÇO",
     pista: "Abro caminhos para uma nova vida depois das perdas.",
     desafio: "Qual objeto eu represento? Justifique sua resposta.",
     narrativa: "Depois de tanto perder, e hora de abrir uma porta para o novo. Um caminho diferente se apresenta: a chance de reconstruir a vida, de comecar de novo em outro lugar, com outra perspectiva."
