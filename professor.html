@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Painel do Professor | O Inventariante do Tempo: A Jornada de Ana Terra</title>
-<link rel="stylesheet" href="assets/style.css?v=5.0">
+<title>Painel do Professor | Ana Terra: Crônicas do Pampa</title>
+<link rel="stylesheet" href="assets/style.css">
 <style>
   .resumo-grade {
     display: grid;
@@ -153,7 +153,7 @@
   <div id="tela-login-prof" class="container" style="padding-top:40px;">
     <div class="marca">
       <h1 class="marca-titulo">Painel do Professor</h1>
-      <p class="marca-subtitulo">O Inventariante do Tempo: A Jornada de Ana Terra</p>
+      <p class="marca-subtitulo">Ana Terra: Crônicas do Pampa</p>
     </div>
     <div class="cartao">
       <h2 class="cartao-titulo">Acesso restrito</h2>
@@ -176,7 +176,7 @@
 
     <div class="hud">
       <div class="hud-info">
-        <div class="hud-nome">Painel do Professor - O Inventariante do Tempo</div>
+        <div class="hud-nome">Painel do Professor</div>
       </div>
       <button onclick="sairProfessor()" style="background:none;border:none;color:var(--dourado-claro);font-family:var(--fonte-dados);font-size:13px;cursor:pointer;">Sair</button>
     </div>
@@ -259,17 +259,13 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="assets/supabase-config.js?v=5.0"></script>
-<script src="assets/icons.js?v=5.0"></script>
-<script src="assets/cartas-data.js?v=5.0"></script>
+<script src="assets/supabase-config.js"></script>
+<script src="assets/icons.js"></script>
+<script src="assets/cartas-data.js"></script>
 <script>
 
 let DUPLAS_DADOS = [];
 let RESPOSTAS_DADOS = [];
-
-/* ============================================================
-   Login do professor
-   ============================================================ */
 
 async function logarProfessor() {
   const nome = document.getElementById("prof-nome").value.trim();
@@ -310,10 +306,6 @@ function sairProfessor() {
   location.reload();
 }
 
-/* ============================================================
-   Carrega todos os dados
-   ============================================================ */
-
 async function carregarDados() {
   const [duplas, respostas] = await Promise.all([
     supabaseClient.rpc("listar_duplas_professor"),
@@ -334,10 +326,6 @@ async function carregarDados() {
   renderizarCartas();
 }
 
-/* ============================================================
-   Resumo geral
-   ============================================================ */
-
 function atualizarResumo() {
   const concluídas = DUPLAS_DADOS.filter(d => d.xp_total > 0).length;
   const comCarta = DUPLAS_DADOS.filter(d => d.carta_numero !== null).length;
@@ -346,10 +334,6 @@ function atualizarResumo() {
   document.getElementById("res-concluídas").textContent = concluídas;
   document.getElementById("res-cartas").textContent = comCarta + "/15";
 }
-
-/* ============================================================
-   Aba: Duplas
-   ============================================================ */
 
 function renderizarDuplas(filtro) {
   const tbody = document.getElementById("tbody-duplas");
@@ -403,10 +387,6 @@ function filtrarDuplas() {
   renderizarDuplas(val);
 }
 
-/* ============================================================
-   Aba: Respostas
-   ============================================================ */
-
 function renderizarRespostas() {
   const tbody = document.getElementById("tbody-respostas");
   tbody.innerHTML = "";
@@ -442,10 +422,6 @@ function toggleResposta(id) {
   bloco.classList.toggle("aberta");
 }
 
-/* ============================================================
-   Aba: Cartas
-   ============================================================ */
-
 function renderizarCartas() {
   const grade = document.getElementById("grade-cartas");
   grade.innerHTML = "";
@@ -477,10 +453,6 @@ function renderizarCartas() {
     grade.appendChild(div);
   });
 }
-
-/* ============================================================
-   Funções de ação
-   ============================================================ */
 
 async function deletarDupla(duplaId, nomeDupla) {
   if (!confirm("Excluir completamente a dupla \"" + nomeDupla + "\"?\nEsta ação apaga o cadastro, a carta vinculada e todas as respostas. Não pode ser desfeita.")) return;
@@ -514,20 +486,12 @@ async function desvincularCarta(duplaId, nomeDupla) {
   await carregarDados();
 }
 
-/* ============================================================
-   Controle de abas
-   ============================================================ */
-
 function abrirAba(idAba, btnClicado) {
   document.querySelectorAll(".aba-conteudo").forEach(a => a.classList.remove("ativa"));
   document.querySelectorAll(".aba-btn").forEach(b => b.classList.remove("ativa"));
   document.getElementById(idAba).classList.add("ativa");
   btnClicado.classList.add("ativa");
 }
-
-/* ============================================================
-   Verificação de sessão ao carregar
-   ============================================================ */
 
 window.addEventListener("DOMContentLoaded", () => {
   if (sessionStorage.getItem("anaTerraProf") === "ok") {
