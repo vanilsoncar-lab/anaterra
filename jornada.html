@@ -530,18 +530,19 @@ window.addEventListener("DOMContentLoaded", async () => {
 
 async function carregarDadosDupla(duplaId) {
   const { data, error } = await supabaseClient
-    .from("duplas")
-    .select("id, nome_dupla, integrantes, turma, arquetipo, carta_número, xp_total, nivel")
-    .eq("id", duplaId)
-    .single();
+    .rpc("buscar_dupla", { p_dupla_id: duplaId });
 
-  if (error || !data) {
+  if (error || !data || data.length === 0) {
     sessionStorage.clear();
     window.location.href = "index.html";
     return;
   }
 
-  DUPLA = data;
+  DUPLA = data[0];
+  // Normaliza campo carta_numero (pode vir como carta_numero com acento)
+  if (DUPLA.carta_numero !== undefined) {
+    DUPLA.carta_numero = DUPLA.carta_numero;
+  }
 }
 
 /* ------------------------------------------------------------
@@ -551,7 +552,7 @@ async function carregarDadosDupla(duplaId) {
 async function carregarTodasDuplas() {
   const { data } = await supabaseClient
     .from("duplas")
-    .select("carta_número, xp_total")
+    .select("carta_numero, xp_total")
     .eq("turma", DUPLA.turma);
 
   TODAS_DUPLAS = data || [];
@@ -566,7 +567,7 @@ async function carregarRespostaExistente() {
     .from("respostas")
     .select("resposta_objeto, justificativa")
     .eq("dupla_id", DUPLA.id)
-    .eq("carta_número", DUPLA.carta_número)
+    .eq("carta_numero", DUPLA.carta_numero)
     .maybeSingle();
 
   RESPOSTA_EXISTENTE = data || null;
@@ -613,8 +614,8 @@ function preencherMapa() {
   trilha.innerHTML = "";
 
   CARTAS.forEach((carta, i) => {
-    const duplaDestaCarta = TODAS_DUPLAS.find(d => d.carta_número === carta.número);
-    const ehPrópria = carta.número === DUPLA.carta_número;
+    const duplaDestaCarta = TODAS_DUPLAS.find(d => d.carta_numero === carta.número);
+    const ehPrópria = carta.número === DUPLA.carta_numero;
     const concluída = duplaDestaCarta && duplaDestaCarta.xp_total > 0;
     const reivindicada = !!duplaDestaCarta;
 
@@ -664,7 +665,7 @@ function preencherMapa() {
    ------------------------------------------------------------ */
 
 function preencherMissão() {
-  const carta = getCartaPorNúmero(DUPLA.carta_número);
+  const carta = getCartaPorNúmero(DUPLA.carta_numero);
   if (!carta) return;
 
   document.getElementById("missão-número").textContent =
@@ -721,7 +722,7 @@ async function enviarResposta() {
 
   const { data, error } = await supabaseClient.rpc("registrar_resposta", {
     p_dupla_id: DUPLA.id,
-    p_carta_número: DUPLA.carta_número,
+    p_carta_numero: DUPLA.carta_numero,
     p_resposta_objeto: objeto,
     p_justificativa: justificativa
   });

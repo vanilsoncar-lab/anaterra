@@ -384,10 +384,12 @@ async function entrarDupla() {
    ------------------------------------------------------------ */
 async function prosseguirAposAutenticacao(duplaId) {
   const { data, error } = await supabaseClient
-    .from("duplas").select("carta_numero").eq("id", duplaId).single();
+    .rpc("buscar_dupla", { p_dupla_id: duplaId });
 
-  if (error) { exibirMensagem("msg-login", "Erro ao verificar dados da dupla: " + error.message, "erro"); return; }
-  if (data.carta_numero !== null) { window.location.href = "jornada.html"; return; }
+  if (error || !data || data.length === 0) {
+    exibirMensagem("msg-login", "Erro ao verificar dados da dupla.", "erro"); return;
+  }
+  if (data[0].carta_numero !== null) { window.location.href = "jornada.html"; return; }
 
   montarGradeArquetipos();
   mostrarBloco("bloco-registro");
