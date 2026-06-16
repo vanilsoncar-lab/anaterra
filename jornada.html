@@ -16,7 +16,7 @@
   }
 
   /* Conector visual entre estações */
-  .estação-conector {
+  .estacao-conector {
     width: 2px;
     height: 20px;
     background: var(--couro);
@@ -25,7 +25,7 @@
   }
 
   /* Carta de missão: palavra-chave em destaque */
-  .missão-número {
+  .missao-numero {
     font-family: var(--fonte-dados);
     font-size: 12px;
     letter-spacing: 0.1em;
@@ -34,7 +34,7 @@
     margin: 0 0 4px;
   }
 
-  .missão-palavra {
+  .missao-palavra {
     font-family: var(--fonte-display);
     font-weight: 700;
     font-size: 34px;
@@ -147,7 +147,7 @@
     border-radius: 999px;
     transition: width 0.4s ease;
   }
-  .progresso-coletivo-número {
+  .progresso-coletivo-numero {
     font-family: var(--fonte-dados);
     font-size: 22px;
     color: var(--dourado);
@@ -407,7 +407,7 @@
           <div class="progresso-coletivo-fill" id="prog-fill" style="width:0%"></div>
         </div>
       </div>
-      <div class="progresso-coletivo-número" id="prog-número">0/15</div>
+      <div class="progresso-coletivo-numero" id="prog-numero">0/15</div>
     </div>
 
     <div class="trilha-wrapper" id="trilha"></div>
@@ -419,20 +419,20 @@
 <!-- ============================================================
      TELA 3: MISSAO (carta da dupla)
      ============================================================ -->
-<div class="tela" id="tela-missão">
+<div class="tela" id="tela-missao">
   <div class="container">
 
-    <div class="cartao" id="cartao-missão">
-      <p class="missão-número" id="missão-número"></p>
-      <h2 class="missão-palavra" id="missão-palavra"></h2>
+    <div class="cartao" id="cartao-missao">
+      <p class="missao-numero" id="missao-numero"></p>
+      <h2 class="missao-palavra" id="missao-palavra"></h2>
 
-      <div class="narrativa" id="missão-narrativa"></div>
+      <div class="narrativa" id="missao-narrativa"></div>
 
       <div class="divisor"><span class="divisor-icone">* * *</span></div>
 
       <div class="pista-original">
         <p class="pista-original-titulo">Pista</p>
-        <p style="margin:0;" id="missão-pista"></p>
+        <p style="margin:0;" id="missao-pista"></p>
       </div>
 
       <div class="divisor"><span class="divisor-icone">* * *</span></div>
@@ -440,7 +440,7 @@
       <!-- Formulario de resposta (so visivel se ainda não respondeu) -->
       <div id="form-resposta">
         <p class="cartao-titulo" style="font-size:17px;margin-bottom:4px;">Desafio</p>
-        <p class="cartao-descricao" id="missão-desafio"></p>
+        <p class="cartao-descricao" id="missao-desafio"></p>
 
         <label for="resp-objeto">Qual objeto eu represento?</label>
         <input type="text" id="resp-objeto" placeholder="Nome do objeto">
@@ -449,7 +449,7 @@
         <textarea id="resp-justificativa" placeholder="Explique por que este objeto representa esta palavra-chave na obra de Érico Veríssimo..."></textarea>
 
         <button class="botao botao-dourado" onclick="enviarResposta()" id="btn-enviar">Enviar resposta</button>
-        <div id="msg-missão"></div>
+        <div id="msg-missao"></div>
       </div>
 
       <!-- Resposta já enviada (exibida no lugar do formulario) -->
@@ -520,7 +520,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   preencherFicha();
   preencherHUD();
   preencherMapa();
-  preencherMissão();
+  preencherMissao();
   atualizarProgressoColetivo();
 });
 
@@ -614,39 +614,39 @@ function preencherMapa() {
   trilha.innerHTML = "";
 
   CARTAS.forEach((carta, i) => {
-    const duplaDestaCarta = TODAS_DUPLAS.find(d => d.carta_numero === carta.número);
-    const ehPrópria = carta.número === DUPLA.carta_numero;
-    const concluída = duplaDestaCarta && duplaDestaCarta.xp_total > 0;
+    const duplaDestaCarta = TODAS_DUPLAS.find(d => d.carta_numero === carta.numero);
+    const ehPropria = carta.numero === DUPLA.carta_numero;
+    const concluida = duplaDestaCarta && duplaDestaCarta.xp_total > 0;
     const reivindicada = !!duplaDestaCarta;
 
-    let classeEstação = "estação";
+    let classeEstacao = "estacao";
     let statusTexto = "Aguardando uma dupla";
 
-    if (ehPrópria) {
-      classeEstação += " estação-própria";
+    if (ehPropria) {
+      classeEstacao += " estacao-propria";
       statusTexto = RESPOSTA_EXISTENTE ? "Missão cumprida" : "Sua missão";
-    } else if (concluída) {
-      classeEstação += " estação-concluída";
+    } else if (concluida) {
+      classeEstacao += " estação-concluida";
       statusTexto = "Concluída por outra dupla";
     } else if (reivindicada) {
-      classeEstação += " estação-bloqueada";
+      classeEstacao += " estacao-bloqueada";
       statusTexto = "Missão em andamento";
     } else {
-      classeEstação += " estação-bloqueada";
+      classeEstacao += " estacao-bloqueada";
     }
 
     const btn = document.createElement("button");
-    btn.className = classeEstação;
+    btn.className = classeEstacao;
 
-    if (ehPrópria) {
-      btn.onclick = () => mostrarTela("tela-missão");
+    if (ehPropria) {
+      btn.onclick = () => mostrarTela("tela-missao");
     }
 
     btn.innerHTML = `
-      <div class="estação-número">${carta.ordem}</div>
-      <div class="estação-info">
-        <p class="estação-palavra">${carta.palavraChave}</p>
-        <p class="estação-status">${statusTexto}</p>
+      <div class="estacao-numero">${carta.ordem}</div>
+      <div class="estacao-info">
+        <p class="estacao-palavra">${carta.palavraChave}</p>
+        <p class="estacao-status">${statusTexto}</p>
       </div>
     `;
 
@@ -654,7 +654,7 @@ function preencherMapa() {
 
     if (i < CARTAS.length - 1) {
       const conector = document.createElement("div");
-      conector.className = "estação-conector";
+      conector.className = "estacao-conector";
       trilha.appendChild(conector);
     }
   });
@@ -664,16 +664,16 @@ function preencherMapa() {
    Preenche a tela de missão (tela 3)
    ------------------------------------------------------------ */
 
-function preencherMissão() {
-  const carta = getCartaPorNúmero(DUPLA.carta_numero);
+function preencherMissao() {
+  const carta = getCartaPorNumero(DUPLA.carta_numero);
   if (!carta) return;
 
-  document.getElementById("missão-número").textContent =
-    "Estação " + carta.ordem + " de 15: Carta " + carta.número;
-  document.getElementById("missão-palavra").textContent = carta.palavraChave;
-  document.getElementById("missão-narrativa").textContent = carta.narrativa;
-  document.getElementById("missão-pista").textContent = carta.pista;
-  document.getElementById("missão-desafio").textContent = carta.desafio;
+  document.getElementById("missao-numero").textContent =
+    "Estação " + carta.ordem + " de 15: Carta " + carta.numero;
+  document.getElementById("missao-palavra").textContent = carta.palavraChave;
+  document.getElementById("missao-narrativa").textContent = carta.narrativa;
+  document.getElementById("missao-pista").textContent = carta.pista;
+  document.getElementById("missao-desafio").textContent = carta.desafio;
 
   if (RESPOSTA_EXISTENTE) {
     document.getElementById("form-resposta").classList.add("oculto");
@@ -688,12 +688,12 @@ function preencherMissão() {
    ------------------------------------------------------------ */
 
 function atualizarProgressoColetivo() {
-  const concluídas = TODAS_DUPLAS.filter(d => d.xp_total > 0).length;
+  const concluidas = TODAS_DUPLAS.filter(d => d.xp_total > 0).length;
   const total = 15;
-  const pct = Math.round((concluídas / total) * 100);
+  const pct = Math.round((concluidas / total) * 100);
 
   document.getElementById("prog-fill").style.width = pct + "%";
-  document.getElementById("prog-número").textContent = concluídas + "/" + total;
+  document.getElementById("prog-numero").textContent = concluidas + "/" + total;
 }
 
 /* ------------------------------------------------------------
@@ -701,18 +701,18 @@ function atualizarProgressoColetivo() {
    ------------------------------------------------------------ */
 
 async function enviarResposta() {
-  limparMensagem("msg-missão");
+  limparMensagem("msg-missao");
 
   const objeto = document.getElementById("resp-objeto").value.trim();
   const justificativa = document.getElementById("resp-justificativa").value.trim();
 
   if (!objeto) {
-    exibirMensagem("msg-missão", "Informe o objeto que representa a palavra-chave.", "erro");
+    exibirMensagem("msg-missao", "Informe o objeto que representa a palavra-chave.", "erro");
     return;
   }
 
   if (justificativa.length < 20) {
-    exibirMensagem("msg-missão", "Escreva uma justificativa mais completa (pelo menos algumas frases).", "erro");
+    exibirMensagem("msg-missao", "Escreva uma justificativa mais completa (pelo menos algumas frases).", "erro");
     return;
   }
 
@@ -731,17 +731,17 @@ async function enviarResposta() {
   btn.textContent = "Enviar resposta";
 
   if (error) {
-    exibirMensagem("msg-missão", "Erro ao enviar. Tente novamente.", "erro");
+    exibirMensagem("msg-missao", "Erro ao enviar. Tente novamente.", "erro");
     return;
   }
 
   if (data === "ja_respondido") {
-    exibirMensagem("msg-missão", "Sua dupla já enviou uma resposta para esta missão.", "info");
+    exibirMensagem("msg-missao", "Sua dupla já enviou uma resposta para esta missão.", "info");
     return;
   }
 
   if (data === "sem_permissão") {
-    exibirMensagem("msg-missão", "Esta carta não pertencé a sua dupla.", "erro");
+    exibirMensagem("msg-missao", "Esta carta não pertencé a sua dupla.", "erro");
     return;
   }
 
