@@ -46,9 +46,91 @@
     color: var(--tinta);
     display: none;
   }
-  .nome-selecionado-label.visivel {
-    display: block;
+  .nome-selecionado-label.visivel { display: block; }
+
+  /* Preview do arquétipo */
+  .preview-arquetipo {
+    display: none;
+    margin-top: 14px;
+    background: var(--papel-claro);
+    border: 1px solid var(--dourado);
+    border-radius: var(--raio-lg);
+    padding: 18px 16px 14px;
+    position: relative;
+    animation: fadeInUp 0.2s ease;
   }
+  .preview-arquetipo.visivel { display: block; }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .preview-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+  .preview-avatar {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+  }
+  .preview-nome {
+    font-family: var(--fonte-display);
+    font-weight: 700;
+    font-size: 17px;
+    margin: 0 0 2px;
+    color: var(--tinta);
+  }
+  .preview-tema {
+    font-family: var(--fonte-dados);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--dourado);
+    margin: 0;
+  }
+  .preview-descricao {
+    font-family: var(--fonte-corpo);
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--tinta);
+    margin: 0 0 14px;
+    border-left: 3px solid var(--dourado);
+    padding-left: 12px;
+  }
+  .preview-fechar {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: var(--texto-secundario);
+    cursor: pointer;
+    padding: 0 4px;
+    line-height: 1;
+  }
+  .preview-fechar:hover { color: var(--tinta); }
+
+  .arquetipo-confirmado {
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: rgba(192, 138, 62, 0.12);
+    border: 1px solid var(--dourado);
+    border-radius: var(--raio-md);
+    font-family: var(--fonte-display);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--tinta);
+    display: none;
+    text-align: center;
+  }
+  .arquetipo-confirmado.visivel { display: block; }
+
   @media (max-width: 380px) {
     .lista-nomes { grid-template-columns: 1fr; }
   }
@@ -124,8 +206,25 @@
       <input type="number" id="reg-carta" min="1" max="15" placeholder="Ex: 7">
 
       <label>Escolha seu arquétipo</label>
-      <p class="texto-pequeno" style="margin-top:-2px;">Cada arquétipo representa um personagem importante da obra. Escolha o que mais combina com sua dupla.</p>
+      <p class="texto-pequeno" style="margin-top:-2px;">Toque em um medalhão para conhecer o personagem. Depois confirme sua escolha.</p>
       <div class="grade-arquetipos" id="grade-arquetipos"></div>
+
+      <!-- Preview do arquétipo selecionado -->
+      <div class="preview-arquetipo" id="preview-arquetipo">
+        <button class="preview-fechar" onclick="fecharPreview()" title="Fechar">&#x2715;</button>
+        <div class="preview-header">
+          <div class="preview-avatar" id="preview-avatar"></div>
+          <div>
+            <p class="preview-nome" id="preview-nome"></p>
+            <p class="preview-tema" id="preview-tema"></p>
+          </div>
+        </div>
+        <p class="preview-descricao" id="preview-descricao"></p>
+        <button class="botao botao-dourado" style="margin-top:0;" onclick="confirmarArquetipo()">Escolher este arquétipo</button>
+      </div>
+
+      <!-- Confirmação do arquétipo escolhido -->
+      <div class="arquetipo-confirmado" id="arquetipo-confirmado"></div>
 
       <button class="botao botao-dourado" onclick="registrarCartaEArquetipo()" id="btn-registrar">Confirmar e iniciar jornada</button>
       <div id="msg-registro"></div>
@@ -139,27 +238,29 @@
 <script src="assets/icons.js"></script>
 <script>
 
+/* ------------------------------------------------------------
+   Descrições dos arquétipos (para o preview)
+   ------------------------------------------------------------ */
+const DESCRICOES_ARQUETIPOS = {
+  ana_terra: "Mulher que enfrenta perdas, violência e preconceitos sem se deixar vencer. Representa a força de quem segue em frente mesmo diante das maiores adversidades. Ana Terra é o coração desta história.",
+  pedro_missioneiro: "Filho do encontro entre culturas diferentes, carrega em si as raízes indígenas e a formação de um novo povo. Representa a mistura que dá origem à identidade gaúcha.",
+  maneco_terra: "Figura que representa o comando da família e a manutenção das regras e costumes do passado. Sua presença marca a força e o peso da tradição na vida do pampa.",
+  henriqueta: "Guarda no dia a dia os hábitos, crenças e modos de viver que sustentam a vida na estância. Representa a continuidade dos costumes através do cuidado cotidiano.",
+  horacio: "Representa a resistência às mudanças e a defesa das normas sociais estabelecidas. Simboliza as tensões entre tradição e transformação no pampa do século XVIII.",
+  pedro_terra: "Representa a passagem do tempo entre gerações, o elo entre o que foi vivido pelos antepassados e o que ainda está por vir. Simboliza a continuidade da família e da história."
+};
+
+/* ------------------------------------------------------------
+   Lista de nomes de dupla
+   ------------------------------------------------------------ */
 const NOMES_DUPLA = [
-  "Filhos da Terra",
-  "Vozes do Pampa",
-  "Herdeiros do Vento",
-  "Raízes do Sul",
-  "Sangue e Campo",
-  "Guardiões da Memória",
-  "Sementes do Pampa",
-  "Filhos do Encontro",
-  "A Marca do Destino",
-  "Entre Rios e Guerras",
-  "Os Sobreviventes",
-  "Crônicas do Campo",
-  "Herdeiros de Ana",
-  "Sombras do Século",
-  "Frutos da Resistência",
-  "Os Caminhantes",
-  "Filhos da Tormenta",
-  "Raízes Cruzadas",
-  "A Voz que Resta",
-  "Guardiões do Pampa"
+  "Filhos da Terra", "Vozes do Pampa", "Herdeiros do Vento",
+  "Raízes do Sul", "Sangue e Campo", "Guardiões da Memória",
+  "Sementes do Pampa", "Filhos do Encontro", "A Marca do Destino",
+  "Entre Rios e Guerras", "Os Sobreviventes", "Crônicas do Campo",
+  "Herdeiros de Ana", "Sombras do Século", "Frutos da Resistência",
+  "Os Caminhantes", "Filhos da Tormenta", "Raízes Cruzadas",
+  "A Voz que Resta", "Guardiões do Pampa"
 ];
 
 function montarListaNomes(containerId, labelId, inputHiddenId) {
@@ -185,6 +286,9 @@ function selecionarNome(nome, containerId, labelId, inputHiddenId) {
   document.getElementById(inputHiddenId).value = nome;
 }
 
+/* ------------------------------------------------------------
+   Controle de blocos
+   ------------------------------------------------------------ */
 function mostrarBloco(idBloco) {
   ["bloco-escolha","bloco-cadastro","bloco-login","bloco-registro"].forEach(id => {
     document.getElementById(id).classList.add("oculto");
@@ -195,6 +299,9 @@ function mostrarBloco(idBloco) {
   }
 }
 
+/* ------------------------------------------------------------
+   Mensagens
+   ------------------------------------------------------------ */
 function exibirMensagem(idContainer, texto, tipo) {
   document.getElementById(idContainer).innerHTML =
     `<div class="mensagem mensagem-${tipo}">${texto}</div>`;
@@ -202,11 +309,13 @@ function exibirMensagem(idContainer, texto, tipo) {
 function limparMensagem(idContainer) {
   document.getElementById(idContainer).innerHTML = "";
 }
-
 function salvarSessao(duplaId) {
   sessionStorage.setItem("anaTerraDuplaId", duplaId);
 }
 
+/* ------------------------------------------------------------
+   Cadastro
+   ------------------------------------------------------------ */
 async function cadastrarDupla() {
   limparMensagem("msg-cadastro");
   const nomeDupla = document.getElementById("cad-nome-dupla").value.trim();
@@ -215,91 +324,73 @@ async function cadastrarDupla() {
   const turma = document.getElementById("cad-turma").value.trim();
   const senha = document.getElementById("cad-senha").value;
 
-  if (!nomeDupla) {
-    exibirMensagem("msg-cadastro", "Selecione um nome para a dupla.", "erro"); return;
-  }
-  if (!integrantes || !email || !turma || !senha) {
-    exibirMensagem("msg-cadastro", "Preencha todos os campos para continuar.", "erro"); return;
-  }
-  if (!email.includes("@")) {
-    exibirMensagem("msg-cadastro", "Informe um e-mail válido.", "erro"); return;
-  }
-  if (senha.length < 4) {
-    exibirMensagem("msg-cadastro", "A senha deve ter pelo menos 4 caracteres.", "erro"); return;
-  }
+  if (!nomeDupla) { exibirMensagem("msg-cadastro", "Selecione um nome para a dupla.", "erro"); return; }
+  if (!integrantes || !email || !turma || !senha) { exibirMensagem("msg-cadastro", "Preencha todos os campos para continuar.", "erro"); return; }
+  if (!email.includes("@")) { exibirMensagem("msg-cadastro", "Informe um e-mail válido.", "erro"); return; }
+  if (senha.length < 4) { exibirMensagem("msg-cadastro", "A senha deve ter pelo menos 4 caracteres.", "erro"); return; }
 
   const btn = document.getElementById("btn-cadastrar");
   btn.disabled = true; btn.textContent = "Cadastrando...";
 
   const { data, error } = await supabaseClient.rpc("cadastrar_dupla", {
-    p_nome_dupla: nomeDupla,
-    p_integrantes: integrantes,
-    p_email: email,
-    p_turma: turma,
-    p_senha: senha
+    p_nome_dupla: nomeDupla, p_integrantes: integrantes,
+    p_email: email, p_turma: turma, p_senha: senha
   });
 
   btn.disabled = false; btn.textContent = "Cadastrar e continuar";
 
-  if (error) {
-    exibirMensagem("msg-cadastro", "Erro ao cadastrar: " + error.message, "erro"); return;
-  }
-  if (data === null) {
-    exibirMensagem("msg-cadastro", "Este e-mail já está cadastrado. Use outro e-mail ou faça login.", "erro"); return;
-  }
+  if (error) { exibirMensagem("msg-cadastro", "Erro ao cadastrar: " + error.message, "erro"); return; }
+  if (data === null) { exibirMensagem("msg-cadastro", "Este e-mail já está cadastrado. Use outro e-mail ou faça login.", "erro"); return; }
 
   salvarSessao(data);
   await prosseguirAposAutenticacao(data);
 }
 
+/* ------------------------------------------------------------
+   Login
+   ------------------------------------------------------------ */
 async function entrarDupla() {
   limparMensagem("msg-login");
   const email = document.getElementById("login-email").value.trim().toLowerCase();
   const senha = document.getElementById("login-senha").value;
 
-  if (!email || !senha) {
-    exibirMensagem("msg-login", "Informe o e-mail e a senha.", "erro"); return;
-  }
+  if (!email || !senha) { exibirMensagem("msg-login", "Informe o e-mail e a senha.", "erro"); return; }
 
   const btn = document.getElementById("btn-entrar");
   btn.disabled = true; btn.textContent = "Entrando...";
 
   const { data, error } = await supabaseClient.rpc("autenticar_dupla", {
-    p_email: email,
-    p_senha: senha
+    p_email: email, p_senha: senha
   });
 
   btn.disabled = false; btn.textContent = "Entrar";
 
-  if (error) {
-    exibirMensagem("msg-login", "Erro ao entrar: " + error.message, "erro"); return;
-  }
-  if (data === null) {
-    exibirMensagem("msg-login", "E-mail ou senha incorretos.", "erro"); return;
-  }
+  if (error) { exibirMensagem("msg-login", "Erro ao entrar: " + error.message, "erro"); return; }
+  if (data === null) { exibirMensagem("msg-login", "E-mail ou senha incorretos.", "erro"); return; }
 
   salvarSessao(data);
   await prosseguirAposAutenticacao(data);
 }
 
+/* ------------------------------------------------------------
+   Pós-autenticação
+   ------------------------------------------------------------ */
 async function prosseguirAposAutenticacao(duplaId) {
   const { data, error } = await supabaseClient
-    .from("duplas")
-    .select("carta_numero")
-    .eq("id", duplaId)
-    .single();
+    .from("duplas").select("carta_numero").eq("id", duplaId).single();
 
-  if (error) {
-    exibirMensagem("msg-login", "Erro ao verificar dados da dupla: " + error.message, "erro"); return;
-  }
-  if (data.carta_numero !== null) {
-    window.location.href = "jornada.html"; return;
-  }
+  if (error) { exibirMensagem("msg-login", "Erro ao verificar dados da dupla: " + error.message, "erro"); return; }
+  if (data.carta_numero !== null) { window.location.href = "jornada.html"; return; }
+
   montarGradeArquetipos();
   mostrarBloco("bloco-registro");
 }
 
+/* ------------------------------------------------------------
+   Grade de arquétipos com preview
+   ------------------------------------------------------------ */
 let arquetipoSelecionado = null;
+let arquetipoEmPreview = null;
 
 function montarGradeArquetipos() {
   const grade = document.getElementById("grade-arquetipos");
@@ -309,18 +400,47 @@ function montarGradeArquetipos() {
     opcao.className = "opcao-arquetipo";
     opcao.dataset.id = arq.id;
     opcao.innerHTML = `${MEDALHOES[arq.id]}<p class="opcao-arquetipo-nome">${arq.nome}</p>`;
-    opcao.addEventListener("click", () => selecionarArquetipo(arq.id));
+    opcao.addEventListener("click", () => abrirPreview(arq.id));
     grade.appendChild(opcao);
   });
 }
 
-function selecionarArquetipo(id) {
-  arquetipoSelecionado = id;
-  document.querySelectorAll(".opcao-arquetipo").forEach(el => {
-    el.classList.toggle("selecionado", el.dataset.id === id);
-  });
+function abrirPreview(id) {
+  arquetipoEmPreview = id;
+  const arq = ARQUETIPOS.find(a => a.id === id);
+
+  document.getElementById("preview-avatar").innerHTML = MEDALHOES[id];
+  document.getElementById("preview-nome").textContent = arq.nome;
+  document.getElementById("preview-tema").textContent = arq.tema;
+  document.getElementById("preview-descricao").textContent = DESCRICOES_ARQUETIPOS[id];
+
+  document.getElementById("preview-arquetipo").classList.add("visivel");
+  document.getElementById("preview-arquetipo").scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 
+function fecharPreview() {
+  document.getElementById("preview-arquetipo").classList.remove("visivel");
+  arquetipoEmPreview = null;
+}
+
+function confirmarArquetipo() {
+  arquetipoSelecionado = arquetipoEmPreview;
+  const arq = ARQUETIPOS.find(a => a.id === arquetipoSelecionado);
+
+  document.querySelectorAll(".opcao-arquetipo").forEach(el => {
+    el.classList.toggle("selecionado", el.dataset.id === arquetipoSelecionado);
+  });
+
+  const confirmado = document.getElementById("arquetipo-confirmado");
+  confirmado.textContent = "Arquétipo escolhido: " + arq.nome;
+  confirmado.classList.add("visivel");
+
+  fecharPreview();
+}
+
+/* ------------------------------------------------------------
+   Registro de carta e arquétipo
+   ------------------------------------------------------------ */
 async function registrarCartaEArquetipo() {
   limparMensagem("msg-registro");
   const duplaId = sessionStorage.getItem("anaTerraDuplaId");
@@ -330,37 +450,30 @@ async function registrarCartaEArquetipo() {
     exibirMensagem("msg-registro", "Informe um número de carta válido, entre 1 e 15.", "erro"); return;
   }
   if (!arquetipoSelecionado) {
-    exibirMensagem("msg-registro", "Escolha um arquétipo para sua dupla.", "erro"); return;
+    exibirMensagem("msg-registro", "Escolha e confirme um arquétipo para sua dupla.", "erro"); return;
   }
 
   const btn = document.getElementById("btn-registrar");
   btn.disabled = true; btn.textContent = "Registrando...";
 
   const { data, error } = await supabaseClient.rpc("registrar_carta_e_arquetipo", {
-    p_dupla_id: duplaId,
-    p_carta_numero: numeroCarta,
-    p_arquetipo: arquetipoSelecionado
+    p_dupla_id: duplaId, p_carta_numero: numeroCarta, p_arquetipo: arquetipoSelecionado
   });
 
   btn.disabled = false; btn.textContent = "Confirmar e iniciar jornada";
 
-  if (error) {
-    exibirMensagem("msg-registro", "Erro ao registrar: " + error.message, "erro"); return;
-  }
-  if (data === "carta_ocupada") {
-    exibirMensagem("msg-registro", "Esta carta já foi registrada por outra dupla. Confira o número com o professor.", "erro"); return;
-  }
-  if (data === "ja_registrado") {
-    window.location.href = "jornada.html"; return;
-  }
-  if (data === "invalido") {
-    exibirMensagem("msg-registro", "Número de carta ou arquétipo inválido.", "erro"); return;
-  }
+  if (error) { exibirMensagem("msg-registro", "Erro ao registrar: " + error.message, "erro"); return; }
+  if (data === "carta_ocupada") { exibirMensagem("msg-registro", "Esta carta já foi registrada por outra dupla. Confira o número com o professor.", "erro"); return; }
+  if (data === "ja_registrado") { window.location.href = "jornada.html"; return; }
+  if (data === "invalido") { exibirMensagem("msg-registro", "Número de carta ou arquétipo inválido.", "erro"); return; }
 
   exibirMensagem("msg-registro", "Carta registrada! Iniciando sua jornada...", "sucesso");
   setTimeout(() => { window.location.href = "jornada.html"; }, 800);
 }
 
+/* ------------------------------------------------------------
+   Ao carregar
+   ------------------------------------------------------------ */
 window.addEventListener("DOMContentLoaded", async () => {
   const duplaId = sessionStorage.getItem("anaTerraDuplaId");
   if (duplaId) await prosseguirAposAutenticacao(duplaId);
