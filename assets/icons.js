@@ -317,10 +317,10 @@ const MEDALHOES = {
    ============================================================ */
 
 const ARQUETIPOS = [
-  { id: "ana_terra", nome: "Ana Terra", tema: "Resistencia feminina" },
-  { id: "pedro_missioneiro", nome: "Pedro Missioneiro", tema: "Miscigenacao e origem do povo gaucho" },
-  { id: "maneco_terra", nome: "Maneco Terra", tema: "Autoridade patriarcal e tradicao" },
-  { id: "henriqueta", nome: "Henriqueta", tema: "Preservacao dos costumes" },
-  { id: "horacio", nome: "Horacio", tema: "Conservadorismo social" },
-  { id: "pedro_terra", nome: "Pedro Terra", tema: "Continuidade das geracoes" }
+  { id: "ana_terra", nome: "Ana Terra", tema: "Resistência feminina" },
+  { id: "pedro_missioneiro", nome: "Pedro Missioneiro", tema: "Miscigenação e origem do povo gaúcho" },
+  { id: "maneco_terra", nome: "Maneco Terra", tema: "Autoridade patriarcal e tradição" },
+  { id: "henriqueta", nome: "Henriqueta", tema: "Preservação dos costumes" },
+  { id: "horacio", nome: "Horácio", tema: "Conservadorismo social" },
+  { id: "pedro_terra", nome: "Pedro Terra", tema: "Continuidade das gerações" }
 ];
