@@ -153,6 +153,111 @@
     color: var(--dourado);
     white-space: nowrap;
   }
+
+  /* Menu lateral */
+  .menu-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--papel-claro);
+    font-size: 22px;
+    padding: 4px 8px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .menu-btn:hover { opacity: 0.8; }
+
+  .menu-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(31, 46, 35, 0.5);
+    z-index: 200;
+  }
+  .menu-overlay.aberto { display: block; }
+
+  .menu-lateral {
+    position: fixed;
+    top: 0;
+    right: -280px;
+    width: 260px;
+    height: 100vh;
+    background: var(--papel-medio);
+    border-left: 2px solid var(--couro);
+    z-index: 201;
+    transition: right 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .menu-lateral.aberto { right: 0; }
+
+  .menu-header {
+    background: var(--verde-pampa);
+    color: var(--papel-claro);
+    padding: 18px 20px 14px;
+    border-bottom: 2px solid var(--couro);
+  }
+  .menu-header-titulo {
+    font-family: var(--fonte-display);
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0 0 2px;
+  }
+  .menu-header-versao {
+    font-family: var(--fonte-dados);
+    font-size: 11px;
+    color: var(--dourado-claro);
+    margin: 0;
+  }
+
+  .menu-secao {
+    padding: 16px 20px 8px;
+  }
+  .menu-secao-titulo {
+    font-family: var(--fonte-dados);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--texto-secundario);
+    margin: 0 0 10px;
+  }
+
+  .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 0;
+    border: none;
+    border-bottom: 1px solid rgba(122, 85, 48, 0.2);
+    background: none;
+    cursor: pointer;
+    font-family: var(--fonte-corpo);
+    font-size: 16px;
+    color: var(--tinta);
+    text-align: left;
+  }
+  .menu-item:last-child { border-bottom: none; }
+  .menu-item:hover { color: var(--verde-pampa); }
+  .menu-item-icone {
+    font-size: 18px;
+    width: 24px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .menu-item-vermelho { color: var(--terracota); }
+  .menu-item-vermelho:hover { color: #7a2e10; }
+
+  .menu-rodape {
+    margin-top: auto;
+    padding: 16px 20px;
+    border-top: 1px solid rgba(122, 85, 48, 0.2);
+    font-family: var(--fonte-dados);
+    font-size: 11px;
+    color: var(--texto-secundario);
+    text-align: center;
+  }
 </style>
 </head>
 <body>
@@ -169,6 +274,95 @@
     </div>
   </div>
   <div class="hud-nivel" id="hud-nivel">Nv 1<br>0 XP</div>
+  <button class="menu-btn" onclick="toggleMenu()" title="Menu" aria-label="Abrir menu">&#9776;</button>
+</div>
+
+<!-- Menu lateral -->
+<div class="menu-overlay" id="menu-overlay" onclick="fecharMenu()"></div>
+<nav class="menu-lateral" id="menu-lateral" aria-label="Menu de navegação">
+  <div class="menu-header">
+    <p class="menu-header-titulo">Ana Terra: Crônicas do Pampa</p>
+    <p class="menu-header-versao">Versão 2.1 &nbsp;|&nbsp; PIBID Letras</p>
+  </div>
+
+  <div class="menu-secao">
+    <p class="menu-secao-titulo">Navegação</p>
+    <button class="menu-item" onclick="irPara('tela-ficha')">
+      <span class="menu-item-icone">&#128100;</span> Minha ficha
+    </button>
+    <button class="menu-item" onclick="irPara('tela-mapa')">
+      <span class="menu-item-icone">&#128506;</span> Mapa da jornada
+    </button>
+    <button class="menu-item" onclick="irPara('tela-missao')">
+      <span class="menu-item-icone">&#9876;</span> Minha missão
+    </button>
+  </div>
+
+  <div class="menu-secao">
+    <p class="menu-secao-titulo">Informações</p>
+    <button class="menu-item" onclick="mostrarSobre()">
+      <span class="menu-item-icone">&#9432;</span> Sobre o projeto
+    </button>
+    <button class="menu-item" onclick="mostrarAjuda()">
+      <span class="menu-item-icone">&#10067;</span> Como funciona
+    </button>
+  </div>
+
+  <div class="menu-secao">
+    <p class="menu-secao-titulo">Sessão</p>
+    <button class="menu-item menu-item-vermelho" onclick="confirmarSair()">
+      <span class="menu-item-icone">&#8594;</span> Sair
+    </button>
+  </div>
+
+  <div class="menu-rodape">
+    Escola Municipal Fundamental Estado do Amazonas<br>
+    9º ano de Língua Portuguesa
+  </div>
+</nav>
+
+<!-- Modal: Sobre o projeto -->
+<div class="menu-overlay" id="modal-sobre-overlay" onclick="fecharModal('modal-sobre')" style="z-index:300;"></div>
+<div id="modal-sobre" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+  background:var(--papel-medio);border:1px solid var(--couro);border-radius:var(--raio-lg);
+  padding:24px;max-width:420px;width:90%;z-index:301;box-shadow:0 4px 24px rgba(31,46,35,0.25);">
+  <h2 style="font-family:var(--fonte-display);font-size:19px;margin:0 0 12px;">Sobre o projeto</h2>
+  <p style="font-family:var(--fonte-corpo);font-size:15px;line-height:1.7;margin:0 0 10px;">
+    Este objeto digital de aprendizagem foi desenvolvido no contexto do PIBID Letras da UNIJUÍ,
+    sob supervisão docente na Escola Municipal Fundamental Estado do Amazonas.
+  </p>
+  <p style="font-family:var(--fonte-corpo);font-size:15px;line-height:1.7;margin:0 0 16px;">
+    A atividade integra a obra <em>Ana Terra</em>, de Érico Veríssimo, com uma jornada gamificada
+    em que cada dupla explora uma palavra-chave da narrativa.
+  </p>
+  <p style="font-family:var(--fonte-dados);font-size:12px;color:var(--texto-secundario);margin:0;">
+    Versão 2.1
+  </p>
+  <button class="botao botao-secundario" style="margin-top:14px;" onclick="fecharModal('modal-sobre')">Fechar</button>
+</div>
+
+<!-- Modal: Como funciona -->
+<div class="menu-overlay" id="modal-ajuda-overlay" onclick="fecharModal('modal-ajuda')" style="z-index:300;"></div>
+<div id="modal-ajuda" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+  background:var(--papel-medio);border:1px solid var(--couro);border-radius:var(--raio-lg);
+  padding:24px;max-width:420px;width:90%;z-index:301;box-shadow:0 4px 24px rgba(31,46,35,0.25);">
+  <h2 style="font-family:var(--fonte-display);font-size:19px;margin:0 0 12px;">Como funciona</h2>
+  <p style="font-family:var(--fonte-corpo);font-size:15px;line-height:1.7;margin:0 0 8px;">
+    <strong>1.</strong> Cada dupla recebeu uma carta com uma palavra-chave da obra.
+  </p>
+  <p style="font-family:var(--fonte-corpo);font-size:15px;line-height:1.7;margin:0 0 8px;">
+    <strong>2.</strong> Acesse o mapa da jornada e toque na sua estação para ver a missão.
+  </p>
+  <p style="font-family:var(--fonte-corpo);font-size:15px;line-height:1.7;margin:0 0 8px;">
+    <strong>3.</strong> Leia o contexto narrativo e a pista da sua carta.
+  </p>
+  <p style="font-family:var(--fonte-corpo);font-size:15px;line-height:1.7;margin:0 0 8px;">
+    <strong>4.</strong> Responda o desafio: identifique o objeto e justifique sua escolha.
+  </p>
+  <p style="font-family:var(--fonte-corpo);font-size:15px;line-height:1.7;margin:0 0 16px;">
+    <strong>5.</strong> Acompanhe o progresso coletivo da turma no mapa.
+  </p>
+  <button class="botao botao-secundario" style="margin-top:0;" onclick="fecharModal('modal-ajuda')">Fechar</button>
 </div>
 
 <!-- ============================================================
@@ -192,8 +386,7 @@
       <p class="texto-pequeno" id="ficha-turma" style="margin:0 0 16px;"></p>
 
       <p class="cartao-descricao" style="margin:0;">
-        Sua missão aguarda. A jornada de Ana Terra se desdobra em 15 estações,
-        é a sua dupla e guardiã de uma delas. Avance para o mapa e cumpra seu papel nesta crônica do pampa.
+        Sua missão aguarda. A jornada de Ana Terra se desdobra em 15 estações, e a sua dupla é guardiã de uma delas. Avance para o mapa e cumpra seu papel nesta crônica do pampa.
       </p>
 
       <button class="botao botao-dourado" onclick="mostrarTela('tela-mapa')">Ver o mapa da jornada</button>
@@ -593,6 +786,52 @@ function exibirMensagem(idContainer, texto, tipo) {
 
 function limparMensagem(idContainer) {
   document.getElementById(idContainer).innerHTML = "";
+}
+
+/* ------------------------------------------------------------
+   Menu lateral
+   ------------------------------------------------------------ */
+
+function toggleMenu() {
+  const menu = document.getElementById("menu-lateral");
+  const overlay = document.getElementById("menu-overlay");
+  menu.classList.toggle("aberto");
+  overlay.classList.toggle("aberto");
+}
+
+function fecharMenu() {
+  document.getElementById("menu-lateral").classList.remove("aberto");
+  document.getElementById("menu-overlay").classList.remove("aberto");
+}
+
+function irPara(tela) {
+  fecharMenu();
+  mostrarTela(tela);
+}
+
+function mostrarSobre() {
+  fecharMenu();
+  document.getElementById("modal-sobre").style.display = "block";
+  document.getElementById("modal-sobre-overlay").style.display = "block";
+}
+
+function mostrarAjuda() {
+  fecharMenu();
+  document.getElementById("modal-ajuda").style.display = "block";
+  document.getElementById("modal-ajuda-overlay").style.display = "block";
+}
+
+function fecharModal(id) {
+  document.getElementById(id).style.display = "none";
+  document.getElementById(id + "-overlay").style.display = "none";
+}
+
+function confirmarSair() {
+  fecharMenu();
+  if (confirm("Deseja sair? Seu progresso está salvo e você pode retornar a qualquer momento com seu e-mail e senha.")) {
+    sessionStorage.clear();
+    window.location.href = "index.html";
+  }
 }
 
 </script>
