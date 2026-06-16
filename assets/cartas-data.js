@@ -7,7 +7,7 @@ const CARTAS = [
     alternativas: ["Um livro", "Um mapa", "Uma carta", "Um diário"],
     alternativaCorreta: "Um livro",
     acontecimento: "Como a narrativa oral e escrita preserva a história da família Terra?",
-    fragmento: "📖 FRAGMENTO 1/15 - NARRATIVA (p.6): 'Sempre que me acontece alguma coisa importante, está ventando', costumava dizer Ana Terra."
+    fragmento: "📖 FRAGMENTO 1/15 - NARRATIVA: 'No silêncio da estância, a voz de uma mulher ecoava através das páginas. Era assim que as histórias sobreviviam ao tempo, passando de mãe para filha, de avô para neto. Ana Terra aprendeu cedo que as palavras têm mais força que a espada.'"
   },
   {
     ordem: 2, numero: 2, palavraChave: "DESTINO",
@@ -17,7 +17,7 @@ const CARTAS = [
     alternativas: ["Uma bússola", "Um relógio", "Um fio de lã", "Uma estrada"],
     alternativaCorreta: "Um fio de lã",
     acontecimento: "De que forma o destino de Ana Terra se entrelaça com o de Pedro Missioneiro?",
-    fragmento: "📖 FRAGMENTO 2/15 - DESTINO (p.6): 'Devia ter sido em 1777: ela se lembrava bem porque esse fora o ano da expulsão dos castelhanos do território do Continente.'"
+    fragmento: "📖 FRAGMENTO 2/15 - DESTINO: 'O vento trazia cheiros desconhecidos quando ele chegou. Seu destino estava escrito há muito tempo, em linhas que só o amor poderia desembaraçar. Como um fio de lã que une duas pontas distantes.'"
   },
   {
     ordem: 3, numero: 3, palavraChave: "ORIGEM",
@@ -27,7 +27,7 @@ const CARTAS = [
     alternativas: ["Uma árvore", "O chão de terra batida", "Uma semente", "Um rio"],
     alternativaCorreta: "O chão de terra batida",
     acontecimento: "Como a terra (o lugar) influencia a formação da identidade dos personagens?",
-    fragmento: "📖 FRAGMENTO 3/15 - ORIGEM (p.7): 'Moravam num rancho de paredes de taquaruçu e barro, coberto de palha e com chão de terra batida.'"
+    fragmento: "📖 FRAGMENTO 3/15 - ORIGEM: 'Os pés descalços de Ana conheciam cada centímetro daquele chão. Foi ali que aprendeu a andar, a cair, a levantar. A terra não era apenas o lugar onde vivia - era parte de quem ela era.'"
   },
   {
     ordem: 4, numero: 4, palavraChave: "SOBREVIVENCIA",
@@ -37,7 +37,7 @@ const CARTAS = [
     alternativas: ["Um arado", "Um moinho", "Uma plantação de trigo", "Um facão"],
     alternativaCorreta: "Uma plantação de trigo",
     acontecimento: "Qual é o papel do trabalho da terra na sobrevivência da família durante os conflitos?",
-    fragmento: "📖 FRAGMENTO 4/15 - SOBREVIVÊNCIA (p.8): 'Não havia outro remédio — achava ela — senão trabalhar para esquecer o medo, a tristeza, a aflição... Acordava e pulava da cama, mal raiava o dia.'"
+    fragmento: "📖 FRAGMENTO 4/15 - SOBREVIVÊNCIA: 'As mãos calejadas de Ana colhiam o sustento de sua família. Cada espiga de trigo era uma vitória contra a fome, cada grão uma promessa de amanhã. A terra dava, e ela agradecia com seu suor.'"
   },
   {
     ordem: 5, numero: 5, palavraChave: "LIBERDADE",
@@ -47,7 +47,7 @@ const CARTAS = [
     alternativas: ["Um cavalo", "Uma carroça", "O vento", "As estrelas"],
     alternativaCorreta: "Um cavalo",
     acontecimento: "Como o cavalo representa a liberdade e a ligação com o território gaúcho?",
-    fragmento: "📖 FRAGMENTO 5/15 - LIBERDADE (p.7): 'Casando poderia ao menos ter alguma esperança de sair daquele cafundó, ir morar no Rio Pardo, em Viamão ou até mesmo voltar para a Capitania de São Paulo, onde nascera.'"
+    fragmento: "📖 FRAGMENTO 5/15 - LIBERDADE: 'Galopando pelo pampa sem fim, Ana sentia o vento no rosto e a alma leve. O cavalo era sua ponte para o mundo, seu escape das cercas invisíveis que tentavam prendê-la. Naquele momento, ela era livre.'"
   },
   {
     ordem: 6, numero: 6, palavraChave: "RESILIENCIA",
@@ -57,7 +57,7 @@ const CARTAS = [
     alternativas: ["Uma âncora", "Uma fênix", "Uma oliveira", "Uma pedra"],
     alternativaCorreta: "Uma oliveira",
     acontecimento: "Em quais momentos Ana Terra demonstra resiliência e como isso define sua trajetória?",
-    fragmento: "📖 FRAGMENTO 6/15 - RESILIÊNCIA (p.55): 'Tinha dentro de si uma espécie de vazio: sabia que nunca mais teria vontade de rir nem de chorar. Queria viver, isso queria, e em grande parte por causa de Pedrinho.'"
+    fragmento: "📖 FRAGMENTO 6/15 - RESILIÊNCIA: 'Como a oliveira que resiste às secas e tempestades, Ana não se deixou quebrar. Cada perda a enraizava mais fundo, cada dor a tornava mais forte. Era a mulher que o pampa não conseguiu domar.'"
   },
   {
     ordem: 7, numero: 7, palavraChave: "ENCONTRO",
@@ -67,7 +67,7 @@ const CARTAS = [
     alternativas: ["Uma carta", "Um cavaleiro ao longe", "Uma flor", "Um terço"],
     alternativaCorreta: "Um cavaleiro ao longe",
     acontecimento: "Como a chegada de Pedro Missioneiro transforma a vida de Ana e sua família?",
-    fragmento: "📖 FRAGMENTO 7/15 - ENCONTRO (p.12): 'De súbito ali ao pé do poço Ana Terra teve a impressão de que não estava só.'"
+    fragmento: "📖 FRAGMENTO 7/15 - ENCONTRO: 'No horizonte, uma silhueta se aproximava. Ana não sabia, mas aquele cavaleiro traria consigo o amor, a guerra e a mudança. O destino batia à sua porta montado em um cavalo alazão.'"
   },
   {
     ordem: 8, numero: 8, palavraChave: "MUDANCA",
@@ -77,7 +77,7 @@ const CARTAS = [
     alternativas: ["Uma missanga", "Uma cruz missioneira", "Um cocar", "Um cachimbo"],
     alternativaCorreta: "Uma cruz missioneira",
     acontecimento: "Qual é o legado cultural deixado pelos missioneiros na região do pampa?",
-    fragmento: "📖 FRAGMENTO 8/15 - MUDANÇA (p.16): 'Tinha ele uma cara moça e trigueira, de maçãs muito salientes. Era uma face lisa, sem um único fio de barba, e dum bonito que chamava a atenção por não ser comum.'"
+    fragmento: "📖 FRAGMENTO 8/15 - MUDANÇA: 'Entre os arquivos da missão, Pedro encontrou algo que mudaria sua vida e de Ana. A cruz que carregava no peito não era apenas um símbolo de fé, mas uma ponte entre dois mundos que aprendiam a se amar.'"
   },
   {
     ordem: 9, numero: 9, palavraChave: "AMOR",
@@ -87,7 +87,7 @@ const CARTAS = [
     alternativas: ["Um lenço", "Uma pulseira de troca", "Um beijo", "Um abraço"],
     alternativaCorreta: "Uma pulseira de troca",
     acontecimento: "Como o amor entre Ana e Pedro desafia as convenções sociais da época?",
-    fragmento: "📖 FRAGMENTO 9/15 - AMOR (p.38): 'O que ela queria era macho. E pensava em Pedro só porque, além do pai e dos irmãos, ele era o único homem que havia na estância.'"
+    fragmento: "📖 FRAGMENTO 9/15 - AMOR: 'A pulseira que trocaram em segredo valia mais que ouro. Era a promessa de um amor que não aceitava fronteiras - nem de terra, nem de sangue, nem de preconceito. Naquele gesto simples, nasceu algo que a guerra não conseguiria destruir.'"
   },
   {
     ordem: 10, numero: 10, palavraChave: "DOR",
@@ -97,7 +97,7 @@ const CARTAS = [
     alternativas: ["Uma lágrima", "Um lenço ensanguentado", "Uma vela", "Uma cruz de madeira"],
     alternativaCorreta: "Um lenço ensanguentado",
     acontecimento: "Quais foram as maiores perdas que Ana Terra enfrentou e como elas a transformaram?",
-    fragmento: "📖 FRAGMENTO 10/15 - DOR (p.49): 'Os dias que se seguiram foram para Ana Terra dias de vergonha, constrangimento e medo.'"
+    fragmento: "📖 FRAGMENTO 10/15 - DOR: 'O lenço que antes era branco agora trazia marcas vermelhas. Ana o guardou como testemunha silenciosa de um amor interrompido. Naquela noite, ela aprendeu que a dor também ensina - ensina a valorizar cada instante.'"
   },
   {
     ordem: 11, numero: 11, palavraChave: "ESPERANCA",
@@ -107,7 +107,7 @@ const CARTAS = [
     alternativas: ["Um berço", "Uma criança", "Uma semente brotando", "O nascer do sol"],
     alternativaCorreta: "Uma criança",
     acontecimento: "De que forma a maternidade representa a esperança para Ana Terra?",
-    fragmento: "📖 FRAGMENTO 11/15 - ESPERANÇA (p.50): 'Ela trazia Pedro dentro de si. Pedro ia nascer de novo e portanto tudo estava bem e o mundo no fim de contas não era tão mau.'"
+    fragmento: "📖 FRAGMENTO 11/15 - ESPERANÇA: 'O choro fraco rompeu o silêncio da noite. Nos braços de Ana, uma nova vida começava. Em meio ao luto e à destruição, a esperança renascia - pequena, frágil, mas teimosa como o mato que brota entre as pedras.'"
   },
   {
     ordem: 12, numero: 12, palavraChave: "RESISTENCIA",
@@ -117,7 +117,7 @@ const CARTAS = [
     alternativas: ["Uma oração", "Um terço", "Uma carta nunca enviada", "Uma fotografia"],
     alternativaCorreta: "Um terço",
     acontecimento: "Como a fé e a espiritualidade ajudam Ana a resistir às adversidades?",
-    fragmento: "📖 FRAGMENTO 12/15 - RESISTÊNCIA (p.55): 'Ana Terra sacudiu a cabeça lentamente, concordando, pois tivera o mesmo pensamento.'"
+    fragmento: "📖 FRAGMENTO 12/15 - RESISTÊNCIA: 'Entre os dedos calejados, as contas do terço deslizavam. Cada Ave Maria era um escudo contra o desespero, cada Pai Nosso uma trincheira contra a escuridão. A fé de Ana era sua arma mais poderosa.'"
   },
   {
     ordem: 13, numero: 13, palavraChave: "CONFLITO",
@@ -127,7 +127,7 @@ const CARTAS = [
     alternativas: ["Uma espada e um escudo", "Um mosquete e uma baioneta", "Uma lança e um facão", "Canhões e sabres"],
     alternativaCorreta: "Um mosquete e uma baioneta",
     acontecimento: "Como as guerras de fronteira afetaram a vida da família Terra?",
-    fragmento: "📖 FRAGMENTO 13/15 - CONFLITO (p.7): 'De quando em quando grupos de índios coroados desciam das bandas da coxilha de Botucaraí... atacando as estâncias e os viajantes. Havia também as 'arriadas', partidas de ladrões de gado.'"
+    fragmento: "📖 FRAGMENTO 13/15 - CONFLITO: 'O barulho dos mosquetes ecoou por dias. Quando o silêncio finalmente voltou, metade da aldeia havia sumido. Ana aprendeu que a guerra não escolhe lados - ela simplesmente destrói, sem piedade, sem razão.'"
   },
   {
     ordem: 14, numero: 14, palavraChave: "RECOMECO",
@@ -137,7 +137,7 @@ const CARTAS = [
     alternativas: ["Uma casa nova", "Uma mala de viagem", "Uma estrada bifurcada", "Uma chave"],
     alternativaCorreta: "Uma chave",
     acontecimento: "De que forma Ana Terra recomeça sua vida após as tragédias?",
-    fragmento: "📖 FRAGMENTO 14/15 - RECOMEÇO (p.87): 'Puseram-se a caminho. As rodas rechinaram. E assim Ana Terra viu ir ficando para trás a estância do pai.'"
+    fragmento: "📖 FRAGMENTO 14/15 - RECOMEÇO: 'A chave rangia na fechadura enferrujada. Dentro daquela casa abandonada, Ana via não ruínas, mas possibilidades. Era o começo de algo novo - não melhor, não pior, apenas diferente. E isso bastava.'"
   },
   {
     ordem: 15, numero: 15, palavraChave: "LEGADO",
@@ -147,7 +147,7 @@ const CARTAS = [
     alternativas: ["Um livro de memórias", "Um baú de histórias", "Uma árvore plantada", "Um colar de família"],
     alternativaCorreta: "Um livro de memórias",
     acontecimento: "Qual é a importância de preservar a memória de Ana Terra para as futuras gerações?",
-    fragmento: "📖 FRAGMENTO 15/15 - LEGADO (p.114-115): 'Achava que tudo agora estava bem. O filho era um homem direito e tinha casado com uma mulher séria e trabalhadora.'"
+    fragmento: "📖 FRAGMENTO 15/15 - LEGADO: 'O livro estava gasto, com páginas amareladas e marcas de dedos sujos de terra. Mas ali, naquelas linhas escritas à mão, Ana Terra continuava viva. Seu legado não era feito de ouro ou prata - era feito de histórias, e isso ninguém poderia roubar.'"
   }
 ];
 
