@@ -79,7 +79,7 @@ body {
 }
 
 /* ============================================================
-   CABEÇALHO COM GRADIENTE ANIMADO
+   CABECALHO COM GRADIENTE ANIMADO
    ============================================================ */
 .marca {
   text-align: center;
@@ -139,7 +139,7 @@ body {
 }
 
 /* ============================================================
-   CARTÕES GLASSMORPHISM
+   CARTOES GLASSMORPHISM
    ============================================================ */
 .cartao {
   background: rgba(242, 227, 198, 0.06);
@@ -161,7 +161,7 @@ body {
 }
 
 .cartao::before {
-  content: '⚜';
+  content: '\⚜';
   position: absolute;
   top: -4px;
   right: 16px;
@@ -235,7 +235,7 @@ textarea {
 }
 
 /* ============================================================
-   BOTÕES COM EFEITOS MODERNOS
+   BOTOES COM EFEITOS MODERNOS
    ============================================================ */
 .botao {
   display: inline-flex;
@@ -299,7 +299,7 @@ textarea {
 }
 
 /* ============================================================
-   MEDALHÕES MODERNOS (SVG ANIMADO)
+   MEDALHOES MODERNOS (SVG ANIMADO)
    ============================================================ */
 .medalhao-container {
   position: relative;
@@ -335,7 +335,7 @@ textarea {
 }
 
 /* ============================================================
-   GRADE DE ARQUÉTIPOS MODERNA
+   GRADE DE ARQUETIPOS MODERNA
    ============================================================ */
 .grade-arquetipos {
   display: grid;
@@ -716,7 +716,7 @@ textarea {
 .marcador:hover .tooltip { display: block; }
 
 /* ============================================================
-   BOTÃO DE COOLDOWN
+   BOTAO DE COOLDOWN
    ============================================================ */
 .botao.cooldown {
   background: rgba(255, 80, 80, 0.1);
@@ -1019,7 +1019,7 @@ textarea {
 }
 
 /* ============================================================
-   PREVIEW ARQUÉTIPO
+   PREVIEW ARQUETIPO
    ============================================================ */
 .preview-arquetipo {
   display: none;
@@ -1114,10 +1114,9 @@ textarea {
   line-height: 1.8;
   color: var(--pergaminho-escuro);
   border-left: 3px solid var(--ouro);
-  padding-left: 16px;
+  padding: 14px 18px;
   margin: 16px 0;
   background: rgba(201, 160, 80, 0.02);
-  padding: 14px 18px;
   border-radius: 0 var(--raio-md) var(--raio-md) 0;
 }
 .pista-original {
@@ -1184,13 +1183,13 @@ textarea {
   <div class="container">
     <div class="marca">
       <h1 class="marca-titulo">O Inventariante do Tempo: <span>A Jornada de Ana Terra</span></h1>
-      <p class="marca-subtitulo">Uma jornada pelo pampa gaúcho, carta a carta</p>
+      <p class="marca-subtitulo">Uma jornada pelo pampa gaucho, carta a carta</p>
     </div>
 
     <div class="cartao" id="bloco-escolha">
-      <h2 class="cartao-titulo">Sua dupla já existe?</h2>
-      <p class="cartao-descricao">Se sua dupla já foi cadastrada nesta jornada, entre com o e-mail e a senha. Se é a primeira vez, cadastre sua dupla.</p>
-      <button class="botao botao-dourado" onclick="mostrarBlocoLogin('bloco-login')">Já tenho cadastro (entrar)</button>
+      <h2 class="cartao-titulo">Sua dupla ja existe?</h2>
+      <p class="cartao-descricao">Se sua dupla ja foi cadastrada nesta jornada, entre com o e-mail e a senha. Se e a primeira vez, cadastre sua dupla.</p>
+      <button class="botao botao-dourado" onclick="mostrarBlocoLogin('bloco-login')">Ja tenho cadastro (entrar)</button>
       <button class="botao botao-secundario" onclick="mostrarBlocoLogin('bloco-cadastro')">Primeira vez (cadastrar dupla)</button>
       <p style="text-align:center;margin-top:28px;">
         <a href="#" onclick="mostrarApp('app-professor');return false;" style="font-family:var(--fonte-dados);font-size:11px;color:var(--ouro-escuro);text-decoration:none;letter-spacing:0.08em;opacity:0.6;">&#9670; Professor</a>
@@ -1201,12 +1200,12 @@ textarea {
       <h2 class="cartao-titulo">Cadastrar dupla</h2>
       <p class="cartao-descricao">Escolha um nome para sua dupla e preencha os demais dados para iniciar a jornada.</p>
       <label>Escolha o nome da dupla</label>
-      <p class="texto-pequeno" style="margin-top:-2px;margin-bottom:8px;">Toque em um nome para selecioná-lo.</p>
+      <p class="texto-pequeno" style="margin-top:-2px;margin-bottom:8px;">Toque em um nome para seleciona-lo.</p>
       <div class="lista-nomes" id="lista-nomes"></div>
       <div class="nome-selecionado-label" id="nome-selecionado-label"></div>
       <input type="hidden" id="cad-nome-dupla">
       <label for="cad-integrantes">Nomes dos integrantes</label>
-      <input type="text" id="cad-integrantes" placeholder="Ex: Maria e João" autocomplete="off">
+      <input type="text" id="cad-integrantes" placeholder="Ex: Maria e Joao" autocomplete="off">
       <label for="cad-email">E-mail de um dos integrantes</label>
       <input type="email" id="cad-email" placeholder="seuemail@gmail.com" autocomplete="off">
       <label for="cad-turma">Turma</label>
@@ -1232,11 +1231,11 @@ textarea {
 
     <div class="cartao oculto" id="bloco-registro">
       <h2 class="cartao-titulo">Registrar sua carta</h2>
-      <p class="cartao-descricao">Cada dupla sorteou uma carta na sala de aula. Informe o número da carta que sua dupla recebeu (de 1 a 15).</p>
-      <label for="reg-carta">Número da carta sorteada</label>
+      <p class="cartao-descricao">Cada dupla sorteou uma carta na sala de aula. Informe o numero da carta que sua dupla recebeu (de 1 a 15).</p>
+      <label for="reg-carta">Numero da carta sorteada</label>
       <input type="number" id="reg-carta" min="1" max="15" placeholder="Ex: 7">
-      <label>Escolha seu arquétipo</label>
-      <p class="texto-pequeno" style="margin-top:-2px;">Toque em um medalhão para conhecer o personagem. Depois confirme sua escolha.</p>
+      <label>Escolha seu arquetipo</label>
+      <p class="texto-pequeno" style="margin-top:-2px;">Toque em um medalhao para conhecer o personagem. Depois confirme sua escolha.</p>
       <div class="grade-arquetipos" id="grade-arquetipos"></div>
       <div class="preview-arquetipo" id="preview-arquetipo">
         <button class="preview-fechar" onclick="fecharPreview()" title="Fechar">&#x2715;</button>
@@ -1248,7 +1247,7 @@ textarea {
           </div>
         </div>
         <p class="preview-descricao" id="preview-descricao"></p>
-        <button class="botao botao-dourado" style="margin-top:0;" onclick="confirmarArquetipo()">Escolher este arquétipo</button>
+        <button class="botao botao-dourado" style="margin-top:0;" onclick="confirmarArquetipo()">Escolher este arquetipo</button>
       </div>
       <div class="arquetipo-confirmado" id="arquetipo-confirmado"></div>
       <button class="botao botao-dourado" onclick="registrarCartaEArquetipo()" id="btn-registrar">Confirmar e iniciar jornada</button>
@@ -1282,20 +1281,20 @@ textarea {
   <nav class="menu-lateral" id="menu-lateral">
     <div class="menu-header">
       <p class="menu-header-titulo">O Inventariante do Tempo</p>
-      <p class="menu-header-versao">Versão 3.0 - RPG</p>
+      <p class="menu-header-versao">Versao 3.0 - RPG</p>
     </div>
     <div class="menu-secao">
-      <p class="menu-secao-titulo">Navegação</p>
+      <p class="menu-secao-titulo">Navegacao</p>
       <button class="menu-item" onclick="irPara('tela-ficha')"><span class="menu-item-icone">&#128100;</span> Minha ficha</button>
       <button class="menu-item" onclick="irPara('tela-mapa')"><span class="menu-item-icone">&#128506;</span> Mapa da jornada</button>
-      <button class="menu-item" onclick="irPara('tela-missao')"><span class="menu-item-icone">&#9876;</span> Minha missão</button>
+      <button class="menu-item" onclick="irPara('tela-missao')"><span class="menu-item-icone">&#9876;</span> Minha missao</button>
     </div>
     <div class="menu-secao">
-      <p class="menu-secao-titulo">Informações</p>
-      <button class="menu-item" onclick="irPara('tela-sobre')"><span class="menu-item-icone">📖</span> Sobre o Game</button>
+      <p class="menu-secao-titulo">Informacoes</p>
+      <button class="menu-item" onclick="irPara('tela-sobre')"><span class="menu-item-icone">&#128214;</span> Sobre o Game</button>
     </div>
     <div class="menu-secao">
-      <p class="menu-secao-titulo">Sessão</p>
+      <p class="menu-secao-titulo">Sessao</p>
       <button class="menu-item menu-item-vermelho" onclick="confirmarSair()"><span class="menu-item-icone">&#8594;</span> Sair</button>
     </div>
     <div class="menu-rodape">Criado por Vanilson Cardoso</div>
@@ -1313,41 +1312,41 @@ textarea {
             <p class="ficha-tema" id="ficha-arquetipo-tema">...</p>
           </div>
         </div>
-        <div class="divisor"><span class="divisor-icone">✦ ✦ ✦</span></div>
+        <div class="divisor"><span class="divisor-icone">&#10022; &#10022; &#10022;</span></div>
         <p class="texto-pequeno" id="ficha-integrantes" style="margin:0 0 4px;"></p>
         <p class="texto-pequeno" id="ficha-turma" style="margin:0 0 16px;"></p>
-        <p class="cartao-descricao" style="margin:0;">Sua missão aguarda. A jornada de Ana Terra se desdobra em 15 estações, e a sua dupla é guardiã de uma delas.</p>
+        <p class="cartao-descricao" style="margin:0;">Sua missao aguarda. A jornada de Ana Terra se desdobra em 15 estacoes, e a sua dupla e guardia de uma delas.</p>
         
-        <!-- Atributos RPG com ícones modernos -->
+        <!-- Atributos RPG -->
         <div class="atributos">
           <div class="atributo">
-            <span class="icone-atributo">⚔️</span>
-            <span>Força</span>
+            <span class="icone-atributo">&#9876;&#65039;</span>
+            <span>Forca</span>
             <div class="barra-atributo barra-forca"><div style="width:60%"></div></div>
           </div>
           <div class="atributo">
-            <span class="icone-atributo">🏹</span>
+            <span class="icone-atributo">&#127993;&#65039;</span>
             <span>Destreza</span>
             <div class="barra-atributo barra-destreza"><div style="width:40%"></div></div>
           </div>
           <div class="atributo">
-            <span class="icone-atributo">📖</span>
+            <span class="icone-atributo">&#128214;</span>
             <span>Sabedoria</span>
             <div class="barra-atributo barra-sabedoria"><div style="width:80%"></div></div>
           </div>
           <div class="atributo">
-            <span class="icone-atributo">💫</span>
+            <span class="icone-atributo">&#10024;</span>
             <span>Carisma</span>
             <div class="barra-atributo barra-carisma"><div style="width:70%"></div></div>
           </div>
         </div>
         
-        <!-- HABILIDADE DO ARQUÉTIPO -->
+        <!-- HABILIDADE DO ARQUETIPO -->
         <div id="habilidades-container">
-          <h3 class="cartao-titulo" style="font-size:17px;">⚔️ Habilidade do Arquétipo</h3>
+          <h3 class="cartao-titulo" style="font-size:17px;">&#9876;&#65039; Habilidade do Arquetipo</h3>
           <div id="habilidades-display"></div>
           <button class="botao botao-secundario" onclick="usarHabilidade()" id="btn-habilidade">
-            🎯 Usar Habilidade Especial
+            &#127919; Usar Habilidade Especial
           </button>
           <div id="msg-habilidade"></div>
         </div>
@@ -1374,33 +1373,72 @@ textarea {
     </div>
   </div>
 
-  <!-- TELA: MISSÃO -->
+  <!-- TELA: MISSAO -->
   <div class="tela" id="tela-missao">
-   <!-- TELA: SOBRE O GAME -->
+    <div class="container">
+      <div class="cartao" id="cartao-missao">
+        <p class="missao-numero" id="missao-numero"></p>
+        <h2 class="missao-palavra" id="missao-palavra"></h2>
+        <div class="narrativa" id="missao-narrativa"></div>
+        <div class="pista-original">
+          <p class="pista-original-titulo">Pista</p>
+          <p style="margin:0;" id="missao-pista"></p>
+        </div>
+        <div id="form-resposta">
+          <p class="cartao-titulo" style="font-size:17px;">Desafio</p>
+          <p class="cartao-descricao" id="missao-desafio"></p>
+          <label for="resp-objeto">Qual objeto eu represento?</label>
+          <input type="text" id="resp-objeto" placeholder="Nome do objeto">
+          <label for="resp-justificativa">Justificativa</label>
+          <textarea id="resp-justificativa" placeholder="Explique por que este objeto representa esta palavra-chave..."></textarea>
+          <button class="botao botao-dourado" onclick="enviarResposta()" id="btn-enviar">Enviar resposta</button>
+          <div id="msg-missao"></div>
+        </div>
+        <div id="resposta-registrada" class="oculto">
+          <div class="mensagem mensagem-sucesso">Missao cumprida!</div>
+          <div class="resposta-enviada">
+            <p class="resposta-enviada-titulo">Objeto</p>
+            <p class="resposta-enviada-texto" id="resp-objeto-salvo"></p>
+          </div>
+          <div class="resposta-enviada">
+            <p class="resposta-enviada-titulo">Justificativa</p>
+            <p class="resposta-enviada-texto" id="resp-justificativa-salva"></p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- DESAFIO DO HEROI -->
+      <div id="desafio-heroi-container"></div>
+      
+      <button class="botao botao-secundario" onclick="mostrarTela('tela-mapa')">Voltar para o mapa</button>
+    </div>
+  </div>
+
+  <!-- TELA: SOBRE O GAME -->
   <div class="tela" id="tela-sobre">
     <div class="container">
       <div class="cartao" style="margin-top:24px;">
         <h2 class="cartao-titulo">Sobre o Game</h2>
         <p class="cartao-descricao">O Inventariante do Tempo: A Jornada de Ana Terra</p>
         <div class="narrativa">
-          Este objeto de aprendizagem digital foi criado para a turma do 9º ano da Escola Municipal Fundamental Estado do Amazonas, como parte das atividades do PIBID Letras da UNIJUÍ.
+          Este objeto de aprendizagem digital foi criado para a turma do 9 ano da Escola Municipal Fundamental Estado do Amazonas, como parte das atividades do PIBID Letras da UNIJUI.
         </div>
-        <div class="divisor"><span class="divisor-icone">✦ ✦ ✦</span></div>
+        <div class="divisor"><span class="divisor-icone">&#10022; &#10022; &#10022;</span></div>
         <div class="habilidade-card">
-          <p class="nome" style="margin-bottom:6px;">📚 A obra</p>
-          <p class="descricao" style="margin:0;">Baseado no romance <em>O Tempo e o Vento</em>, de Érico Veríssimo, o game acompanha a trajetória de Ana Terra pelo pampa gaúcho do século XVIII.</p>
-        </div>
-        <div class="habilidade-card">
-          <p class="nome" style="margin-bottom:6px;">🎯 Como funciona</p>
-          <p class="descricao" style="margin:0;">Cada dupla recebeu uma carta com uma palavra-chave da narrativa. Sua missão é identificar um objeto que represente essa palavra e justificar sua escolha com base na obra.</p>
+          <p class="nome" style="margin-bottom:6px;">&#128218; A obra</p>
+          <p class="descricao" style="margin:0;">Baseado no romance <em>O Tempo e o Vento</em>, de Erico Verissimo, o game acompanha a trajetoria de Ana Terra pelo pampa gaucho do seculo XVIII.</p>
         </div>
         <div class="habilidade-card">
-          <p class="nome" style="margin-bottom:6px;">🏆 Pontuação</p>
-          <p class="descricao" style="margin:0;">Resposta principal: +50 XP. Habilidade especial: +15 a +25 XP. Desafio do Herói (cartas 1, 3 e 7): +30 XP.</p>
+          <p class="nome" style="margin-bottom:6px;">&#127919; Como funciona</p>
+          <p class="descricao" style="margin:0;">Cada dupla recebeu uma carta com uma palavra-chave da narrativa. Sua missao e identificar um objeto que represente essa palavra e justificar sua escolha com base na obra.</p>
         </div>
-        <div class="divisor"><span class="divisor-icone">✦ ✦ ✦</span></div>
-        <p class="texto-pequeno texto-central" style="margin:0;">Criado por Vanilson Cardoso | PIBID Letras, UNIJUÍ</p>
-        <p class="texto-pequeno texto-central" style="margin:4px 0 0;">Supervisora: Prof.ª Andréia Cardoso</p>
+        <div class="habilidade-card">
+          <p class="nome" style="margin-bottom:6px;">&#127942; Pontuacao</p>
+          <p class="descricao" style="margin:0;">Resposta principal: +50 XP. Habilidade especial: +15 a +25 XP. Desafio do Heroi (cartas 1, 3 e 7): +30 XP.</p>
+        </div>
+        <div class="divisor"><span class="divisor-icone">&#10022; &#10022; &#10022;</span></div>
+        <p class="texto-pequeno texto-central" style="margin:0;">Criado por Vanilson Cardoso | PIBID Letras, UNIJUI</p>
+        <p class="texto-pequeno texto-central" style="margin:4px 0 0;">Supervisora: Prof. Andreia Cardoso</p>
         <button class="botao botao-secundario" onclick="mostrarTela('tela-ficha')" style="margin-top:24px;">Voltar para a ficha</button>
       </div>
     </div>
@@ -1428,7 +1466,7 @@ textarea {
         <input type="password" id="prof-senha" autocomplete="current-password">
         <button class="botao botao-dourado" onclick="logarProfessor()" id="btn-login-prof">Entrar</button>
         <div id="msg-login-prof"></div>
-        <a href="#" onclick="mostrarApp('app-login');return false;" class="link-discreto" style="display:block;text-align:center;margin-top:12px;">&#8592; Voltar para a página dos alunos</a>
+        <a href="#" onclick="mostrarApp('app-login');return false;" class="link-discreto" style="display:block;text-align:center;margin-top:12px;">&#8592; Voltar para a pagina dos alunos</a>
       </div>
     </div>
   </div>
@@ -1440,7 +1478,7 @@ textarea {
     <div class="container-largo" style="padding-top:24px;">
       <div class="resumo-grade">
         <div class="resumo-card"><span class="resumo-numero" id="res-duplas">0</span><span class="resumo-label">Duplas cadastradas</span></div>
-        <div class="resumo-card"><span class="resumo-numero" id="res-concluidas">0</span><span class="resumo-label">Missões concluídas</span></div>
+        <div class="resumo-card"><span class="resumo-numero" id="res-concluidas">0</span><span class="resumo-label">Missoes concluidas</span></div>
         <div class="resumo-card"><span class="resumo-numero" id="res-cartas">0/15</span><span class="resumo-label">Cartas registradas</span></div>
       </div>
       <div id="grade-cartas" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;"></div>
@@ -1461,92 +1499,92 @@ const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_
    MEDALHOES MODERNOS (SVG OTIMIZADOS)
    ============================================================ */
 const MEDALHOES = {
-  ana_terra: `<svg viewBox="0 0 240 240"><defs><radialGradient id="g_ana"><stop offset="0%" stop-color="#f3e3c3"/><stop offset="100%" stop-color="#d4c4a8"/></radialGradient></defs><circle cx="120" cy="120" r="104" fill="url(#g_ana)" stroke="#c9a050" stroke-width="2"/><circle cx="120" cy="120" r="94" fill="none" stroke="#a9784f" stroke-width="1"/><path d="M80 180 Q120 140 160 180" stroke="#6b4226" stroke-width="2" fill="none"/><circle cx="120" cy="120" r="40" fill="none" stroke="#6b4226" stroke-width="1.5"/><circle cx="120" cy="120" r="20" fill="#c9a050" opacity="0.3"/><text x="120" y="130" text-anchor="middle" font-family="Cinzel" font-size="28" fill="#6b4226">⚜</text></svg>`,
-  pedro_missioneiro: `<svg viewBox="0 0 240 240"><defs><radialGradient id="g_pm"><stop offset="0%" stop-color="#f3e3c3"/><stop offset="100%" stop-color="#d4c4a8"/></radialGradient></defs><circle cx="120" cy="120" r="104" fill="url(#g_pm)" stroke="#c9a050" stroke-width="2"/><circle cx="120" cy="120" r="94" fill="none" stroke="#a9784f" stroke-width="1"/><path d="M60 160 L180 160 L160 100 L80 100 Z" stroke="#6b4226" stroke-width="2" fill="none"/><circle cx="120" cy="80" r="20" fill="none" stroke="#6b4226" stroke-width="1.5"/><text x="120" y="130" text-anchor="middle" font-family="Cinzel" font-size="32" fill="#6b4226">⛪</text></svg>`,
-  maneco_terra: `<svg viewBox="0 0 240 240"><defs><radialGradient id="g_mt"><stop offset="0%" stop-color="#f3e3c3"/><stop offset="100%" stop-color="#d4c4a8"/></radialGradient></defs><circle cx="120" cy="120" r="104" fill="url(#g_mt)" stroke="#c9a050" stroke-width="2"/><circle cx="120" cy="120" r="94" fill="none" stroke="#a9784f" stroke-width="1"/><path d="M100 140 L140 140 L140 80 L100 80 Z" stroke="#6b4226" stroke-width="2" fill="none"/><path d="M80 80 L160 80 L160 60 L80 60 Z" stroke="#6b4226" stroke-width="2" fill="none"/><text x="120" y="130" text-anchor="middle" font-family="Cinzel" font-size="32" fill="#6b4226">🏛️</text></svg>`,
-  henriqueta: `<svg viewBox="0 0 240 240"><defs><radialGradient id="g_h"><stop offset="0%" stop-color="#f3e3c3"/><stop offset="100%" stop-color="#d4c4a8"/></radialGradient></defs><circle cx="120" cy="120" r="104" fill="url(#g_h)" stroke="#c9a050" stroke-width="2"/><circle cx="120" cy="120" r="94" fill="none" stroke="#a9784f" stroke-width="1"/><path d="M80 160 Q120 120 160 160" stroke="#6b4226" stroke-width="2" fill="none"/><circle cx="120" cy="100" r="30" fill="none" stroke="#6b4226" stroke-width="1.5"/><text x="120" y="130" text-anchor="middle" font-family="Cinzel" font-size="32" fill="#6b4226">🌾</text></svg>`,
-  horacio: `<svg viewBox="0 0 240 240"><defs><radialGradient id="g_hor"><stop offset="0%" stop-color="#f3e3c3"/><stop offset="100%" stop-color="#d4c4a8"/></radialGradient></defs><circle cx="120" cy="120" r="104" fill="url(#g_hor)" stroke="#c9a050" stroke-width="2"/><circle cx="120" cy="120" r="94" fill="none" stroke="#a9784f" stroke-width="1"/><path d="M80 140 L160 140" stroke="#6b4226" stroke-width="2"/><path d="M100 140 L100 80" stroke="#6b4226" stroke-width="2"/><path d="M140 140 L140 80" stroke="#6b4226" stroke-width="2"/><circle cx="120" cy="80" r="15" fill="none" stroke="#6b4226" stroke-width="1.5"/><text x="120" y="130" text-anchor="middle" font-family="Cinzel" font-size="32" fill="#6b4226">⚖️</text></svg>`,
-  pedro_terra: `<svg viewBox="0 0 240 240"><defs><radialGradient id="g_pt"><stop offset="0%" stop-color="#f3e3c3"/><stop offset="100%" stop-color="#d4c4a8"/></radialGradient></defs><circle cx="120" cy="120" r="104" fill="url(#g_pt)" stroke="#c9a050" stroke-width="2"/><circle cx="120" cy="120" r="94" fill="none" stroke="#a9784f" stroke-width="1"/><path d="M80 140 Q120 110 160 140" stroke="#6b4226" stroke-width="2" fill="none"/><circle cx="120" cy="100" r="25" fill="none" stroke="#6b4226" stroke-width="1.5"/><text x="120" y="130" text-anchor="middle" font-family="Cinzel" font-size="32" fill="#6b4226">🌿</text></svg>`
+  ana_terra: `<svg viewBox="0 0 240 240"><defs><radialGradient id="g_ana"><stop offset="0%" stop-color="#f3e3c3"/><stop offset="100%" stop-color="#d4c4a8"/></radialGradient></defs><circle cx="120" cy="120" r="104" fill="url(#g_ana)" stroke="#c9a050" stroke-width="2"/><circle cx="120" cy="120" r="94" fill="none" stroke="#a9784f" stroke-width="1"/><path d="M80 180 Q120 140 160 180" stroke="#6b4226" stroke-width="2" fill="none"/><circle cx="120" cy="120" r="40" fill="none" stroke="#6b4226" stroke-width="1.5"/><circle cx="120" cy="120" r="20" fill="#c9a050" opacity="0.3"/><text x="120" y="130" text-anchor="middle" font-family="Cinzel" font-size="28" fill="#6b4226">&#9752;</text></svg>`,
+  pedro_missioneiro: `<svg viewBox="0 0 240 240"><defs><radialGradient id="g_pm"><stop offset="0%" stop-color="#f3e3c3"/><stop offset="100%" stop-color="#d4c4a8"/></radialGradient></defs><circle cx="120" cy="120" r="104" fill="url(#g_pm)" stroke="#c9a050" stroke-width="2"/><circle cx="120" cy="120" r="94" fill="none" stroke="#a9784f" stroke-width="1"/><path d="M60 160 L180 160 L160 100 L80 100 Z" stroke="#6b4226" stroke-width="2" fill="none"/><circle cx="120" cy="80" r="20" fill="none" stroke="#6b4226" stroke-width="1.5"/><text x="120" y="130" text-anchor="middle" font-family="Cinzel" font-size="32" fill="#6b4226">&#9962;</text></svg>`,
+  maneco_terra: `<svg viewBox="0 0 240 240"><defs><radialGradient id="g_mt"><stop offset="0%" stop-color="#f3e3c3"/><stop offset="100%" stop-color="#d4c4a8"/></radialGradient></defs><circle cx="120" cy="120" r="104" fill="url(#g_mt)" stroke="#c9a050" stroke-width="2"/><circle cx="120" cy="120" r="94" fill="none" stroke="#a9784f" stroke-width="1"/><path d="M100 140 L140 140 L140 80 L100 80 Z" stroke="#6b4226" stroke-width="2" fill="none"/><path d="M80 80 L160 80 L160 60 L80 60 Z" stroke="#6b4226" stroke-width="2" fill="none"/><text x="120" y="130" text-anchor="middle" font-family="Cinzel" font-size="32" fill="#6b4226">&#127963;</text></svg>`,
+  henriqueta: `<svg viewBox="0 0 240 240"><defs><radialGradient id="g_h"><stop offset="0%" stop-color="#f3e3c3"/><stop offset="100%" stop-color="#d4c4a8"/></radialGradient></defs><circle cx="120" cy="120" r="104" fill="url(#g_h)" stroke="#c9a050" stroke-width="2"/><circle cx="120" cy="120" r="94" fill="none" stroke="#a9784f" stroke-width="1"/><path d="M80 160 Q120 120 160 160" stroke="#6b4226" stroke-width="2" fill="none"/><circle cx="120" cy="100" r="30" fill="none" stroke="#6b4226" stroke-width="1.5"/><text x="120" y="130" text-anchor="middle" font-family="Cinzel" font-size="32" fill="#6b4226">&#127806;</text></svg>`,
+  horacio: `<svg viewBox="0 0 240 240"><defs><radialGradient id="g_hor"><stop offset="0%" stop-color="#f3e3c3"/><stop offset="100%" stop-color="#d4c4a8"/></radialGradient></defs><circle cx="120" cy="120" r="104" fill="url(#g_hor)" stroke="#c9a050" stroke-width="2"/><circle cx="120" cy="120" r="94" fill="none" stroke="#a9784f" stroke-width="1"/><path d="M80 140 L160 140" stroke="#6b4226" stroke-width="2"/><path d="M100 140 L100 80" stroke="#6b4226" stroke-width="2"/><path d="M140 140 L140 80" stroke="#6b4226" stroke-width="2"/><circle cx="120" cy="80" r="15" fill="none" stroke="#6b4226" stroke-width="1.5"/><text x="120" y="130" text-anchor="middle" font-family="Cinzel" font-size="32" fill="#6b4226">&#9878;</text></svg>`,
+  pedro_terra: `<svg viewBox="0 0 240 240"><defs><radialGradient id="g_pt"><stop offset="0%" stop-color="#f3e3c3"/><stop offset="100%" stop-color="#d4c4a8"/></radialGradient></defs><circle cx="120" cy="120" r="104" fill="url(#g_pt)" stroke="#c9a050" stroke-width="2"/><circle cx="120" cy="120" r="94" fill="none" stroke="#a9784f" stroke-width="1"/><path d="M80 140 Q120 110 160 140" stroke="#6b4226" stroke-width="2" fill="none"/><circle cx="120" cy="100" r="25" fill="none" stroke="#6b4226" stroke-width="1.5"/><text x="120" y="130" text-anchor="middle" font-family="Cinzel" font-size="32" fill="#6b4226">&#127807;</text></svg>`
 };
 
 /* ============================================================
-   DADOS DOS ARQUÉTIPOS
+   DADOS DOS ARQUETIPOS
    ============================================================ */
 const ARQUETIPOS = [
-  { id: "ana_terra", nome: "Ana Terra", tema: "Resistência feminina" },
-  { id: "pedro_missioneiro", nome: "Pedro Missioneiro", tema: "Miscigenação" },
+  { id: "ana_terra", nome: "Ana Terra", tema: "Resistencia feminina" },
+  { id: "pedro_missioneiro", nome: "Pedro Missioneiro", tema: "Miscigenacao" },
   { id: "maneco_terra", nome: "Maneco Terra", tema: "Autoridade patriarcal" },
-  { id: "henriqueta", nome: "Henriqueta", tema: "Preservação dos costumes" },
-  { id: "horacio", nome: "Horácio", tema: "Conservadorismo social" },
-  { id: "pedro_terra", nome: "Pedro Terra", tema: "Continuidade das gerações" }
+  { id: "henriqueta", nome: "Henriqueta", tema: "Preservacao dos costumes" },
+  { id: "horacio", nome: "Horacio", tema: "Conservadorismo social" },
+  { id: "pedro_terra", nome: "Pedro Terra", tema: "Continuidade das geracoes" }
 ];
 
 const DESCRICOES_ARQUETIPOS = {
   ana_terra: "Mulher que enfrenta perdas e preconceitos sem se deixar vencer.",
-  pedro_missioneiro: "Filho do encontro entre culturas diferentes, origem da identidade gaúcha.",
-  maneco_terra: "Representa o comando da família e a manutenção das regras do passado.",
-  henriqueta: "Guarda os hábitos e modos de viver que sustentam a vida na estância.",
-  horacio: "Representa a resistência às mudanças e a defesa das normas sociais.",
-  pedro_terra: "Representa a passagem do tempo entre gerações e a continuidade da história."
+  pedro_missioneiro: "Filho do encontro entre culturas diferentes, origem da identidade gaucha.",
+  maneco_terra: "Representa o comando da familia e a manutencao das regras do passado.",
+  henriqueta: "Guarda os habitos e modos de viver que sustentam a vida na estancia.",
+  horacio: "Representa a resistencia as mudancas e a defesa das normas sociais.",
+  pedro_terra: "Representa a passagem do tempo entre geracoes e a continuidade da historia."
 };
 
 /* ============================================================
    SISTEMA DE HABILIDADES (RPG) - COOLDOWN 30 SEGUNDOS
    ============================================================ */
-const COOLDOWN_HABILIDADE = 30; // 30 segundos
+const COOLDOWN_HABILIDADE = 30;
 
 const HABILIDADES = {
   ana_terra: {
-    nome: "Resiliência do Pampa",
-    descricao: "Ana Terra encontra forças para continuar. Aumenta eficácia das respostas.",
-    icone: "🛡️",
+    nome: "Resiliencia do Pampa",
+    descricao: "Ana Terra encontra forcas para continuar. Aumenta eficacia das respostas.",
+    icone: "&#128737;&#65039;",
     tipo: "passiva",
-    efeito: "Aumenta a eficácia das respostas em 15%"
+    efeito: "Aumenta a eficacia das respostas em 15%"
   },
   pedro_missioneiro: {
     nome: "Sabedoria Missioneira",
     descricao: "Conhecimento ancestral. Revela uma pista adicional sobre a palavra-chave.",
-    icone: "📜",
+    icone: "&#128220;",
     tipo: "ativa",
     efeito: "Revela uma pista adicional sobre a palavra-chave"
   },
   maneco_terra: {
     nome: "Autoridade Patriarcal",
-    descricao: "A tradição guia suas ações. Fortalece a argumentação.",
-    icone: "⚔️",
+    descricao: "A tradicao guia suas acoes. Fortalece a argumentacao.",
+    icone: "&#9876;&#65039;",
     tipo: "ativa",
-    efeito: "Aumenta o poder de convicção da justificativa"
+    efeito: "Aumenta o poder de conviccao da justificativa"
   },
   henriqueta: {
-    nome: "Guardiã do Fogo",
-    descricao: "Memória dos costumes. Identifica elementos culturais nas respostas.",
-    icone: "🔥",
+    nome: "Guardia do Fogo",
+    descricao: "Memoria dos costumes. Identifica elementos culturais nas respostas.",
+    icone: "&#128293;",
     tipo: "passiva",
     efeito: "Identifica automaticamente elementos culturais nas respostas"
   },
   horacio: {
-    nome: "Visão Conservadora",
-    descricao: "Análise crítica. Permite antever desafios futuros.",
-    icone: "👁️",
+    nome: "Visao Conservadora",
+    descricao: "Analise critica. Permite antever desafios futuros.",
+    icone: "&#128065;&#65039;",
     tipo: "ativa",
-    efeito: "Revela o próximo desafio da jornada"
+    efeito: "Revela o proximo desafio da jornada"
   },
   pedro_terra: {
-    nome: "Legado das Gerações",
-    descricao: "Sabedoria acumulada. Conexão com todos os personagens da narrativa.",
-    icone: "🌳",
+    nome: "Legado das Geracoes",
+    descricao: "Sabedoria acumulada. Conexao com todos os personagens da narrativa.",
+    icone: "&#127795;",
     tipo: "passiva",
-    efeito: "Permite acessar conhecimentos de outros arquétipos"
+    efeito: "Permite acessar conhecimentos de outros arquetipos"
   }
 };
 
 /* ============================================================
-   DESAFIOS DO HERÓI
+   DESAFIOS DO HEROI
    ============================================================ */
 const DESAFIOS_ADICIONAIS = {
   1: { titulo: "A Marca da Terra", descricao: "Explique como a paisagem do pampa molda a personalidade de Ana Terra.", bonus_xp: 30 },
-  3: { titulo: "Costumes que Persistem", descricao: "Identifique três costumes presentes na narrativa que ainda fazem parte da cultura gaúcha.", bonus_xp: 30 },
-  7: { titulo: "O Impacto do Encontro", descricao: "Como o personagem indígena transforma a estrutura social retratada na obra?", bonus_xp: 30 }
+  3: { titulo: "Costumes que Persistem", descricao: "Identifique tres costumes presentes na narrativa que ainda fazem parte da cultura gaucha.", bonus_xp: 30 },
+  7: { titulo: "O Impacto do Encontro", descricao: "Como o personagem indigena transforma a estrutura social retratada na obra?", bonus_xp: 30 }
 };
 
 /* ============================================================
@@ -1555,16 +1593,16 @@ const DESAFIOS_ADICIONAIS = {
 const CARTAS = [
   { ordem: 1, numero: 3, palavraChave: "ORIGEM", pista: "Represento o lugar onde Ana Terra nasceu e cresceu.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Antes de Ana Terra, houve a terra. Vasta, dura, generosa. E dela que tudo nasce: o sangue, o sustento, a primeira lembranca de infancia sob o ceu aberto do pampa." },
   { ordem: 2, numero: 1, palavraChave: "NARRATIVA", pista: "Sou o inicio de tudo. Guardo personagens, conflitos e memorias.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Toda jornada precisa de um lugar para guardar suas memorias. Personagens nascem, conflitos se acumulam, geracoes se sucedem." },
-  { ordem: 3, numero: 14, palavraChave: "TRADIÇÃO", pista: "Represento costumes e habitos que fazem parte da identidade gaucha.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Antes mesmo de Ana Terra existir, ja existiam os costumes que a formaram: o modo de viver, de se vestir, de receber visitas." },
+  { ordem: 3, numero: 14, palavraChave: "TRADICAO", pista: "Represento costumes e habitos que fazem parte da identidade gaucha.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Antes mesmo de Ana Terra existir, ja existiam os costumes que a formaram: o modo de viver, de se vestir, de receber visitas." },
   { ordem: 4, numero: 7, palavraChave: "ENCONTRO", pista: "Minha chegada transforma completamente o rumo da narrativa.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Um dia, alguem chega. E nada mais e como antes. Esse encontro muda o rumo de tudo, nao apenas da vida de Ana, mas da propria narrativa." },
   { ordem: 5, numero: 9, palavraChave: "AMOR", pista: "Nasci da uniao de duas pessoas que desafiaram as regras de sua epoca.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Entre duas pessoas que a sociedade dizia nao deverem se unir, nasce algo verdadeiro. Esse sentimento desafia regras, costumes e expectativas." },
   { ordem: 6, numero: 15, palavraChave: "CONFLITO", pista: "Represento guerras, disputas territoriais e acontecimentos que influenciaram a formacao do Rio Grande do Sul.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "As terras do pampa nunca foram pacificas. Disputas territoriais, guerras e tensoes marcam a regiao onde Ana Terra vive." },
-  { ordem: 7, numero: 8, palavraChave: "MUDANÇA", pista: "Sou um personagem ligado a cultura indigena e ao amor proibido.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Ha quem chegue para transformar tudo. Um personagem ligado a outra cultura, a outras tradicoes, envolvido em um amor que a epoca nao aceitava." },
+  { ordem: 7, numero: 8, palavraChave: "MUDANCA", pista: "Sou um personagem ligado a cultura indigena e ao amor proibido.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Ha quem chegue para transformar tudo. Um personagem ligado a outra cultura, a outras tradicoes, envolvido em um amor que a epoca nao aceitava." },
   { ordem: 8, numero: 10, palavraChave: "DOR", pista: "Represento perdas, sofrimento, violencia e relacoes de poder.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Depois da transformacao, vem o preco. Perdas, sofrimento, violencia, e relacoes de poder que pesam sobre quem tem menos voz." },
-  { ordem: 9, numero: 4, palavraChave: "SOBREVIVÊNCIA", pista: "Sou resultado do trabalho diario e garanto o sustento da familia.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Mesmo na dor, a vida continua, e ela exige trabalho. Dia apos dia, o sustento da familia depende do esforco sobre a terra." },
-  { ordem: 10, numero: 6, palavraChave: "RESILIÊNCIA", pista: "Represento uma mulher forte que enfrentou perdas, violencia e preconceitos sem desistir.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Ana Terra e, antes de tudo, uma mulher que nao desiste. Perdas, violencia, preconceitos: nada disso a quebra por completo." },
-  { ordem: 11, numero: 11, palavraChave: "ESPERANÇA", pista: "Mesmo apos tantas tragedias, simbolizo a continuidade da vida.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Mesmo depois de tantas tragedias, a vida encontra um jeito de continuar. Um novo comeco se anuncia: pequeno, fragil, mas real." },
-  { ordem: 12, numero: 12, palavraChave: "RESISTÊNCIA", pista: "Ajudo a enfrentar momentos dificeis e manter a esperanca.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Nos momentos mais dificeis, e preciso algo a que se apegar. Algo que ajude a manter a fe, a forca e a esperanca." },
+  { ordem: 9, numero: 4, palavraChave: "SOBREVIVENCIA", pista: "Sou resultado do trabalho diario e garanto o sustento da familia.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Mesmo na dor, a vida continua, e ela exige trabalho. Dia apos dia, o sustento da familia depende do esforco sobre a terra." },
+  { ordem: 10, numero: 6, palavraChave: "RESILIENCIA", pista: "Represento uma mulher forte que enfrentou perdas, violencia e preconceitos sem desistir.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Ana Terra e, antes de tudo, uma mulher que nao desiste. Perdas, violencia, preconceitos: nada disso a quebra por completo." },
+  { ordem: 11, numero: 11, palavraChave: "ESPERANCA", pista: "Mesmo apos tantas tragedias, simbolizo a continuidade da vida.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Mesmo depois de tantas tragedias, a vida encontra um jeito de continuar. Um novo comeco se anuncia: pequeno, fragil, mas real." },
+  { ordem: 12, numero: 12, palavraChave: "RESISTENCIA", pista: "Ajudo a enfrentar momentos dificeis e manter a esperanca.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Nos momentos mais dificeis, e preciso algo a que se apegar. Algo que ajude a manter a fe, a forca e a esperanca." },
   { ordem: 13, numero: 13, palavraChave: "RECOMEÇO", pista: "Abro caminhos para uma nova vida depois das perdas.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Depois de tanto perder, e hora de abrir uma porta para o novo. Um caminho diferente se apresenta." },
   { ordem: 14, numero: 5, palavraChave: "LIBERDADE", pista: "Levo pessoas, mensagens e sonhos pelos pampas gauchos.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Pelo pampa, seguem mensagens, sonhos e pessoas em movimento. Esse ir e vir constante representa a liberdade de seguir caminho." },
   { ordem: 15, numero: 2, palavraChave: "DESTINO", pista: "Acompanho os momentos mais importantes da vida da protagonista.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "No fim, olhamos para tras e vemos: cada momento importante da vida de Ana Terra estava conectado." }
@@ -1572,16 +1610,16 @@ const CARTAS = [
 
 const NOMES_DUPLA = [
   "Filhos da Terra", "Vozes do Pampa", "Herdeiros do Vento",
-  "Raízes do Sul", "Sangue e Campo", "Guardiões da Memória",
+  "Raizes do Sul", "Sangue e Campo", "Guardioes da Memoria",
   "Sementes do Pampa", "Filhos do Encontro", "A Marca do Destino",
-  "Entre Rios e Guerras", "Os Sobreviventes", "Crônicas do Campo",
-  "Herdeiros de Ana", "Sombras do Século", "Frutos da Resistência",
-  "Os Caminhantes", "Filhos da Tormenta", "Raízes Cruzadas",
-  "A Voz que Resta", "Guardiões do Pampa"
+  "Entre Rios e Guerras", "Os Sobreviventes", "Cronicas do Campo",
+  "Herdeiros de Ana", "Sombras do Seculo", "Frutos da Resistencia",
+  "Os Caminhantes", "Filhos da Tormenta", "Raizes Cruzadas",
+  "A Voz que Resta", "Guardioes do Pampa"
 ];
 
 /* ============================================================
-   FUNÇÕES AUXILIARES
+   FUNCOES AUXILIARES
    ============================================================ */
 function getCartaPorNumero(numero) { return CARTAS.find(c => c.numero === numero); }
 
@@ -1639,7 +1677,7 @@ function montarListaNomes() {
 }
 
 /* ============================================================
-   ARQUÉTIPOS
+   ARQUETIPOS
    ============================================================ */
 let arquetipoSelecionado = null;
 let arquetipoEmPreview = null;
@@ -1684,7 +1722,7 @@ function confirmarArquetipo() {
   document.querySelectorAll(".opcao-arquetipo").forEach(el => {
     el.classList.toggle("selecionado", el.dataset.id === arquetipoSelecionado);
   });
-  document.getElementById("arquetipo-confirmado").textContent = "Arquétipo escolhido: " + arq.nome;
+  document.getElementById("arquetipo-confirmado").textContent = "Arquetipo escolhido: " + arq.nome;
   document.getElementById("arquetipo-confirmado").classList.add("visivel");
   fecharPreview();
 }
@@ -1702,7 +1740,7 @@ async function cadastrarDupla() {
 
   if (!nomeDupla) { exibirMensagem("msg-cadastro","Selecione um nome para a dupla.","erro"); return; }
   if (!integrantes||!email||!turma||!senha) { exibirMensagem("msg-cadastro","Preencha todos os campos.","erro"); return; }
-  if (!email.includes("@")) { exibirMensagem("msg-cadastro","E-mail inválido.","erro"); return; }
+  if (!email.includes("@")) { exibirMensagem("msg-cadastro","E-mail invalido.","erro"); return; }
   if (senha.length < 4) { exibirMensagem("msg-cadastro","A senha deve ter pelo menos 4 caracteres.","erro"); return; }
 
   const btn = document.getElementById("btn-cadastrar");
@@ -1716,7 +1754,7 @@ async function cadastrarDupla() {
   btn.disabled = false; btn.textContent = "Cadastrar e continuar";
 
   if (error) { exibirMensagem("msg-cadastro","Erro: "+error.message,"erro"); return; }
-  if (data === null) { exibirMensagem("msg-cadastro","E-mail já cadastrado.","erro"); return; }
+  if (data === null) { exibirMensagem("msg-cadastro","E-mail ja cadastrado.","erro"); return; }
 
   salvarSessao(data);
   await prosseguirAposAutenticacao(data);
@@ -1759,8 +1797,8 @@ async function registrarCartaEArquetipo() {
   const duplaId = sessionStorage.getItem("anaTerraDuplaId");
   const numeroCarta = parseInt(document.getElementById("reg-carta").value, 10);
 
-  if (!numeroCarta||numeroCarta<1||numeroCarta>15) { exibirMensagem("msg-registro","Número de carta inválido (1-15).","erro"); return; }
-  if (!arquetipoSelecionado) { exibirMensagem("msg-registro","Escolha e confirme um arquétipo.","erro"); return; }
+  if (!numeroCarta||numeroCarta<1||numeroCarta>15) { exibirMensagem("msg-registro","Numero de carta invalido (1-15).","erro"); return; }
+  if (!arquetipoSelecionado) { exibirMensagem("msg-registro","Escolha e confirme um arquetipo.","erro"); return; }
 
   const btn = document.getElementById("btn-registrar");
   btn.disabled = true; btn.textContent = "Registrando...";
@@ -1772,7 +1810,7 @@ async function registrarCartaEArquetipo() {
   btn.disabled = false; btn.textContent = "Confirmar e iniciar jornada";
 
   if (error) { exibirMensagem("msg-registro","Erro: "+error.message,"erro"); return; }
-  if (data==="carta_ocupada") { exibirMensagem("msg-registro","Carta já registrada por outra dupla.","erro"); return; }
+  if (data==="carta_ocupada") { exibirMensagem("msg-registro","Carta ja registrada por outra dupla.","erro"); return; }
   if (data==="ja_registrado") { await iniciarJornada(duplaId); return; }
 
   exibirMensagem("msg-registro","Carta registrada! Iniciando jornada...","sucesso");
@@ -1856,8 +1894,8 @@ function preencherMapa() {
     
     let classe = "marcador";
     let status = "Aguardando";
-    if (ehPropria) { classe += " marcador-proprio"; status = RESPOSTA_EXISTENTE ? "Concluída" : "Sua missão"; }
-    else if (concluida) { classe += " marcador-concluido"; status = "Concluída"; }
+    if (ehPropria) { classe += " marcador-proprio"; status = RESPOSTA_EXISTENTE ? "Concluida" : "Sua missao"; }
+    else if (concluida) { classe += " marcador-concluido"; status = "Concluida"; }
     else { classe += " marcador-bloqueado"; status = duplaDestaCarta ? "Em andamento" : "Livre"; }
     
     const marcador = document.createElement("div");
@@ -1874,7 +1912,7 @@ function preencherMapa() {
 function preencherMissao() {
   const carta = getCartaPorNumero(DUPLA.carta_numero);
   if (!carta) return;
-  document.getElementById("missao-numero").textContent = "Estação " + carta.ordem + " de 15: Carta " + carta.numero;
+  document.getElementById("missao-numero").textContent = "Estacao " + carta.ordem + " de 15: Carta " + carta.numero;
   document.getElementById("missao-palavra").textContent = carta.palavraChave;
   document.getElementById("missao-narrativa").textContent = carta.narrativa;
   document.getElementById("missao-pista").textContent = carta.pista;
@@ -1895,7 +1933,7 @@ function atualizarProgressoColetivo() {
 }
 
 /* ============================================================
-   FUNÇÕES RPG - HABILIDADES (COOLDOWN 30 SEGUNDOS)
+   FUNCOES RPG - HABILIDADES (COOLDOWN 30 SEGUNDOS)
    ============================================================ */
 function exibirHabilidades() {
   const arq = DUPLA.arquetipo;
@@ -1916,16 +1954,14 @@ function exibirHabilidades() {
     </div>
   `;
   
-  // Verificar cooldown - 30 SEGUNDOS
   const ultimoUso = localStorage.getItem(`habilidade_${DUPLA.id}`);
   if (ultimoUso && (Date.now() - parseInt(ultimoUso)) < (COOLDOWN_HABILIDADE * 1000)) {
     const restante = Math.ceil((COOLDOWN_HABILIDADE * 1000 - (Date.now() - parseInt(ultimoUso))) / 1000);
     const btn = document.getElementById("btn-habilidade");
     btn.disabled = true;
     btn.className = "botao botao-secundario cooldown";
-    btn.innerHTML = `⏳ Aguarde <span class="timer">${restante}s</span>`;
+    btn.innerHTML = `&#9203; Aguarde <span class="timer">${restante}s</span>`;
     
-    // Atualizar timer a cada segundo
     const intervalo = setInterval(() => {
       const agora = Date.now();
       const rest = Math.ceil((COOLDOWN_HABILIDADE * 1000 - (agora - parseInt(ultimoUso))) / 1000);
@@ -1933,15 +1969,15 @@ function exibirHabilidades() {
         clearInterval(intervalo);
         btn.disabled = false;
         btn.className = "botao botao-secundario";
-        btn.innerHTML = "🎯 Usar Habilidade Especial";
+        btn.innerHTML = "&#127919; Usar Habilidade Especial";
       } else {
-        btn.innerHTML = `⏳ Aguarde <span class="timer">${rest}s</span>`;
+        btn.innerHTML = `&#9203; Aguarde <span class="timer">${rest}s</span>`;
       }
     }, 1000);
   } else {
     document.getElementById("btn-habilidade").disabled = false;
     document.getElementById("btn-habilidade").className = "botao botao-secundario";
-    document.getElementById("btn-habilidade").innerHTML = "🎯 Usar Habilidade Especial";
+    document.getElementById("btn-habilidade").innerHTML = "&#127919; Usar Habilidade Especial";
   }
 }
 
@@ -1950,11 +1986,10 @@ async function usarHabilidade() {
   const hab = HABILIDADES[arq];
   if (!hab) return;
   
-  // Verificar cooldown - 30 SEGUNDOS
   const ultimoUso = localStorage.getItem(`habilidade_${DUPLA.id}`);
   if (ultimoUso && (Date.now() - parseInt(ultimoUso)) < (COOLDOWN_HABILIDADE * 1000)) {
     const restante = Math.ceil((COOLDOWN_HABILIDADE * 1000 - (Date.now() - parseInt(ultimoUso))) / 1000);
-    exibirMensagem("msg-habilidade", `⏳ Aguarde ${restante} segundos para usar sua habilidade novamente.`, "info");
+    exibirMensagem("msg-habilidade", `&#9203; Aguarde ${restante} segundos para usar sua habilidade novamente.`, "info");
     return;
   }
   
@@ -1964,21 +1999,21 @@ async function usarHabilidade() {
   switch(hab.efeito) {
     case "Revela uma pista adicional sobre a palavra-chave":
       const carta = CARTAS.find(c => c.numero === DUPLA.carta_numero);
-      mensagem = `🔍 Pista adicional: "Na obra de Erico Verissimo, ${carta.palavraChave} se manifesta de forma profunda..."`;
+      mensagem = `&#128269; Pista adicional: "Na obra de Erico Verissimo, ${carta.palavraChave} se manifesta de forma profunda..."`;
       bonusXP = 20;
       break;
-    case "Aumenta o poder de convicção da justificativa":
-      mensagem = "⚔️ Sua argumentação ganha força ancestral! A tradição fala através de suas palavras.";
+    case "Aumenta o poder de conviccao da justificativa":
+      mensagem = "&#9876;&#65039; Sua argumentacao ganha forca ancestral! A tradicao fala atraves de suas palavras.";
       bonusXP = 25;
       break;
-    case "Revela o próximo desafio da jornada":
+    case "Revela o proximo desafio da jornada":
       const atual = CARTAS.find(c => c.numero === DUPLA.carta_numero);
       const proximo = CARTAS.find(c => c.ordem > atual.ordem);
-      mensagem = `👁️ O próximo desafio será sobre "${proximo?.palavraChave}". Prepare-se!`;
+      mensagem = `&#128065;&#65039; O proximo desafio sera sobre "${proximo?.palavraChave}". Prepare-se!`;
       bonusXP = 15;
       break;
     default:
-      mensagem = "✨ Habilidade ativada com sucesso!";
+      mensagem = "&#10024; Habilidade ativada com sucesso!";
       bonusXP = 15;
   }
   
@@ -1987,19 +2022,18 @@ async function usarHabilidade() {
   preencherHUD();
   exibirMensagem("msg-habilidade", `${mensagem} (+${bonusXP} XP)`, "sucesso");
   
-  // Registrar no banco
   await supabaseClient.rpc("registrar_acao", {
     p_dupla_id: DUPLA.id,
     p_acao: "uso_habilidade",
     p_xp_ganho: bonusXP
   });
   
-  exibirConquista(`✨ Habilidade usada! +${bonusXP} XP`);
+  exibirConquista(`&#10024; Habilidade usada! +${bonusXP} XP`);
   exibirHabilidades();
 }
 
 /* ============================================================
-   DESAFIO DO HERÓI
+   DESAFIO DO HEROI
    ============================================================ */
 function verificarDesafioHeroi() {
   const cartaNum = DUPLA.carta_numero;
@@ -2009,7 +2043,7 @@ function verificarDesafioHeroi() {
   const container = document.getElementById("desafio-heroi-container");
   container.innerHTML = `
     <div class="cartao desafio-heroi-card">
-      <h4 class="cartao-titulo" style="font-size:16px;">🏆 Desafio do Herói</h4>
+      <h4 class="cartao-titulo" style="font-size:16px;">&#127942; Desafio do Heroi</h4>
       <p style="font-size:14px;font-style:italic;color:var(--pergaminho-escuro);">${desafio.descricao}</p>
       <button class="botao botao-secundario" style="margin:0;padding:10px 16px;font-size:13px;" onclick="aceitarDesafioHeroi()">
         Aceitar Desafio (+${desafio.bonus_xp} XP)
@@ -2020,13 +2054,12 @@ function verificarDesafioHeroi() {
 }
 
 function aceitarDesafioHeroi() {
-  const desafio = DESAFIOS_ADICIONAIS[DUPLA.carta_numero];
   const container = document.getElementById("desafio-heroi-container");
   container.innerHTML = `
     <div class="cartao desafio-heroi-card">
-      <h4 class="cartao-titulo" style="font-size:16px;">🏆 Desafio do Herói</h4>
+      <h4 class="cartao-titulo" style="font-size:16px;">&#127942; Desafio do Heroi</h4>
       <label>Resposta</label>
-      <textarea id="resp-desafio-heroi" rows="4" placeholder="Sua resposta para o desafio do herói..."></textarea>
+      <textarea id="resp-desafio-heroi" rows="4" placeholder="Sua resposta para o desafio do heroi..."></textarea>
       <button class="botao botao-dourado" style="margin-top:8px;" onclick="enviarRespostaHeroi()">Enviar Resposta</button>
       <div id="msg-desafio-heroi"></div>
     </div>
@@ -2051,16 +2084,16 @@ async function enviarRespostaHeroi() {
     p_xp_ganho: desafio.bonus_xp
   });
   
-  exibirMensagem("msg-desafio-heroi", `🏆 Desafio concluído! +${desafio.bonus_xp} XP!`, "sucesso");
-  exibirConquista(`🏆 Herói do Pampa! +${desafio.bonus_xp} XP!`);
+  exibirMensagem("msg-desafio-heroi", `&#127942; Desafio concluido! +${desafio.bonus_xp} XP!`, "sucesso");
+  exibirConquista(`&#127942; Heroi do Pampa! +${desafio.bonus_xp} XP!`);
   
   document.querySelector("#desafio-heroi-container .botao-dourado").disabled = true;
-  document.querySelector("#desafio-heroi-container .botao-dourado").textContent = "✅ Concluído!";
+  document.querySelector("#desafio-heroi-container .botao-dourado").textContent = "Concluido!";
 }
 
 function exibirConquista(texto) {
   const popup = document.getElementById("conquista-popup");
-  popup.textContent = texto;
+  popup.innerHTML = texto;
   popup.classList.add("visivel");
   setTimeout(() => popup.classList.remove("visivel"), 4000);
 }
@@ -2087,8 +2120,8 @@ async function enviarResposta() {
   btn.disabled = false; btn.textContent = "Enviar resposta";
 
   if (error) { exibirMensagem("msg-missao","Erro ao enviar.","erro"); return; }
-  if (data==="ja_respondido") { exibirMensagem("msg-missao","Sua dupla já enviou uma resposta.","info"); return; }
-  if (data==="sem_permissao") { exibirMensagem("msg-missao","Esta carta não pertence à sua dupla.","erro"); return; }
+  if (data==="ja_respondido") { exibirMensagem("msg-missao","Sua dupla ja enviou uma resposta.","info"); return; }
+  if (data==="sem_permissao") { exibirMensagem("msg-missao","Esta carta nao pertence a sua dupla.","erro"); return; }
 
   if (data==="ok") {
     DUPLA.xp_total = (DUPLA.xp_total||0) + 50;
@@ -2098,7 +2131,7 @@ async function enviarResposta() {
     document.getElementById("resposta-registrada").classList.remove("oculto");
     document.getElementById("resp-objeto-salvo").textContent = objeto;
     document.getElementById("resp-justificativa-salva").textContent = justificativa;
-    exibirConquista("Missão cumprida! +50 XP!");
+    exibirConquista("Missao cumprida! +50 XP!");
     await carregarTodasDuplas();
     preencherMapa();
     atualizarProgressoColetivo();
@@ -2121,7 +2154,7 @@ function fecharMenu() {
 
 function confirmarSair() {
   fecharMenu();
-  if (confirm("Deseja sair? Seu progresso está salvo.")) {
+  if (confirm("Deseja sair? Seu progresso esta salvo.")) {
     sessionStorage.clear();
     DUPLA = null;
     RESPOSTA_EXISTENTE = null;
@@ -2189,7 +2222,7 @@ function sairProfessor() {
 }
 
 /* ============================================================
-   INICIALIZAÇÃO
+   INICIALIZACAO
    ============================================================ */
 window.addEventListener("DOMContentLoaded", async () => {
   if (sessionStorage.getItem("anaTerraProf") === "ok") {
