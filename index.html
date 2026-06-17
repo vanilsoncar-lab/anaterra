@@ -6,35 +6,31 @@
 <title>O Inventariante do Tempo: A Jornada de Ana Terra</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Special+Elite&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Special+Elite&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
-   ANA TERRA: CRONICAS DO PAMPA
-   Folha de estilo principal
-   Estetica: papel envelhecido, sepia, pampa, seculo XVIII
+   ANA TERRA: CRONICAS DO PAMPA - ESTILO RPG
+   Mantém toda a funcionalidade, mas com visual de grimório
    ============================================================ */
 
 :root {
-  --papel-claro: #f3e3c3;
-  --papel-medio: #e8cfa0;
-  --papel-escuro: #dcc190;
-  --tinta: #3d2f1f;
-  --tinta-clara: #6b4226;
-  --couro: #7a5530;
-  --dourado: #c08a3e;
-  --dourado-claro: #d8ab66;
-  --verde-pampa: #2f4a36;
-  --verde-pampa-claro: #3e5c46;
-  --terracota: #9c5a32;
-  --texto-secundario: #8a6f52;
+  --pergaminho: #f2e3c6;
+  --pergaminho-escuro: #dac292;
+  --sangue: #6b1a1a;
+  --ouro: #c9a050;
+  --ouro-escuro: #a57c3a;
+  --ferro: #3a3a3a;
+  --carvao: #1e1e1e;
+  --brilho: #f5e6b0;
+  --fundo: #1a1410;
 
-  --fonte-display: "Playfair Display", "Georgia", serif;
-  --fonte-corpo: "Crimson Text", "Georgia", serif;
-  --fonte-dados: "Special Elite", "Courier New", monospace;
+  --fonte-titulo: 'Cinzel', serif;
+  --fonte-corpo: 'Crimson Text', serif;
+  --fonte-dados: 'Special Elite', 'Courier New', monospace;
 
   --raio-md: 6px;
   --raio-lg: 10px;
-  --sombra-papel: 0 2px 10px rgba(61, 47, 31, 0.18);
+  --sombra-papel: 0 8px 24px rgba(0,0,0,0.7);
 }
 
 * {
@@ -46,17 +42,19 @@ html, body {
   padding: 0;
   font-family: var(--fonte-corpo);
   font-size: 17px;
-  color: var(--tinta);
+  color: var(--pergaminho);
   line-height: 1.65;
+  background: var(--fundo);
 }
 
 body {
-  background-color: var(--papel-claro);
   background-image:
-    radial-gradient(ellipse at 20% 20%, rgba(232, 207, 160, 0.6) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 70%, rgba(220, 193, 144, 0.5) 0%, transparent 55%),
-    radial-gradient(ellipse at 50% 100%, rgba(122, 85, 48, 0.08) 0%, transparent 60%);
+    radial-gradient(ellipse at 20% 30%, #3a2a1a 0%, #1a1410 80%),
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.04"><path d="M20 20 L30 10 L40 20 L30 30 Z" fill="%23c9a050"/><circle cx="70" cy="30" r="5" fill="%23c9a050"/><path d="M60 60 L70 50 L80 60 L70 70 Z" fill="%23c9a050"/><path d="M10 80 L20 70 L30 80 L20 90 Z" fill="%23c9a050"/><circle cx="45" cy="75" r="4" fill="%23c9a050"/></svg>');
+  background-repeat: repeat;
+  background-size: 120px 120px;
   background-attachment: fixed;
+  min-height: 100vh;
 }
 
 img, svg {
@@ -65,7 +63,7 @@ img, svg {
 }
 
 a {
-  color: var(--verde-pampa);
+  color: var(--ouro);
   text-decoration: underline;
 }
 
@@ -103,68 +101,84 @@ a {
 }
 
 .marca-titulo {
-  font-family: var(--fonte-display);
+  font-family: var(--fonte-titulo);
   font-weight: 700;
   font-size: 30px;
-  color: var(--tinta);
+  color: var(--ouro);
   margin: 0;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 20px rgba(201,160,80,0.3);
 }
 
 .marca-subtitulo {
   font-family: var(--fonte-corpo);
   font-style: italic;
   font-size: 15px;
-  color: var(--texto-secundario);
+  color: var(--pergaminho-escuro);
   margin: 6px 0 0;
 }
 
 /* ------------------------------------------------------------
-   Cards e formularios (estilo pergaminho)
+   Cards e formularios (estilo grimório)
    ------------------------------------------------------------ */
 
 .cartao {
-  background: var(--papel-medio);
-  border: 1px solid var(--couro);
-  border-radius: var(--raio-lg);
-  padding: 24px;
-  box-shadow: var(--sombra-papel);
+  background: var(--pergaminho);
+  color: var(--carvao);
+  border: 3px solid var(--ouro-escuro);
+  border-radius: 0 12px 0 12px;
+  padding: 30px 24px;
+  box-shadow: var(--sombra-papel), inset 0 0 40px rgba(0,0,0,0.1);
   margin-bottom: 20px;
   position: relative;
+  animation: surgir 0.6s ease-out;
 }
 
 .cartao::before {
+  content: "⚜";
+  position: absolute;
+  top: -8px;
+  left: 12px;
+  font-size: 28px;
+  color: var(--ouro);
+  opacity: 0.4;
+  transform: rotate(-15deg);
+}
+
+.cartao::after {
   content: "";
   position: absolute;
-  inset: 6px;
-  border: 1px solid rgba(122, 85, 48, 0.35);
-  border-radius: calc(var(--raio-lg) - 3px);
+  inset: 8px;
+  border: 1px solid var(--ouro-escuro);
+  border-radius: 0 8px 0 8px;
   pointer-events: none;
+  opacity: 0.3;
 }
 
 .cartao-titulo {
-  font-family: var(--fonte-display);
-  font-weight: 600;
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
   font-size: 21px;
   margin: 0 0 4px;
-  color: var(--tinta);
+  color: var(--ferro);
 }
 
 .cartao-descricao {
   font-size: 15px;
   font-style: italic;
-  color: var(--texto-secundario);
+  color: var(--ferro);
   margin: 0 0 20px;
+  opacity: 0.8;
 }
 
 label {
   display: block;
-  font-family: var(--fonte-display);
+  font-family: var(--fonte-titulo);
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 6px;
   margin-top: 16px;
-  color: var(--tinta);
+  color: var(--ferro);
 }
 
 label:first-of-type {
@@ -174,18 +188,18 @@ label:first-of-type {
 input, select, textarea {
   width: 100%;
   padding: 12px 14px;
-  border: 1px solid var(--couro);
+  border: 2px solid var(--ouro-escuro);
   border-radius: var(--raio-md);
   font-family: var(--fonte-corpo);
   font-size: 16px;
-  background: var(--papel-claro);
-  color: var(--tinta);
+  background: var(--pergaminho);
+  color: var(--carvao);
 }
 
 input:focus, select:focus, textarea:focus {
-  outline: 2px solid var(--dourado);
+  outline: 2px solid var(--ouro);
   outline-offset: 1px;
-  border-color: var(--dourado);
+  border-color: var(--ouro);
 }
 
 textarea {
@@ -195,7 +209,7 @@ textarea {
 }
 
 /* ------------------------------------------------------------
-   Botoes
+   Botoes (estilo rúnico)
    ------------------------------------------------------------ */
 
 .botao {
@@ -204,55 +218,76 @@ textarea {
   justify-content: center;
   gap: 8px;
   width: 100%;
-  padding: 13px 20px;
+  padding: 14px 24px;
   margin-top: 20px;
-  border: 1px solid var(--couro);
+  border: 2px solid var(--ouro-escuro);
   border-radius: var(--raio-md);
-  font-family: var(--fonte-display);
+  font-family: var(--fonte-titulo);
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
   cursor: pointer;
-  transition: opacity 0.15s ease, transform 0.1s ease;
-  letter-spacing: 0.02em;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  color: var(--ouro);
+  box-shadow: 0 0 12px rgba(201,160,80,0.2);
+}
+
+.botao::before {
+  content: "✦ ";
+  opacity: 0.6;
 }
 
 .botao:active {
-  transform: scale(0.99);
+  transform: scale(0.97);
+}
+
+.botao:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 30px var(--ouro);
 }
 
 .botao-primario {
-  background: var(--tinta);
-  color: var(--papel-claro);
-  border-color: var(--tinta);
+  background: var(--sangue);
+  border-color: var(--sangue);
+  color: var(--pergaminho);
 }
 
 .botao-primario:hover {
-  opacity: 0.9;
+  background: #8a2a2a;
+  border-color: var(--ouro);
+  color: var(--pergaminho);
 }
 
 .botao-dourado {
-  background: var(--dourado);
-  color: var(--tinta);
-  border-color: var(--couro);
+  background: var(--ouro);
+  color: var(--carvao);
+  border-color: var(--ouro-escuro);
 }
 
 .botao-dourado:hover {
-  opacity: 0.9;
+  background: var(--brilho);
+  border-color: var(--ouro);
 }
 
 .botao-secundario {
   background: transparent;
-  color: var(--tinta);
-  border: 1px solid var(--couro);
+  color: var(--ouro);
+  border: 2px solid var(--ouro-escuro);
 }
 
 .botao-secundario:hover {
-  background: rgba(122, 85, 48, 0.08);
+  background: rgba(201,160,80,0.15);
 }
 
 .botao:disabled {
   opacity: 0.45;
   cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
 }
 
 /* ------------------------------------------------------------
@@ -268,39 +303,38 @@ textarea {
 }
 
 .mensagem-erro {
-  background: #f1ddd0;
-  color: #7a3318;
-  border-color: #d6ad8f;
+  background: #3a1a1a;
+  color: #e8b8a0;
+  border-color: var(--sangue);
 }
 
 .mensagem-sucesso {
-  background: #dde6da;
-  color: var(--verde-pampa);
-  border-color: #b9cdb2;
+  background: #1a3a2a;
+  color: #b8d8b0;
+  border-color: #2a5a3a;
 }
 
 .mensagem-info {
-  background: #ecd9b8;
-  color: var(--terracota);
-  border-color: #d8bd8a;
+  background: #2a2a1a;
+  color: var(--ouro);
+  border-color: var(--ouro-escuro);
 }
 
 /* ------------------------------------------------------------
-   HUD
+   HUD (barra de vida RPG)
    ------------------------------------------------------------ */
 
 .hud {
   position: sticky;
   top: 0;
   z-index: 10;
-  background: var(--verde-pampa);
-  background-image: radial-gradient(ellipse at 70% 0%, rgba(192, 138, 62, 0.12) 0%, transparent 60%);
-  color: var(--papel-claro);
+  background: var(--carvao);
+  border-bottom: 3px solid var(--ouro-escuro);
   padding: 14px 20px;
   display: flex;
   align-items: center;
   gap: 14px;
-  border-bottom: 2px solid var(--couro);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.6);
 }
 
 .hud-avatar {
@@ -309,8 +343,8 @@ textarea {
   border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
-  border: 2px solid var(--dourado);
-  background: var(--papel-medio);
+  border: 2px solid var(--ouro);
+  background: var(--pergaminho);
 }
 
 .hud-avatar svg {
@@ -324,40 +358,84 @@ textarea {
 }
 
 .hud-nome {
-  font-family: var(--fonte-display);
+  font-family: var(--fonte-titulo);
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: var(--brilho);
+}
+
+.hud-barra-container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
 }
 
 .hud-barra-fundo {
-  height: 7px;
-  border-radius: 999px;
-  background: rgba(243, 227, 195, 0.18);
-  margin-top: 6px;
+  flex: 1;
+  height: 12px;
+  background: #2a1a0a;
+  border: 2px solid var(--ouro-escuro);
+  border-radius: 20px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.6);
   overflow: hidden;
-  border: 1px solid rgba(192, 138, 62, 0.3);
+  display: flex;
+  align-items: center;
 }
 
 .hud-barra-progresso {
   height: 100%;
-  background: var(--dourado);
-  border-radius: 999px;
-  transition: width 0.4s ease;
+  background: linear-gradient(90deg, #b8860b, #f5d742);
+  border-radius: 20px;
+  box-shadow: 0 0 12px #f5d74288;
+  transition: width 0.5s ease;
+}
+
+.hud-divisorias {
+  display: flex;
+  gap: 2px;
+  padding: 0 4px;
+  height: 100%;
+  align-items: center;
+  flex: 1;
+}
+
+.hud-divisorias span {
+  flex: 1;
+  height: 60%;
+  border-right: 1px solid rgba(255,215,0,0.15);
+}
+
+.hud-divisorias span:last-child {
+  border-right: none;
 }
 
 .hud-nivel {
   font-family: var(--fonte-dados);
   font-size: 13px;
-  color: var(--dourado-claro);
+  color: var(--ouro);
   text-align: right;
   white-space: nowrap;
 }
 
+.menu-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--pergaminho);
+  font-size: 22px;
+  padding: 4px 8px;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: color 0.2s;
+}
+.menu-btn:hover { color: var(--ouro); }
+
 /* ------------------------------------------------------------
-   Trilha / mapa da jornada
+   Trilha / mapa da jornada (estilo tabuleiro)
    ------------------------------------------------------------ */
 
 .trilha-wrapper {
@@ -374,39 +452,44 @@ textarea {
   margin-bottom: 6px;
   border-radius: var(--raio-md);
   cursor: pointer;
-  border: 1px solid transparent;
+  border: 2px solid transparent;
   background: transparent;
   width: 100%;
   text-align: left;
   font-family: var(--fonte-corpo);
+  transition: background 0.2s, border-color 0.2s;
 }
 
 .estacao:hover {
-  background: rgba(192, 138, 62, 0.08);
+  background: rgba(201,160,80,0.08);
 }
 
 .estacao-numero {
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--fonte-dados);
-  font-size: 14px;
+  font-family: var(--fonte-titulo);
+  font-size: 18px;
+  font-weight: 700;
   flex-shrink: 0;
-  background: var(--papel-medio);
-  border: 2px solid var(--couro);
-  color: var(--couro);
+  background: radial-gradient(circle, var(--pergaminho-escuro), var(--ferro));
+  border: 2px solid var(--ouro);
+  color: var(--ouro);
+  box-shadow: 0 0 12px rgba(201,160,80,0.4);
   position: relative;
 }
 
-.estacao-numero::after {
-  content: "";
+.estacao-numero::before {
+  content: "⚔";
   position: absolute;
-  inset: -5px;
-  border: 1px dashed rgba(122, 85, 48, 0.4);
-  border-radius: 50%;
+  top: -6px;
+  right: -6px;
+  font-size: 12px;
+  color: var(--ouro);
+  opacity: 0.6;
 }
 
 .estacao-info {
@@ -415,39 +498,42 @@ textarea {
 }
 
 .estacao-palavra {
-  font-family: var(--fonte-display);
-  font-weight: 600;
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
   font-size: 17px;
   margin: 0;
-  color: var(--tinta);
+  color: var(--ouro);
 }
 
 .estacao-status {
   font-size: 13px;
   font-style: italic;
-  color: var(--texto-secundario);
+  color: var(--pergaminho-escuro);
   margin: 2px 0 0;
+  opacity: 0.8;
 }
 
 .estacao-propria .estacao-numero {
-  background: var(--dourado);
-  border-color: var(--couro);
-  color: var(--tinta);
+  background: radial-gradient(circle, var(--ouro), var(--ouro-escuro));
+  border-color: var(--brilho);
+  color: var(--carvao);
+  box-shadow: 0 0 24px var(--ouro);
 }
 
 .estacao-propria {
-  border-color: var(--dourado);
-  background: rgba(192, 138, 62, 0.1);
+  border-color: var(--ouro);
+  background: rgba(201,160,80,0.12);
 }
 
 .estacao-concluida .estacao-numero {
-  background: var(--verde-pampa);
-  border-color: var(--verde-pampa);
-  color: var(--papel-claro);
+  background: radial-gradient(circle, #2a5a2a, #1a3a1a);
+  border-color: #4caf50;
+  color: #8fdf8f;
 }
 
-.estacao-concluida .estacao-numero::after {
-  border-color: rgba(47, 74, 54, 0.4);
+.estacao-concluida .estacao-numero::before {
+  content: "✓";
+  color: #4caf50;
 }
 
 .estacao-bloqueada {
@@ -456,15 +542,30 @@ textarea {
 
 .estacao-bloqueada .estacao-numero {
   opacity: 0.5;
+  filter: grayscale(0.4);
 }
 
 .estacao-bloqueada .estacao-palavra,
 .estacao-bloqueada .estacao-status {
+  opacity: 0.5;
+}
+
+.estacao-conector {
+  width: 2px;
+  height: 32px;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--ouro-escuro) 0px,
+    var(--ouro-escuro) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+  margin: 0 auto;
   opacity: 0.6;
 }
 
 /* ------------------------------------------------------------
-   Ficha de personagem
+   Ficha de personagem (com atributos)
    ------------------------------------------------------------ */
 
 .ficha-personagem {
@@ -481,18 +582,51 @@ textarea {
 }
 
 .ficha-nome {
-  font-family: var(--fonte-display);
-  font-weight: 600;
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
   font-size: 19px;
   margin: 0;
-  color: var(--tinta);
+  color: var(--ferro);
 }
 
 .ficha-tema {
   font-size: 14px;
   font-style: italic;
-  color: var(--texto-secundario);
+  color: var(--ferro);
   margin: 2px 0 0;
+}
+
+.atributos {
+  margin: 20px 0 12px;
+  border-top: 1px solid var(--ouro-escuro);
+  padding-top: 16px;
+}
+
+.atributo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 6px 0;
+}
+.atributo span {
+  width: 80px;
+  font-family: var(--fonte-titulo);
+  font-size: 13px;
+  text-transform: uppercase;
+  color: var(--ouro-escuro);
+}
+.barra-atributo {
+  flex: 1;
+  height: 8px;
+  background: var(--ferro);
+  border: 1px solid var(--ouro-escuro);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.barra-atributo div {
+  height: 100%;
+  background: var(--ouro);
+  border-radius: 12px;
 }
 
 /* ------------------------------------------------------------
@@ -507,23 +641,24 @@ textarea {
 }
 
 .opcao-arquetipo {
-  border: 1px solid var(--couro);
+  border: 2px solid var(--ouro-escuro);
   border-radius: var(--raio-md);
   padding: 12px;
   cursor: pointer;
   text-align: center;
-  background: var(--papel-claro);
-  transition: border-color 0.15s ease, background 0.15s ease;
+  background: var(--pergaminho);
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
 }
 
 .opcao-arquetipo:hover {
-  border-color: var(--dourado);
+  border-color: var(--ouro);
+  box-shadow: 0 0 16px rgba(201,160,80,0.3);
 }
 
 .opcao-arquetipo.selecionado {
-  border-color: var(--dourado);
-  background: rgba(192, 138, 62, 0.12);
-  box-shadow: 0 0 0 2px rgba(192, 138, 62, 0.25);
+  border-color: var(--ouro);
+  background: rgba(201,160,80,0.15);
+  box-shadow: 0 0 20px var(--ouro);
 }
 
 .opcao-arquetipo svg {
@@ -533,11 +668,11 @@ textarea {
 }
 
 .opcao-arquetipo-nome {
-  font-family: var(--fonte-display);
+  font-family: var(--fonte-titulo);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   margin: 0;
-  color: var(--tinta);
+  color: var(--ferro);
 }
 
 /* ------------------------------------------------------------
@@ -549,15 +684,18 @@ textarea {
   font-style: italic;
   font-size: 17px;
   line-height: 1.85;
-  color: var(--tinta);
-  border-left: 3px solid var(--dourado);
+  color: var(--ferro);
+  border-left: 4px solid var(--ouro);
   padding-left: 16px;
   margin: 16px 0;
+  background: rgba(201,160,80,0.05);
+  padding: 12px 16px;
+  border-radius: 0 6px 6px 0;
 }
 
 .pista-original {
-  background: var(--papel-claro);
-  border: 1px solid var(--couro);
+  background: var(--pergaminho);
+  border: 2px solid var(--ouro-escuro);
   border-radius: var(--raio-md);
   padding: 14px 16px;
   font-size: 15px;
@@ -570,7 +708,7 @@ textarea {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--texto-secundario);
+  color: var(--ouro-escuro);
   margin: 0 0 6px;
 }
 
@@ -592,18 +730,19 @@ table {
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
+  color: var(--pergaminho);
 }
 
 th, td {
   text-align: left;
   padding: 10px 12px;
-  border-bottom: 1px solid var(--couro);
+  border-bottom: 1px solid var(--ouro-escuro);
 }
 
 th {
-  font-family: var(--fonte-display);
-  font-weight: 600;
-  color: var(--tinta);
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  color: var(--ouro);
   font-size: 13px;
 }
 
@@ -618,7 +757,7 @@ th {
 .texto-pequeno {
   font-size: 13px;
   font-style: italic;
-  color: var(--texto-secundario);
+  color: var(--pergaminho-escuro);
 }
 
 .espaco-topo {
@@ -631,7 +770,7 @@ th {
   margin-top: 16px;
   font-size: 14px;
   font-style: italic;
-  color: var(--texto-secundario);
+  color: var(--ouro-escuro);
 }
 
 .oculto {
@@ -652,6 +791,18 @@ th {
   }
 }
 
+/* ------------------------------------------------------------
+   Animações
+   ------------------------------------------------------------ */
+
+@keyframes surgir {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.tela.ativa {
+  animation: surgir 0.5s ease-out;
+}
 
 /* ============================================================
    ESTILOS COMPLEMENTARES DA JORNADA
@@ -660,30 +811,23 @@ th {
 .tela { display: none; }
 .tela.ativa { display: block; }
 
-.estacao-conector {
-  width: 2px;
-  height: 20px;
-  background: var(--couro);
-  margin-left: 35px;
-  opacity: 0.3;
-}
-
 .missao-numero {
   font-family: var(--fonte-dados);
   font-size: 12px;
   letter-spacing: 0.1em;
-  color: var(--texto-secundario);
+  color: var(--ouro-escuro);
   text-transform: uppercase;
   margin: 0 0 4px;
 }
 
 .missao-palavra {
-  font-family: var(--fonte-display);
-  font-weight: 700;
+  font-family: var(--fonte-titulo);
+  font-weight: 900;
   font-size: 34px;
-  color: var(--tinta);
+  color: var(--ferro);
   margin: 0 0 20px;
   line-height: 1.15;
+  text-shadow: 0 0 20px rgba(201,160,80,0.2);
 }
 
 .divisor {
@@ -691,23 +835,23 @@ th {
   align-items: center;
   gap: 10px;
   margin: 20px 0;
-  opacity: 0.45;
+  opacity: 0.6;
 }
 .divisor::before, .divisor::after {
   content: "";
   flex: 1;
   height: 1px;
-  background: var(--couro);
+  background: var(--ouro-escuro);
 }
 .divisor-icone {
   font-size: 14px;
-  color: var(--couro);
+  color: var(--ouro-escuro);
   letter-spacing: 4px;
 }
 
 .resposta-enviada {
-  background: var(--papel-claro);
-  border: 1px solid var(--couro);
+  background: var(--pergaminho);
+  border: 2px solid var(--ouro-escuro);
   border-radius: var(--raio-md);
   padding: 16px;
   margin-top: 16px;
@@ -717,14 +861,14 @@ th {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--texto-secundario);
+  color: var(--ouro-escuro);
   margin: 0 0 8px;
 }
 .resposta-enviada-texto {
   font-family: var(--fonte-corpo);
   font-style: italic;
   font-size: 16px;
-  color: var(--tinta);
+  color: var(--ferro);
   margin: 0;
 }
 
@@ -733,21 +877,21 @@ th {
   bottom: 32px;
   left: 50%;
   transform: translateX(-50%) translateY(120px);
-  background: var(--verde-pampa);
-  color: var(--papel-claro);
+  background: var(--carvao);
+  color: var(--brilho);
   padding: 16px 24px;
   border-radius: var(--raio-lg);
-  border: 2px solid var(--dourado);
-  font-family: var(--fonte-display);
+  border: 2px solid var(--ouro);
+  font-family: var(--fonte-titulo);
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
   z-index: 999;
   transition: transform 0.4s ease, opacity 0.4s ease;
   max-width: 320px;
   width: calc(100vw - 48px);
   text-align: center;
   opacity: 0;
-  box-shadow: 0 4px 20px rgba(31, 46, 35, 0.35);
+  box-shadow: 0 0 40px rgba(201,160,80,0.3);
 }
 .conquista-popup.visivel {
   transform: translateX(-50%) translateY(0);
@@ -758,55 +902,46 @@ th {
   display: flex;
   align-items: center;
   gap: 12px;
-  background: var(--papel-medio);
-  border: 1px solid var(--couro);
+  background: var(--pergaminho);
+  color: var(--carvao);
+  border: 2px solid var(--ouro-escuro);
   border-radius: var(--raio-md);
   padding: 12px 16px;
   margin-bottom: 20px;
 }
 .progresso-coletivo-texto { flex: 1; }
 .progresso-coletivo-titulo {
-  font-family: var(--fonte-display);
-  font-weight: 600;
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
   font-size: 14px;
   margin: 0 0 4px;
+  color: var(--ferro);
 }
 .progresso-coletivo-barra {
-  height: 6px;
+  height: 8px;
   border-radius: 999px;
-  background: rgba(122, 85, 48, 0.2);
+  background: var(--ferro);
+  border: 1px solid var(--ouro-escuro);
   overflow: hidden;
 }
 .progresso-coletivo-fill {
   height: 100%;
-  background: var(--dourado);
+  background: linear-gradient(90deg, var(--ouro-escuro), var(--ouro));
   border-radius: 999px;
   transition: width 0.4s ease;
 }
 .progresso-coletivo-numero {
   font-family: var(--fonte-dados);
   font-size: 22px;
-  color: var(--dourado);
+  color: var(--ouro);
   white-space: nowrap;
 }
-
-.menu-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--papel-claro);
-  font-size: 22px;
-  padding: 4px 8px;
-  line-height: 1;
-  flex-shrink: 0;
-}
-.menu-btn:hover { opacity: 0.8; }
 
 .menu-overlay {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(31, 46, 35, 0.5);
+  background: rgba(0,0,0,0.7);
   z-index: 200;
 }
 .menu-overlay.aberto { display: block; }
@@ -817,8 +952,8 @@ th {
   right: -280px;
   width: 260px;
   height: 100vh;
-  background: var(--papel-medio);
-  border-left: 2px solid var(--couro);
+  background: var(--carvao);
+  border-left: 3px solid var(--ouro-escuro);
   z-index: 201;
   transition: right 0.3s ease;
   display: flex;
@@ -828,21 +963,21 @@ th {
 .menu-lateral.aberto { right: 0; }
 
 .menu-header {
-  background: var(--verde-pampa);
-  color: var(--papel-claro);
+  background: var(--ferro);
+  color: var(--brilho);
   padding: 18px 20px 14px;
-  border-bottom: 2px solid var(--couro);
+  border-bottom: 2px solid var(--ouro-escuro);
 }
 .menu-header-titulo {
-  font-family: var(--fonte-display);
+  font-family: var(--fonte-titulo);
   font-size: 17px;
-  font-weight: 600;
+  font-weight: 700;
   margin: 0 0 2px;
 }
 .menu-header-versao {
   font-family: var(--fonte-dados);
   font-size: 11px;
-  color: var(--dourado-claro);
+  color: var(--ouro);
   margin: 0;
 }
 
@@ -852,7 +987,7 @@ th {
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--texto-secundario);
+  color: var(--ouro-escuro);
   margin: 0 0 10px;
 }
 
@@ -863,27 +998,28 @@ th {
   width: 100%;
   padding: 12px 0;
   border: none;
-  border-bottom: 1px solid rgba(122, 85, 48, 0.2);
+  border-bottom: 1px solid rgba(201,160,80,0.15);
   background: none;
   cursor: pointer;
   font-family: var(--fonte-corpo);
   font-size: 16px;
-  color: var(--tinta);
+  color: var(--pergaminho);
   text-align: left;
+  transition: color 0.2s;
 }
 .menu-item:last-child { border-bottom: none; }
-.menu-item:hover { color: var(--verde-pampa); }
+.menu-item:hover { color: var(--ouro); }
 .menu-item-icone { font-size: 18px; width: 24px; text-align: center; flex-shrink: 0; }
-.menu-item-vermelho { color: var(--terracota); }
-.menu-item-vermelho:hover { color: #7a2e10; }
+.menu-item-vermelho { color: #c97a5a; }
+.menu-item-vermelho:hover { color: #e8a080; }
 
 .menu-rodape {
   margin-top: auto;
   padding: 16px 20px;
-  border-top: 1px solid rgba(122, 85, 48, 0.2);
+  border-top: 1px solid rgba(201,160,80,0.15);
   font-family: var(--fonte-dados);
   font-size: 11px;
-  color: var(--texto-secundario);
+  color: var(--ouro-escuro);
   text-align: center;
 }
 
@@ -896,33 +1032,33 @@ th {
 }
 .opcao-nome {
   padding: 10px 12px;
-  border: 1px solid var(--couro);
+  border: 2px solid var(--ouro-escuro);
   border-radius: var(--raio-md);
-  background: var(--papel-claro);
+  background: var(--pergaminho);
   font-family: var(--fonte-corpo);
   font-size: 14px;
-  color: var(--tinta);
+  color: var(--ferro);
   cursor: pointer;
   text-align: center;
-  transition: border-color 0.15s ease, background 0.15s ease;
+  transition: border-color 0.2s, background 0.2s;
   line-height: 1.3;
 }
-.opcao-nome:hover { border-color: var(--dourado); background: rgba(192, 138, 62, 0.08); }
+.opcao-nome:hover { border-color: var(--ouro); background: rgba(201,160,80,0.08); }
 .opcao-nome.selecionado {
-  border-color: var(--dourado);
-  background: rgba(192, 138, 62, 0.14);
-  box-shadow: 0 0 0 2px rgba(192, 138, 62, 0.25);
+  border-color: var(--ouro);
+  background: rgba(201,160,80,0.15);
+  box-shadow: 0 0 12px rgba(201,160,80,0.3);
 }
 .nome-selecionado-label {
   margin-top: 12px;
   padding: 10px 14px;
-  background: var(--papel-claro);
-  border: 1px solid var(--couro);
+  background: var(--pergaminho);
+  border: 2px solid var(--ouro-escuro);
   border-radius: var(--raio-md);
-  font-family: var(--fonte-display);
+  font-family: var(--fonte-titulo);
   font-size: 15px;
-  font-weight: 600;
-  color: var(--tinta);
+  font-weight: 700;
+  color: var(--ferro);
   display: none;
 }
 .nome-selecionado-label.visivel { display: block; }
@@ -931,54 +1067,50 @@ th {
 .preview-arquetipo {
   display: none;
   margin-top: 14px;
-  background: var(--papel-claro);
-  border: 1px solid var(--dourado);
+  background: var(--pergaminho);
+  border: 2px solid var(--ouro);
   border-radius: var(--raio-lg);
   padding: 18px 16px 14px;
   position: relative;
-  animation: fadeInUp 0.2s ease;
+  animation: surgir 0.2s ease;
 }
 .preview-arquetipo.visivel { display: block; }
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
 .preview-header { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
 .preview-avatar { width: 64px; height: 64px; flex-shrink: 0; }
-.preview-nome { font-family: var(--fonte-display); font-weight: 700; font-size: 17px; margin: 0 0 2px; color: var(--tinta); }
-.preview-tema { font-family: var(--fonte-dados); font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--dourado); margin: 0; }
-.preview-descricao { font-family: var(--fonte-corpo); font-style: italic; font-size: 15px; line-height: 1.75; color: var(--tinta); margin: 0 0 14px; border-left: 3px solid var(--dourado); padding-left: 12px; }
-.preview-fechar { position: absolute; top: 10px; right: 12px; background: none; border: none; font-size: 20px; color: var(--texto-secundario); cursor: pointer; padding: 0 4px; line-height: 1; }
-.preview-fechar:hover { color: var(--tinta); }
+.preview-nome { font-family: var(--fonte-titulo); font-weight: 700; font-size: 17px; margin: 0 0 2px; color: var(--ferro); }
+.preview-tema { font-family: var(--fonte-dados); font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ouro-escuro); margin: 0; }
+.preview-descricao { font-family: var(--fonte-corpo); font-style: italic; font-size: 15px; line-height: 1.75; color: var(--ferro); margin: 0 0 14px; border-left: 4px solid var(--ouro); padding-left: 12px; }
+.preview-fechar { position: absolute; top: 10px; right: 12px; background: none; border: none; font-size: 20px; color: var(--ferro); cursor: pointer; padding: 0 4px; line-height: 1; }
+.preview-fechar:hover { color: var(--sangue); }
 .arquetipo-confirmado {
   margin-top: 10px; padding: 10px 14px;
-  background: rgba(192, 138, 62, 0.12);
-  border: 1px solid var(--dourado);
+  background: rgba(201,160,80,0.12);
+  border: 2px solid var(--ouro);
   border-radius: var(--raio-md);
-  font-family: var(--fonte-display);
-  font-size: 14px; font-weight: 600; color: var(--tinta);
+  font-family: var(--fonte-titulo);
+  font-size: 14px; font-weight: 700; color: var(--ferro);
   display: none; text-align: center;
 }
 .arquetipo-confirmado.visivel { display: block; }
 
 /* Painel professor */
 .resumo-grade { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
-.resumo-card { background: var(--papel-medio); border: 1px solid var(--couro); border-radius: var(--raio-md); padding: 14px; text-align: center; }
-.resumo-numero { font-family: var(--fonte-dados); font-size: 28px; color: var(--dourado); display: block; }
-.resumo-label { font-size: 12px; font-style: italic; color: var(--texto-secundario); }
+.resumo-card { background: var(--pergaminho); color: var(--ferro); border: 2px solid var(--ouro-escuro); border-radius: var(--raio-md); padding: 14px; text-align: center; }
+.resumo-numero { font-family: var(--fonte-dados); font-size: 28px; color: var(--ouro); display: block; }
+.resumo-label { font-size: 12px; font-style: italic; color: var(--ferro); opacity: 0.7; }
 .filtro-turma { margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
-.filtro-turma label { margin: 0; white-space: nowrap; }
+.filtro-turma label { margin: 0; white-space: nowrap; color: var(--pergaminho); }
 .badge-status { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-family: var(--fonte-dados); }
-.badge-concluida { background: #dde6da; color: var(--verde-pampa); border: 1px solid #b9cdb2; }
-.badge-pendente { background: #ecd9b8; color: var(--terracota); border: 1px solid #d8bd8a; }
-.badge-sem-carta { background: var(--papel-medio); color: var(--texto-secundario); border: 1px solid var(--couro); }
-.resposta-bloco { background: var(--papel-claro); border: 1px solid var(--couro); border-radius: var(--raio-md); padding: 12px 14px; margin-top: 6px; font-size: 14px; font-style: italic; color: var(--tinta); display: none; }
+.badge-concluida { background: #1a3a2a; color: #8fdf8f; border: 1px solid #4caf50; }
+.badge-pendente { background: #3a2a1a; color: var(--ouro); border: 1px solid var(--ouro-escuro); }
+.badge-sem-carta { background: var(--ferro); color: var(--pergaminho-escuro); border: 1px solid var(--ouro-escuro); }
+.resposta-bloco { background: var(--pergaminho); color: var(--ferro); border: 1px solid var(--ouro-escuro); border-radius: var(--raio-md); padding: 12px 14px; margin-top: 6px; font-size: 14px; font-style: italic; display: none; }
 .resposta-bloco.aberta { display: block; }
-.btn-ver-resposta { background: none; border: none; font-family: var(--fonte-corpo); font-size: 13px; font-style: italic; color: var(--verde-pampa); cursor: pointer; padding: 0; text-decoration: underline; }
-.btn-desvincular { background: none; border: none; font-family: var(--fonte-corpo); font-size: 12px; color: var(--terracota); cursor: pointer; padding: 0; text-decoration: underline; }
+.btn-ver-resposta { background: none; border: none; font-family: var(--fonte-corpo); font-size: 13px; font-style: italic; color: var(--ouro); cursor: pointer; padding: 0; text-decoration: underline; }
+.btn-desvincular { background: none; border: none; font-family: var(--fonte-corpo); font-size: 12px; color: #c97a5a; cursor: pointer; padding: 0; text-decoration: underline; }
 .aba-nav { display: flex; gap: 8px; margin-bottom: 20px; }
-.aba-btn { flex: 1; padding: 10px; border: 1px solid var(--couro); border-radius: var(--raio-md); background: var(--papel-claro); font-family: var(--fonte-display); font-size: 14px; font-weight: 600; cursor: pointer; color: var(--tinta); }
-.aba-btn.ativa { background: var(--tinta); color: var(--papel-claro); border-color: var(--tinta); }
+.aba-btn { flex: 1; padding: 10px; border: 2px solid var(--ouro-escuro); border-radius: var(--raio-md); background: transparent; font-family: var(--fonte-titulo); font-size: 14px; font-weight: 700; cursor: pointer; color: var(--pergaminho); transition: background 0.2s, color 0.2s; }
+.aba-btn.ativa { background: var(--ouro); color: var(--carvao); border-color: var(--ouro); }
 .aba-conteudo { display: none; }
 .aba-conteudo.ativa { display: block; }
 table td { vertical-align: top; }
@@ -1009,7 +1141,7 @@ table td { vertical-align: top; }
       <button class="botao botao-dourado" onclick="mostrarBlocoLogin('bloco-login')">Já tenho cadastro (entrar)</button>
       <button class="botao botao-secundario" onclick="mostrarBlocoLogin('bloco-cadastro')">Primeira vez (cadastrar dupla)</button>
       <p style="text-align:center;margin-top:28px;">
-        <a href="#" onclick="mostrarApp('app-professor');return false;" style="font-family:var(--fonte-dados);font-size:11px;color:var(--texto-secundario);text-decoration:none;letter-spacing:0.08em;opacity:0.6;">&#9670; Professor</a>
+        <a href="#" onclick="mostrarApp('app-professor');return false;" style="font-family:var(--fonte-dados);font-size:11px;color:var(--ouro-escuro);text-decoration:none;letter-spacing:0.08em;opacity:0.6;">&#9670; Professor</a>
       </p>
     </div>
 
@@ -1082,8 +1214,13 @@ table td { vertical-align: top; }
     <div class="hud-avatar" id="hud-avatar"></div>
     <div class="hud-info">
       <div class="hud-nome" id="hud-nome">Carregando...</div>
-      <div class="hud-barra-fundo">
-        <div class="hud-barra-progresso" id="hud-barra" style="width:0%"></div>
+      <div class="hud-barra-container">
+        <div class="hud-barra-fundo">
+          <div class="hud-barra-progresso" id="hud-barra" style="width:0%"></div>
+          <div class="hud-divisorias">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
       </div>
     </div>
     <div class="hud-nivel" id="hud-nivel">Nv 1<br>0 XP</div>
@@ -1115,23 +1252,23 @@ table td { vertical-align: top; }
   </nav>
 
   <div class="menu-overlay" id="modal-sobre-overlay" onclick="fecharModal('modal-sobre')" style="z-index:300;"></div>
-  <div id="modal-sobre" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--papel-medio);border:1px solid var(--couro);border-radius:var(--raio-lg);padding:24px;max-width:420px;width:90%;z-index:301;box-shadow:0 4px 24px rgba(31,46,35,0.25);">
-    <h2 style="font-family:var(--fonte-display);font-size:19px;margin:0 0 12px;">Sobre o projeto</h2>
+  <div id="modal-sobre" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--pergaminho);color:var(--carvao);border:3px solid var(--ouro-escuro);border-radius:var(--raio-lg);padding:24px;max-width:420px;width:90%;z-index:301;box-shadow:0 4px 24px rgba(0,0,0,0.7);">
+    <h2 style="font-family:var(--fonte-titulo);font-size:19px;margin:0 0 12px;">Sobre o projeto</h2>
     <p style="font-family:var(--fonte-corpo);font-size:15px;line-height:1.7;margin:0 0 10px;">Este objeto digital de aprendizagem foi desenvolvido no contexto do Curso de Letras da UNIJUÍ, Turma 2024.</p>
     <p style="font-family:var(--fonte-corpo);font-size:15px;line-height:1.7;margin:0 0 16px;">A atividade integra a obra <em>Ana Terra</em>, de Erico Verissimo, com uma jornada gamificada em que cada dupla explora uma palavra-chave da narrativa.</p>
-    <p style="font-family:var(--fonte-dados);font-size:12px;color:var(--texto-secundario);margin:0;">Versão 2.1</p>
-    <button class="botao botao-secundario" style="margin-top:14px;" onclick="fecharModal('modal-sobre')">Fechar</button>
+    <p style="font-family:var(--fonte-dados);font-size:12px;color:var(--ouro-escuro);margin:0;">Versão 2.1</p>
+    <button class="botao botao-secundario" style="margin-top:14px;color:var(--ferro);border-color:var(--ouro-escuro);" onclick="fecharModal('modal-sobre')">Fechar</button>
   </div>
 
   <div class="menu-overlay" id="modal-ajuda-overlay" onclick="fecharModal('modal-ajuda')" style="z-index:300;"></div>
-  <div id="modal-ajuda" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--papel-medio);border:1px solid var(--couro);border-radius:var(--raio-lg);padding:24px;max-width:420px;width:90%;z-index:301;box-shadow:0 4px 24px rgba(31,46,35,0.25);">
-    <h2 style="font-family:var(--fonte-display);font-size:19px;margin:0 0 12px;">Como funciona</h2>
+  <div id="modal-ajuda" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--pergaminho);color:var(--carvao);border:3px solid var(--ouro-escuro);border-radius:var(--raio-lg);padding:24px;max-width:420px;width:90%;z-index:301;box-shadow:0 4px 24px rgba(0,0,0,0.7);">
+    <h2 style="font-family:var(--fonte-titulo);font-size:19px;margin:0 0 12px;">Como funciona</h2>
     <p style="font-family:var(--fonte-corpo);font-size:15px;line-height:1.7;margin:0 0 8px;"><strong>1.</strong> Cada dupla recebeu uma carta com uma palavra-chave da obra.</p>
     <p style="font-family:var(--fonte-corpo);font-size:15px;line-height:1.7;margin:0 0 8px;"><strong>2.</strong> Acesse o mapa da jornada e toque na sua estação para ver a missão.</p>
     <p style="font-family:var(--fonte-corpo);font-size:15px;line-height:1.7;margin:0 0 8px;"><strong>3.</strong> Leia o contexto narrativo e a pista da sua carta.</p>
     <p style="font-family:var(--fonte-corpo);font-size:15px;line-height:1.7;margin:0 0 8px;"><strong>4.</strong> Responda o desafio: identifique o objeto e justifique sua escolha.</p>
     <p style="font-family:var(--fonte-corpo);font-size:15px;line-height:1.7;margin:0 0 16px;"><strong>5.</strong> Acompanhe o progresso coletivo da turma no mapa.</p>
-    <button class="botao botao-secundario" style="margin-top:0;" onclick="fecharModal('modal-ajuda')">Fechar</button>
+    <button class="botao botao-secundario" style="margin-top:0;color:var(--ferro);border-color:var(--ouro-escuro);" onclick="fecharModal('modal-ajuda')">Fechar</button>
   </div>
 
   <div class="tela ativa" id="tela-ficha">
@@ -1149,6 +1286,13 @@ table td { vertical-align: top; }
         <p class="texto-pequeno" id="ficha-integrantes" style="margin:0 0 4px;"></p>
         <p class="texto-pequeno" id="ficha-turma" style="margin:0 0 16px;"></p>
         <p class="cartao-descricao" style="margin:0;">Sua missão aguarda. A jornada de Ana Terra se desdobra em 15 estações, e a sua dupla é guardiã de uma delas. Avance para o mapa e cumpra seu papel nesta crônica do pampa.</p>
+        <!-- Atributos decorativos (RPG) -->
+        <div class="atributos">
+          <div class="atributo"><span>Força</span><div class="barra-atributo"><div style="width:60%"></div></div></div>
+          <div class="atributo"><span>Destreza</span><div class="barra-atributo"><div style="width:40%"></div></div></div>
+          <div class="atributo"><span>Sabedoria</span><div class="barra-atributo"><div style="width:80%"></div></div></div>
+          <div class="atributo"><span>Carisma</span><div class="barra-atributo"><div style="width:70%"></div></div></div>
+        </div>
         <button class="botao botao-dourado" onclick="mostrarTela('tela-mapa')">Ver o mapa da jornada</button>
       </div>
     </div>
@@ -1231,7 +1375,7 @@ table td { vertical-align: top; }
         <input type="password" id="prof-senha" autocomplete="current-password">
         <button class="botao botao-dourado" onclick="logarProfessor()" id="btn-login-prof">Entrar</button>
         <div id="msg-login-prof"></div>
-        <a href="#" onclick="mostrarApp('app-login');return false;" class="link-discreto" style="display:block;text-align:center;margin-top:12px;font-style:italic;color:var(--texto-secundario);text-decoration:none;font-size:14px;">&#8592; Voltar para a página dos alunos</a>
+        <a href="#" onclick="mostrarApp('app-login');return false;" class="link-discreto" style="display:block;text-align:center;margin-top:12px;font-style:italic;color:var(--ouro-escuro);text-decoration:none;font-size:14px;">&#8592; Voltar para a página dos alunos</a>
       </div>
     </div>
   </div>
@@ -1239,7 +1383,7 @@ table td { vertical-align: top; }
   <div id="tela-painel" class="oculto">
     <div class="hud">
       <div class="hud-info"><div class="hud-nome">Painel do Professor</div></div>
-      <button onclick="sairProfessor()" style="background:none;border:none;color:var(--dourado-claro);font-family:var(--fonte-dados);font-size:13px;cursor:pointer;">Sair</button>
+      <button onclick="sairProfessor()" style="background:none;border:none;color:var(--ouro);font-family:var(--fonte-dados);font-size:13px;cursor:pointer;">Sair</button>
     </div>
     <div class="container-largo" style="padding-top:24px;">
       <div class="resumo-grade">
@@ -1255,7 +1399,7 @@ table td { vertical-align: top; }
       <div class="aba-conteudo ativa" id="aba-duplas">
         <div class="filtro-turma">
           <label for="filtro-turma-input" style="margin-top:0;">Turma:</label>
-          <input type="text" id="filtro-turma-input" placeholder="Filtrar por turma" style="max-width:200px;padding:8px 12px;font-size:14px;" oninput="filtrarDuplas()">
+          <input type="text" id="filtro-turma-input" placeholder="Filtrar por turma" style="max-width:200px;padding:8px 12px;font-size:14px;background:var(--pergaminho);color:var(--carvao);border:2px solid var(--ouro-escuro);" oninput="filtrarDuplas()">
         </div>
         <div style="overflow-x:auto;">
           <table id="tabela-duplas">
@@ -1281,7 +1425,6 @@ table td { vertical-align: top; }
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-
 /* ============================================================
    CONFIGURACAO SUPABASE
    ============================================================ */
@@ -2280,20 +2423,20 @@ function renderizarDuplas(filtro) {
     else badge = '<span class="badge-status badge-pendente">Pendente</span>';
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td><strong>${d.nome_dupla}</strong><br><span style="font-size:12px;font-style:italic;color:var(--texto-secundario);">${d.integrantes}</span></td>
+      <td><strong>${d.nome_dupla}</strong><br><span style="font-size:12px;font-style:italic;color:var(--pergaminho-escuro);">${d.integrantes}</span></td>
       <td>${d.turma}</td>
       <td>${carta ? carta.numero+" ("+carta.palavraChave+")" : "..."}</td>
       <td style="font-size:13px;">${arq ? arq.nome : "..."}</td>
-      <td><span style="font-family:var(--fonte-dados);color:var(--dourado);">${d.xp_total||0} XP</span></td>
+      <td><span style="font-family:var(--fonte-dados);color:var(--ouro);">${d.xp_total||0} XP</span></td>
       <td>${badge}</td>
       <td style="display:flex;gap:8px;flex-wrap:wrap;">
         ${d.carta_numero ? `<button class="btn-desvincular" onclick="desvincularCarta('${d.id}', '${d.nome_dupla}')">Desvincular carta</button>` : ""}
-        <button class="btn-desvincular" style="color:#8b1a1a;" onclick="deletarDupla('${d.id}', '${d.nome_dupla}')">&#128465; Excluir dupla</button>
+        <button class="btn-desvincular" style="color:#c97a5a;" onclick="deletarDupla('${d.id}', '${d.nome_dupla}')">&#128465; Excluir dupla</button>
       </td>
     `;
     tbody.appendChild(tr);
   });
-  if (lista.length===0) tbody.innerHTML='<tr><td colspan="7" style="text-align:center;font-style:italic;color:var(--texto-secundario);">Nenhuma dupla encontrada.</td></tr>';
+  if (lista.length===0) tbody.innerHTML='<tr><td colspan="7" style="text-align:center;font-style:italic;color:var(--pergaminho-escuro);">Nenhuma dupla encontrada.</td></tr>';
 }
 
 function filtrarDuplas() { renderizarDuplas(document.getElementById("filtro-turma-input").value); }
@@ -2319,7 +2462,7 @@ function renderizarRespostas() {
     `;
     tbody.appendChild(tr);
   });
-  if (RESPOSTAS_DADOS.length===0) tbody.innerHTML='<tr><td colspan="5" style="text-align:center;font-style:italic;color:var(--texto-secundario);">Nenhuma resposta enviada ainda.</td></tr>';
+  if (RESPOSTAS_DADOS.length===0) tbody.innerHTML='<tr><td colspan="5" style="text-align:center;font-style:italic;color:var(--pergaminho-escuro);">Nenhuma resposta enviada ainda.</td></tr>';
 }
 
 function toggleResposta(id) { document.getElementById(id).classList.toggle("aberta"); }
@@ -2330,19 +2473,20 @@ function renderizarCartas() {
   CARTAS.forEach(carta => {
     const duplaComCarta = DUPLAS_DADOS.find(d => d.carta_numero === carta.numero);
     const resp = duplaComCarta ? RESPOSTAS_DADOS.find(r => r.dupla_id === duplaComCarta.id) : null;
-    let cor = "var(--papel-medio)";
+    let cor = "var(--pergaminho)";
     let statusTxt = "Livre";
-    if (duplaComCarta && resp) { cor = "#dde6da"; statusTxt = "Concluída"; }
-    else if (duplaComCarta) { cor = "#ecd9b8"; statusTxt = "Em andamento"; }
+    if (duplaComCarta && resp) { cor = "#1a3a2a"; statusTxt = "Concluída"; }
+    else if (duplaComCarta) { cor = "#3a2a1a"; statusTxt = "Em andamento"; }
     const div = document.createElement("div");
     div.className = "resumo-card";
     div.style.background = cor;
+    div.style.color = "var(--pergaminho)";
     div.style.textAlign = "left";
     div.innerHTML = `
-      <p style="font-family:var(--fonte-dados);font-size:11px;color:var(--texto-secundario);margin:0 0 4px;text-transform:uppercase;letter-spacing:.06em;">Carta ${carta.numero}</p>
-      <p style="font-family:var(--fonte-display);font-weight:600;font-size:15px;margin:0 0 4px;">${carta.palavraChave}</p>
-      <p style="font-size:12px;font-style:italic;color:var(--texto-secundario);margin:0 0 6px;">${statusTxt}</p>
-      ${duplaComCarta ? `<p style="font-size:12px;margin:0;color:var(--tinta);">${duplaComCarta.nome_dupla}</p>` : ""}
+      <p style="font-family:var(--fonte-dados);font-size:11px;color:var(--ouro-escuro);margin:0 0 4px;text-transform:uppercase;letter-spacing:.06em;">Carta ${carta.numero}</p>
+      <p style="font-family:var(--fonte-titulo);font-weight:700;font-size:15px;margin:0 0 4px;color:var(--ouro);">${carta.palavraChave}</p>
+      <p style="font-size:12px;font-style:italic;color:var(--pergaminho-escuro);margin:0 0 6px;">${statusTxt}</p>
+      ${duplaComCarta ? `<p style="font-size:12px;margin:0;color:var(--pergaminho);">${duplaComCarta.nome_dupla}</p>` : ""}
     `;
     grade.appendChild(div);
   });
