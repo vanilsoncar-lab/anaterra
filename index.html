@@ -168,7 +168,7 @@ a {
   font-style: italic;
   color: var(--ferro);
   margin: 0 0 20px;
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
 label {
@@ -747,17 +747,18 @@ th {
 }
 
 /* ------------------------------------------------------------
-   Utilidades
+   Utilidades (CORRIGIDAS PARA MELHOR CONTRASTE)
    ------------------------------------------------------------ */
 
 .texto-central {
   text-align: center;
+  color: var(--ferro); /* agora escuro para legibilidade */
 }
 
 .texto-pequeno {
   font-size: 13px;
   font-style: italic;
-  color: var(--pergaminho-escuro);
+  color: var(--ferro); /* escurecido para contraste */
 }
 
 .espaco-topo {
@@ -1274,7 +1275,8 @@ table td { vertical-align: top; }
   <div class="tela ativa" id="tela-ficha">
     <div class="container">
       <div class="cartao" style="margin-top:24px;">
-        <p class="texto-pequeno texto-central" style="margin:0 0 16px;">Bem-vindo de volta, viajante</p>
+        <!-- Texto agora com cor escura para legibilidade -->
+        <p class="texto-pequeno texto-central" style="margin:0 0 16px; color: var(--ferro);">Bem-vindo de volta, viajante</p>
         <div class="ficha-personagem">
           <div class="ficha-avatar" id="ficha-avatar"></div>
           <div>
@@ -1283,8 +1285,8 @@ table td { vertical-align: top; }
           </div>
         </div>
         <div class="divisor"><span class="divisor-icone">* * *</span></div>
-        <p class="texto-pequeno" id="ficha-integrantes" style="margin:0 0 4px;"></p>
-        <p class="texto-pequeno" id="ficha-turma" style="margin:0 0 16px;"></p>
+        <p class="texto-pequeno" id="ficha-integrantes" style="margin:0 0 4px; color: var(--ferro);"></p>
+        <p class="texto-pequeno" id="ficha-turma" style="margin:0 0 16px; color: var(--ferro);"></p>
         <p class="cartao-descricao" style="margin:0;">Sua missão aguarda. A jornada de Ana Terra se desdobra em 15 estações, e a sua dupla é guardiã de uma delas. Avance para o mapa e cumpra seu papel nesta crônica do pampa.</p>
         <!-- Atributos decorativos (RPG) -->
         <div class="atributos">
