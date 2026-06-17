@@ -680,4 +680,694 @@ body {
         <a href="#" onclick="mostrarApp('app-login');return false;" class="link-discreto">&#8592; Voltar</a>
       </div>
     </div>
- 
+  </div>
+  <div id="tela-painel" class="oculto">
+    <div class="container-largo" style="padding-top:24px;">
+      <div class="resumo-grade">
+        <div class="resumo-card"><span class="resumo-numero" id="res-duplas">0</span><span class="resumo-label">Duplas</span></div>
+        <div class="resumo-card"><span class="resumo-numero" id="res-concluidas">0</span><span class="resumo-label">Concluídas</span></div>
+        <div class="resumo-card"><span class="resumo-numero" id="res-cartas">0/15</span><span class="resumo-label">Cartas</span></div>
+      </div>
+      <div id="grade-cartas" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* ============================================================
+   CONFIGURAÇÃO SUPABASE
+   ============================================================ */
+const SUPABASE_URL = "https://betfuvirdfikkhcuyweg.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJldGZ1dmlyZGZpa2toY3V5d2VnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1NTY2MjMsImV4cCI6MjA5NzEzMjYyM30.ymiJTQ3mQDYCdu7ShW4_7x2yH95wyS-L30uxzlH9Fxw";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+/* ============================================================
+   DADOS DOS ARQUÉTIPOS E MEDALHÕES (ícones)
+   ============================================================ */
+const MEDALHOES = {
+  ana_terra: `<svg viewBox="0 0 240 240"><circle cx="120" cy="120" r="100" fill="#f3e3c3" stroke="#7a5530" stroke-width="3"/><text x="120" y="130" text-anchor="middle" font-family="Cinzel" font-size="24" fill="#6b4226">⚜</text></svg>`,
+  pedro_missioneiro: `<svg viewBox="0 0 240 240"><circle cx="120" cy="120" r="100" fill="#f3e3c3" stroke="#7a5530" stroke-width="3"/><text x="120" y="130" text-anchor="middle" font-family="Cinzel" font-size="24" fill="#6b4226">⛪</text></svg>`,
+  maneco_terra: `<svg viewBox="0 0 240 240"><circle cx="120" cy="120" r="100" fill="#f3e3c3" stroke="#7a5530" stroke-width="3"/><text x="120" y="130" text-anchor="middle" font-family="Cinzel" font-size="24" fill="#6b4226">🏛️</text></svg>`,
+  henriqueta: `<svg viewBox="0 0 240 240"><circle cx="120" cy="120" r="100" fill="#f3e3c3" stroke="#7a5530" stroke-width="3"/><text x="120" y="130" text-anchor="middle" font-family="Cinzel" font-size="24" fill="#6b4226">🌾</text></svg>`,
+  horacio: `<svg viewBox="0 0 240 240"><circle cx="120" cy="120" r="100" fill="#f3e3c3" stroke="#7a5530" stroke-width="3"/><text x="120" y="130" text-anchor="middle" font-family="Cinzel" font-size="24" fill="#6b4226">⚖️</text></svg>`,
+  pedro_terra: `<svg viewBox="0 0 240 240"><circle cx="120" cy="120" r="100" fill="#f3e3c3" stroke="#7a5530" stroke-width="3"/><text x="120" y="130" text-anchor="middle" font-family="Cinzel" font-size="24" fill="#6b4226">🌿</text></svg>`
+};
+
+/* ============================================================
+   SISTEMA DE HABILIDADES (RPG)
+   ============================================================ */
+const HABILIDADES = {
+  ana_terra: {
+    nome: "Resiliência do Pampa",
+    descricao: "Ana Terra encontra forças para continuar. Aumenta eficácia das respostas em 15%.",
+    icone: "🛡️",
+    tipo: "passiva",
+    efeito: "Aumenta a eficácia das respostas em 15%"
+  },
+  pedro_missioneiro: {
+    nome: "Sabedoria Missioneira",
+    descricao: "Conhecimento ancestral. Revela uma pista adicional sobre a palavra-chave.",
+    icone: "📜",
+    tipo: "ativa",
+    efeito: "Revela uma pista adicional sobre a palavra-chave"
+  },
+  maneco_terra: {
+    nome: "Autoridade Patriarcal",
+    descricao: "A tradição guia suas ações. Fortalece a argumentação.",
+    icone: "⚔️",
+    tipo: "ativa",
+    efeito: "Aumenta o poder de convicção da justificativa"
+  },
+  henriqueta: {
+    nome: "Guardiã do Fogo",
+    descricao: "Memória dos costumes. Identifica elementos culturais nas respostas.",
+    icone: "🔥",
+    tipo: "passiva",
+    efeito: "Identifica automaticamente elementos culturais nas respostas"
+  },
+  horacio: {
+    nome: "Visão Conservadora",
+    descricao: "Análise crítica. Permite antever desafios futuros.",
+    icone: "👁️",
+    tipo: "ativa",
+    efeito: "Revela o próximo desafio da jornada"
+  },
+  pedro_terra: {
+    nome: "Legado das Gerações",
+    descricao: "Sabedoria acumulada. Conexão com todos os personagens da narrativa.",
+    icone: "🌳",
+    tipo: "passiva",
+    efeito: "Permite acessar conhecimentos de outros arquétipos"
+  }
+};
+
+const ARQUETIPOS = [
+  { id: "ana_terra", nome: "Ana Terra", tema: "Resistência feminina" },
+  { id: "pedro_missioneiro", nome: "Pedro Missioneiro", tema: "Miscigenação" },
+  { id: "maneco_terra", nome: "Maneco Terra", tema: "Autoridade patriarcal" },
+  { id: "henriqueta", nome: "Henriqueta", tema: "Preservação dos costumes" },
+  { id: "horacio", nome: "Horácio", tema: "Conservadorismo social" },
+  { id: "pedro_terra", nome: "Pedro Terra", tema: "Continuidade das gerações" }
+];
+
+const DESCRICOES_ARQUETIPOS = {
+  ana_terra: "Mulher que enfrenta perdas e preconceitos sem se deixar vencer.",
+  pedro_missioneiro: "Filho do encontro entre culturas diferentes, origem da identidade gaúcha.",
+  maneco_terra: "Representa o comando da família e a manutenção das regras do passado.",
+  henriqueta: "Guarda os hábitos e modos de viver que sustentam a vida na estância.",
+  horacio: "Representa a resistência às mudanças e a defesa das normas sociais.",
+  pedro_terra: "Representa a passagem do tempo entre gerações e a continuidade da história."
+};
+
+const NOMES_DUPLA = [
+  "Filhos da Terra", "Vozes do Pampa", "Herdeiros do Vento",
+  "Raízes do Sul", "Sangue e Campo", "Guardiões da Memória",
+  "Sementes do Pampa", "Filhos do Encontro", "A Marca do Destino"
+];
+
+/* ============================================================
+   CARTAS DA JORNADA
+   ============================================================ */
+const CARTAS = [
+  { ordem: 1, numero: 3, palavraChave: "ORIGEM", pista: "Represento o lugar onde Ana Terra nasceu.", desafio: "Qual objeto eu represento?", narrativa: "Antes de Ana Terra, houve a terra..." },
+  { ordem: 2, numero: 1, palavraChave: "NARRATIVA", pista: "Sou o início de tudo.", desafio: "Qual objeto eu represento?", narrativa: "Toda jornada precisa de um lugar para guardar memórias..." },
+  { ordem: 3, numero: 14, palavraChave: "TRADIÇÃO", pista: "Represento costumes e hábitos gaúchos.", desafio: "Qual objeto eu represento?", narrativa: "Antes mesmo de Ana existir, já existiam os costumes..." },
+  { ordem: 4, numero: 7, palavraChave: "ENCONTRO", pista: "Minha chegada transforma o rumo da história.", desafio: "Qual objeto eu represento?", narrativa: "Um dia, alguém chega e nada é como antes..." },
+  { ordem: 5, numero: 9, palavraChave: "AMOR", pista: "Nasci da união de duas pessoas que desafiaram regras.", desafio: "Qual objeto eu represento?", narrativa: "Entre duas pessoas que a sociedade dizia não deverem se unir..." },
+  { ordem: 6, numero: 15, palavraChave: "CONFLITO", pista: "Represento guerras e disputas territoriais.", desafio: "Qual objeto eu represento?", narrativa: "As terras do pampa nunca foram pacíficas..." },
+  { ordem: 7, numero: 8, palavraChave: "MUDANÇA", pista: "Sou ligado à cultura indígena e ao amor proibido.", desafio: "Qual objeto eu represento?", narrativa: "Há quem chegue para transformar tudo..." },
+  { ordem: 8, numero: 10, palavraChave: "DOR", pista: "Represento perdas e sofrimento.", desafio: "Qual objeto eu represento?", narrativa: "Depois da transformação, vem o preço..." },
+  { ordem: 9, numero: 4, palavraChave: "SOBREVIVÊNCIA", pista: "Sou resultado do trabalho diário.", desafio: "Qual objeto eu represento?", narrativa: "Mesmo na dor, a vida continua..." },
+  { ordem: 10, numero: 6, palavraChave: "RESILIÊNCIA", pista: "Represento uma mulher forte que não desistiu.", desafio: "Qual objeto eu represento?", narrativa: "Ana Terra é, antes de tudo, uma mulher que não desiste..." },
+  { ordem: 11, numero: 11, palavraChave: "ESPERANÇA", pista: "Simbolizo a continuidade da vida.", desafio: "Qual objeto eu represento?", narrativa: "Mesmo depois de tantas tragédias, a vida encontra um jeito..." },
+  { ordem: 12, numero: 12, palavraChave: "RESISTÊNCIA", pista: "Ajudo a enfrentar momentos difíceis.", desafio: "Qual objeto eu represento?", narrativa: "Nos momentos mais difíceis, é preciso algo a que se apegar..." },
+  { ordem: 13, numero: 13, palavraChave: "RECOMEÇO", pista: "Abro caminhos para uma nova vida.", desafio: "Qual objeto eu represento?", narrativa: "Depois de tanto perder, é hora de abrir uma porta..." },
+  { ordem: 14, numero: 5, palavraChave: "LIBERDADE", pista: "Levo pessoas e sonhos pelos pampas.", desafio: "Qual objeto eu represento?", narrativa: "Pelo pampa, seguem mensagens, sonhos e pessoas em movimento..." },
+  { ordem: 15, numero: 2, palavraChave: "DESTINO", pista: "Acompanho os momentos mais importantes.", desafio: "Qual objeto eu represento?", narrativa: "No fim, olhamos para trás e vemos..." }
+];
+
+/* ============================================================
+   FUNÇÕES PRINCIPAIS
+   ============================================================ */
+let DUPLA = null;
+let RESPOSTA_EXISTENTE = null;
+let TODAS_DUPLAS = [];
+let arquetipoSelecionado = null;
+let arquetipoEmPreview = null;
+
+function mostrarApp(id) {
+  ["app-login","app-jornada","app-professor"].forEach(a => {
+    document.getElementById(a).classList.add("oculto");
+  });
+  document.getElementById(id).classList.remove("oculto");
+}
+
+function mostrarBlocoLogin(id) {
+  ["bloco-escolha","bloco-cadastro","bloco-login","bloco-registro"].forEach(b => {
+    document.getElementById(b).classList.add("oculto");
+  });
+  document.getElementById(id).classList.remove("oculto");
+  if (id === "bloco-cadastro") montarListaNomes();
+}
+
+function montarListaNomes() {
+  const container = document.getElementById("lista-nomes");
+  container.innerHTML = "";
+  NOMES_DUPLA.forEach(nome => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "opcao-nome";
+    btn.textContent = nome;
+    btn.onclick = () => {
+      document.querySelectorAll(".opcao-nome").forEach(b => b.classList.remove("selecionado"));
+      btn.classList.add("selecionado");
+      document.getElementById("nome-selecionado-label").textContent = "Selecionado: " + nome;
+      document.getElementById("nome-selecionado-label").classList.add("visivel");
+      document.getElementById("cad-nome-dupla").value = nome;
+    };
+    container.appendChild(btn);
+  });
+}
+
+function montarGradeArquetipos() {
+  const grade = document.getElementById("grade-arquetipos");
+  grade.innerHTML = "";
+  ARQUETIPOS.forEach(arq => {
+    const opcao = document.createElement("div");
+    opcao.className = "opcao-arquetipo";
+    opcao.dataset.id = arq.id;
+    opcao.innerHTML = MEDALHOES[arq.id] + `<p class="opcao-arquetipo-nome">${arq.nome}</p>`;
+    opcao.onclick = () => abrirPreview(arq.id);
+    grade.appendChild(opcao);
+  });
+}
+
+function abrirPreview(id) {
+  arquetipoEmPreview = id;
+  const arq = ARQUETIPOS.find(a => a.id === id);
+  document.getElementById("preview-avatar").innerHTML = MEDALHOES[id];
+  document.getElementById("preview-nome").textContent = arq.nome;
+  document.getElementById("preview-tema").textContent = arq.tema;
+  document.getElementById("preview-descricao").textContent = DESCRICOES_ARQUETIPOS[id];
+  document.getElementById("preview-arquetipo").classList.add("visivel");
+}
+
+function fecharPreview() {
+  document.getElementById("preview-arquetipo").classList.remove("visivel");
+}
+
+function confirmarArquetipo() {
+  arquetipoSelecionado = arquetipoEmPreview;
+  const arq = ARQUETIPOS.find(a => a.id === arquetipoSelecionado);
+  document.querySelectorAll(".opcao-arquetipo").forEach(el => {
+    el.classList.toggle("selecionado", el.dataset.id === arquetipoSelecionado);
+  });
+  document.getElementById("arquetipo-confirmado").textContent = "Arquétipo escolhido: " + arq.nome;
+  document.getElementById("arquetipo-confirmado").classList.add("visivel");
+  fecharPreview();
+}
+
+/* ============================================================
+   EXIBIÇÃO DE HABILIDADES (RPG)
+   ============================================================ */
+function exibirHabilidades() {
+  const arq = DUPLA.arquetipo;
+  const hab = HABILIDADES[arq];
+  if (!hab) return;
+  
+  const container = document.getElementById("habilidades-display");
+  container.innerHTML = `
+    <div class="habilidade-card">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span style="font-size:32px;">${hab.icone}</span>
+        <div>
+          <h4 class="nome">${hab.nome}</h4>
+          <p class="descricao">${hab.descricao}</p>
+          <span class="tipo">${hab.tipo.toUpperCase()}</span>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  // Verificar cooldown
+  const ultimoUso = localStorage.getItem(`habilidade_${DUPLA.id}`);
+  if (ultimoUso && (Date.now() - parseInt(ultimoUso)) < 300000) {
+    const restante = Math.ceil((300000 - (Date.now() - parseInt(ultimoUso))) / 60000);
+    document.getElementById("btn-habilidade").disabled = true;
+    document.getElementById("btn-habilidade").textContent = `⏳ Aguarde ${restante} min`;
+  } else {
+    document.getElementById("btn-habilidade").disabled = false;
+    document.getElementById("btn-habilidade").textContent = "🎯 Usar Habilidade Especial";
+  }
+}
+
+/* ============================================================
+   USAR HABILIDADE (RPG)
+   ============================================================ */
+async function usarHabilidade() {
+  const arq = DUPLA.arquetipo;
+  const hab = HABILIDADES[arq];
+  if (!hab) return;
+  
+  // Verificar cooldown
+  const ultimoUso = localStorage.getItem(`habilidade_${DUPLA.id}`);
+  if (ultimoUso && (Date.now() - parseInt(ultimoUso)) < 300000) {
+    const restante = Math.ceil((300000 - (Date.now() - parseInt(ultimoUso))) / 60000);
+    exibirMensagem("msg-habilidade", `⏳ Aguarde ${restante} minutos para usar sua habilidade novamente.`, "info");
+    return;
+  }
+  
+  let mensagem = "";
+  let bonusXP = 15;
+  
+  switch(hab.efeito) {
+    case "Revela uma pista adicional sobre a palavra-chave":
+      const carta = CARTAS.find(c => c.numero === DUPLA.carta_numero);
+      mensagem = `🔍 Pista adicional: "Na obra de Erico Verissimo, ${carta.palavraChave} se manifesta de forma profunda..."`;
+      bonusXP = 20;
+      break;
+    case "Aumenta o poder de convicção da justificativa":
+      mensagem = "⚔️ Sua argumentação ganha força ancestral! A tradição fala através de suas palavras.";
+      bonusXP = 25;
+      break;
+    case "Revela o próximo desafio da jornada":
+      const atual = CARTAS.find(c => c.numero === DUPLA.carta_numero);
+      const proximo = CARTAS.find(c => c.ordem > atual.ordem);
+      mensagem = `👁️ O próximo desafio será sobre "${proximo?.palavraChave}". Prepare-se!`;
+      bonusXP = 15;
+      break;
+    default:
+      mensagem = "✨ Habilidade ativada com sucesso!";
+      bonusXP = 15;
+  }
+  
+  localStorage.setItem(`habilidade_${DUPLA.id}`, Date.now().toString());
+  DUPLA.xp_total = (DUPLA.xp_total || 0) + bonusXP;
+  preencherHUD();
+  exibirMensagem("msg-habilidade", `${mensagem} (+${bonusXP} XP)`, "sucesso");
+  
+  // Registrar no banco
+  await supabaseClient.rpc("registrar_acao", {
+    p_dupla_id: DUPLA.id,
+    p_acao: "uso_habilidade",
+    p_xp_ganho: bonusXP
+  });
+  
+  exibirConquista(`✨ Habilidade usada! +${bonusXP} XP`);
+  exibirHabilidades();
+}
+
+/* ============================================================
+   DESAFIO DO HERÓI (RPG)
+   ============================================================ */
+function verificarDesafioHeroi() {
+  const cartaNum = DUPLA.carta_numero;
+  const desafio = DESAFIOS_ADICIONAIS[cartaNum];
+  if (!desafio || !RESPOSTA_EXISTENTE) return;
+  
+  const container = document.getElementById("desafio-heroi-container");
+  container.innerHTML = `
+    <div class="cartao desafio-heroi-card">
+      <h4 class="cartao-titulo" style="font-size:16px;">🏆 Desafio do Herói</h4>
+      <p style="font-size:14px;font-style:italic;color:var(--ferro);">${desafio.descricao}</p>
+      <button class="botao botao-secundario" style="margin:0;padding:10px 16px;font-size:13px;" onclick="aceitarDesafioHeroi()">
+        Aceitar Desafio (+${desafio.bonus_xp} XP)
+      </button>
+      <div id="msg-desafio-heroi"></div>
+    </div>
+  `;
+}
+
+function aceitarDesafioHeroi() {
+  const desafio = DESAFIOS_ADICIONAIS[DUPLA.carta_numero];
+  const container = document.getElementById("desafio-heroi-container");
+  container.innerHTML = `
+    <div class="cartao desafio-heroi-card">
+      <h4 class="cartao-titulo" style="font-size:16px;">🏆 Desafio do Herói</h4>
+      <label>Resposta</label>
+      <textarea id="resp-desafio-heroi" rows="4" placeholder="Sua resposta para o desafio do herói..."></textarea>
+      <button class="botao botao-dourado" style="margin-top:8px;" onclick="enviarRespostaHeroi()">Enviar Resposta</button>
+      <div id="msg-desafio-heroi"></div>
+    </div>
+  `;
+}
+
+async function enviarRespostaHeroi() {
+  const resposta = document.getElementById("resp-desafio-heroi").value.trim();
+  if (resposta.length < 30) {
+    exibirMensagem("msg-desafio-heroi", "Sua resposta deve ter pelo menos 30 caracteres.", "erro");
+    return;
+  }
+  
+  const desafio = DESAFIOS_ADICIONAIS[DUPLA.carta_numero];
+  DUPLA.xp_total = (DUPLA.xp_total || 0) + desafio.bonus_xp;
+  preencherHUD();
+  
+  await supabaseClient.rpc("registrar_resposta_heroi", {
+    p_dupla_id: DUPLA.id,
+    p_carta_numero: DUPLA.carta_numero,
+    p_resposta: resposta,
+    p_xp_ganho: desafio.bonus_xp
+  });
+  
+  exibirMensagem("msg-desafio-heroi", `🏆 Desafio concluído! +${desafio.bonus_xp} XP!`, "sucesso");
+  exibirConquista(`🏆 Herói do Pampa! +${desafio.bonus_xp} XP!`);
+  
+  // Desabilitar botão
+  document.querySelector("#desafio-heroi-container .botao-dourado").disabled = true;
+  document.querySelector("#desafio-heroi-container .botao-dourado").textContent = "✅ Concluído!";
+}
+
+/* ============================================================
+   FUNÇÕES DE AUTENTICAÇÃO E JORNADA
+   ============================================================ */
+async function cadastrarDupla() {
+  const nomeDupla = document.getElementById("cad-nome-dupla").value.trim();
+  const integrantes = document.getElementById("cad-integrantes").value.trim();
+  const email = document.getElementById("cad-email").value.trim().toLowerCase();
+  const turma = document.getElementById("cad-turma").value.trim();
+  const senha = document.getElementById("cad-senha").value;
+  
+  if (!nomeDupla || !integrantes || !email || !turma || !senha) {
+    exibirMensagem("msg-cadastro", "Preencha todos os campos.", "erro");
+    return;
+  }
+  
+  const { data, error } = await supabaseClient.rpc("cadastrar_dupla", {
+    p_nome_dupla: nomeDupla, p_integrantes: integrantes,
+    p_email: email, p_turma: turma, p_senha: senha
+  });
+  
+  if (error) { exibirMensagem("msg-cadastro", "Erro: " + error.message, "erro"); return; }
+  if (data === null) { exibirMensagem("msg-cadastro", "E-mail já cadastrado.", "erro"); return; }
+  
+  sessionStorage.setItem("anaTerraDuplaId", data);
+  await prosseguirAposAutenticacao(data);
+}
+
+async function entrarDupla() {
+  const email = document.getElementById("login-email").value.trim().toLowerCase();
+  const senha = document.getElementById("login-senha").value;
+  
+  if (!email || !senha) {
+    exibirMensagem("msg-login", "Informe e-mail e senha.", "erro");
+    return;
+  }
+  
+  const { data, error } = await supabaseClient.rpc("autenticar_dupla", { p_email: email, p_senha: senha });
+  
+  if (error || data === null) {
+    exibirMensagem("msg-login", "E-mail ou senha incorretos.", "erro");
+    return;
+  }
+  
+  sessionStorage.setItem("anaTerraDuplaId", data);
+  await prosseguirAposAutenticacao(data);
+}
+
+async function prosseguirAposAutenticacao(duplaId) {
+  const { data, error } = await supabaseClient.rpc("buscar_dupla", { p_dupla_id: duplaId });
+  if (error || !data || data.length === 0) return;
+  
+  if (data[0].carta_numero !== null) {
+    await iniciarJornada(duplaId);
+    return;
+  }
+  
+  montarGradeArquetipos();
+  mostrarBlocoLogin("bloco-registro");
+}
+
+async function registrarCartaEArquetipo() {
+  const duplaId = sessionStorage.getItem("anaTerraDuplaId");
+  const numeroCarta = parseInt(document.getElementById("reg-carta").value, 10);
+  
+  if (!numeroCarta || numeroCarta < 1 || numeroCarta > 15) {
+    exibirMensagem("msg-registro", "Informe um número de carta válido (1-15).", "erro");
+    return;
+  }
+  if (!arquetipoSelecionado) {
+    exibirMensagem("msg-registro", "Escolha e confirme um arquétipo.", "erro");
+    return;
+  }
+  
+  const { data, error } = await supabaseClient.rpc("registrar_carta_e_arquetipo", {
+    p_dupla_id: duplaId, p_carta_numero: numeroCarta, p_arquetipo: arquetipoSelecionado
+  });
+  
+  if (error) { exibirMensagem("msg-registro", "Erro: " + error.message, "erro"); return; }
+  if (data === "carta_ocupada") { exibirMensagem("msg-registro", "Carta já registrada.", "erro"); return; }
+  
+  exibirMensagem("msg-registro", "Carta registrada! Iniciando jornada...", "sucesso");
+  setTimeout(() => iniciarJornada(duplaId), 800);
+}
+
+/* ============================================================
+   INICIAR JORNADA
+   ============================================================ */
+async function iniciarJornada(duplaId) {
+  await carregarDadosDupla(duplaId);
+  await carregarTodasDuplas();
+  await carregarRespostaExistente();
+  preencherFicha();
+  preencherHUD();
+  preencherMapa();
+  preencherMissao();
+  exibirHabilidades();
+  verificarDesafioHeroi();
+  atualizarProgressoColetivo();
+  mostrarApp("app-jornada");
+  mostrarTela("tela-ficha");
+}
+
+async function carregarDadosDupla(duplaId) {
+  const { data, error } = await supabaseClient.rpc("buscar_dupla", { p_dupla_id: duplaId });
+  if (error || !data || data.length === 0) { sessionStorage.clear(); mostrarApp("app-login"); return; }
+  DUPLA = data[0];
+}
+
+async function carregarTodasDuplas() {
+  const { data } = await supabaseClient.from("duplas").select("carta_numero, xp_total").eq("turma", DUPLA.turma);
+  TODAS_DUPLAS = data || [];
+}
+
+async function carregarRespostaExistente() {
+  const { data } = await supabaseClient.from("respostas").select("resposta_objeto, justificativa")
+    .eq("dupla_id", DUPLA.id).eq("carta_numero", DUPLA.carta_numero).maybeSingle();
+  RESPOSTA_EXISTENTE = data || null;
+}
+
+function getCartaPorNumero(numero) { return CARTAS.find(c => c.numero === numero); }
+
+function mostrarTela(id) {
+  document.querySelectorAll(".tela").forEach(t => t.classList.remove("ativa"));
+  document.getElementById(id).classList.add("ativa");
+  window.scrollTo(0,0);
+}
+
+function preencherFicha() {
+  const arq = ARQUETIPOS.find(a => a.id === DUPLA.arquetipo);
+  document.getElementById("ficha-avatar").innerHTML = MEDALHOES[DUPLA.arquetipo] || "";
+  document.getElementById("ficha-nome-dupla").textContent = DUPLA.nome_dupla;
+  document.getElementById("ficha-arquetipo-tema").textContent = arq ? arq.nome + ": " + arq.tema : "";
+  document.getElementById("ficha-integrantes").textContent = "Integrantes: " + DUPLA.integrantes;
+  document.getElementById("ficha-turma").textContent = "Turma: " + DUPLA.turma;
+}
+
+function preencherHUD() {
+  document.getElementById("hud-avatar").innerHTML = MEDALHOES[DUPLA.arquetipo] || "";
+  document.getElementById("hud-nome").textContent = DUPLA.nome_dupla;
+  const xp = DUPLA.xp_total || 0;
+  const nivel = Math.floor(xp / 100) + 1;
+  const pct = Math.min(100, xp % 100);
+  document.getElementById("hud-barra").style.width = pct + "%";
+  document.getElementById("hud-nivel").innerHTML = "Nv " + nivel + "<br>" + xp + " XP";
+}
+
+function preencherMapa() {
+  const container = document.getElementById("mapa-jornada");
+  container.innerHTML = "";
+  
+  const coords = [
+    { left: 18, top: 68 }, { left: 32, top: 52 }, { left: 48, top: 38 },
+    { left: 62, top: 28 }, { left: 78, top: 22 }, { left: 88, top: 32 },
+    { left: 84, top: 48 }, { left: 72, top: 58 }, { left: 56, top: 68 },
+    { left: 42, top: 78 }, { left: 28, top: 82 }, { left: 16, top: 74 },
+    { left: 10, top: 58 }, { left: 22, top: 42 }, { left: 40, top: 30 }
+  ];
+  
+  CARTAS.forEach((carta, i) => {
+    const duplaDestaCarta = TODAS_DUPLAS.find(d => d.carta_numero === carta.numero);
+    const ehPropria = carta.numero === DUPLA.carta_numero;
+    const concluida = duplaDestaCarta && duplaDestaCarta.xp_total > 0;
+    
+    let classe = "marcador";
+    let status = "Aguardando";
+    if (ehPropria) { classe += " marcador-proprio"; status = RESPOSTA_EXISTENTE ? "Concluída" : "Sua missão"; }
+    else if (concluida) { classe += " marcador-concluido"; status = "Concluída"; }
+    else { classe += " marcador-bloqueado"; status = duplaDestaCarta ? "Em andamento" : "Livre"; }
+    
+    const marcador = document.createElement("div");
+    marcador.className = classe;
+    marcador.style.left = coords[i].left + "%";
+    marcador.style.top = coords[i].top + "%";
+    marcador.textContent = carta.ordem;
+    marcador.innerHTML += `<span class="tooltip">${carta.palavraChave} (${status})</span>`;
+    if (ehPropria) marcador.onclick = () => mostrarTela("tela-missao");
+    container.appendChild(marcador);
+  });
+}
+
+function preencherMissao() {
+  const carta = getCartaPorNumero(DUPLA.carta_numero);
+  if (!carta) return;
+  document.getElementById("missao-numero").textContent = "Estação " + carta.ordem + " de 15";
+  document.getElementById("missao-palavra").textContent = carta.palavraChave;
+  document.getElementById("missao-narrativa").textContent = carta.narrativa;
+  document.getElementById("missao-pista").textContent = carta.pista;
+  document.getElementById("missao-desafio").textContent = carta.desafio;
+  
+  if (RESPOSTA_EXISTENTE) {
+    document.getElementById("form-resposta").classList.add("oculto");
+    document.getElementById("resposta-registrada").classList.remove("oculto");
+    document.getElementById("resp-objeto-salvo").textContent = RESPOSTA_EXISTENTE.resposta_objeto;
+    document.getElementById("resp-justificativa-salva").textContent = RESPOSTA_EXISTENTE.justificativa;
+  }
+}
+
+function atualizarProgressoColetivo() {
+  const concluidas = TODAS_DUPLAS.filter(d => d.xp_total > 0).length;
+  document.getElementById("prog-fill").style.width = Math.round((concluidas / 15) * 100) + "%";
+  document.getElementById("prog-numero").textContent = concluidas + "/15";
+}
+
+async function enviarResposta() {
+  const objeto = document.getElementById("resp-objeto").value.trim();
+  const justificativa = document.getElementById("resp-justificativa").value.trim();
+  
+  if (!objeto) { exibirMensagem("msg-missao", "Informe o objeto.", "erro"); return; }
+  if (justificativa.length < 20) { exibirMensagem("msg-missao", "Justificativa muito curta.", "erro"); return; }
+  
+  const { data, error } = await supabaseClient.rpc("registrar_resposta", {
+    p_dupla_id: DUPLA.id, p_carta_numero: DUPLA.carta_numero,
+    p_resposta_objeto: objeto, p_justificativa: justificativa
+  });
+  
+  if (error || data !== "ok") {
+    exibirMensagem("msg-missao", "Erro ao enviar. Tente novamente.", "erro");
+    return;
+  }
+  
+  DUPLA.xp_total = (DUPLA.xp_total || 0) + 50;
+  preencherHUD();
+  RESPOSTA_EXISTENTE = { resposta_objeto: objeto, justificativa };
+  document.getElementById("form-resposta").classList.add("oculto");
+  document.getElementById("resposta-registrada").classList.remove("oculto");
+  document.getElementById("resp-objeto-salvo").textContent = objeto;
+  document.getElementById("resp-justificativa-salva").textContent = justificativa;
+  
+  exibirConquista("Missão cumprida! +50 XP!");
+  await carregarTodasDuplas();
+  preencherMapa();
+  atualizarProgressoColetivo();
+  verificarDesafioHeroi();
+}
+
+function exibirMensagem(id, texto, tipo) {
+  document.getElementById(id).innerHTML = `<div class="mensagem mensagem-${tipo}">${texto}</div>`;
+}
+
+function exibirConquista(texto) {
+  const popup = document.getElementById("conquista-popup");
+  popup.textContent = texto;
+  popup.classList.add("visivel");
+  setTimeout(() => popup.classList.remove("visivel"), 4000);
+}
+
+/* ============================================================
+   MENU
+   ============================================================ */
+function toggleMenu() {
+  document.getElementById("menu-lateral").classList.toggle("aberto");
+  document.getElementById("menu-overlay").classList.toggle("aberto");
+}
+function fecharMenu() {
+  document.getElementById("menu-lateral").classList.remove("aberto");
+  document.getElementById("menu-overlay").classList.remove("aberto");
+}
+function irPara(tela) { fecharMenu(); mostrarTela(tela); }
+function confirmarSair() {
+  if (confirm("Deseja sair? Seu progresso está salvo.")) {
+    sessionStorage.clear(); mostrarApp("app-login"); mostrarBlocoLogin("bloco-escolha");
+  }
+}
+
+/* ============================================================
+   PROFESSOR
+   ============================================================ */
+async function logarProfessor() {
+  const nome = document.getElementById("prof-nome").value.trim();
+  const senha = document.getElementById("prof-senha").value;
+  if (!nome || !senha) { alert("Preencha nome e senha."); return; }
+  const { data, error } = await supabaseClient.rpc("autenticar_professor", { p_nome: nome, p_senha: senha });
+  if (error || !data) { alert("Nome ou senha incorretos."); return; }
+  document.getElementById("tela-login-prof").classList.add("oculto");
+  document.getElementById("tela-painel").classList.remove("oculto");
+  await carregarDadosProfessor();
+}
+
+async function carregarDadosProfessor() {
+  const { data } = await supabaseClient.rpc("listar_duplas_professor");
+  const duplas = data || [];
+  const concluidas = duplas.filter(d => d.xp_total > 0).length;
+  const comCarta = duplas.filter(d => d.carta_numero !== null).length;
+  document.getElementById("res-duplas").textContent = duplas.length;
+  document.getElementById("res-concluidas").textContent = concluidas;
+  document.getElementById("res-cartas").textContent = comCarta + "/15";
+  
+  const grade = document.getElementById("grade-cartas");
+  grade.innerHTML = "";
+  CARTAS.forEach(carta => {
+    const duplaComCarta = duplas.find(d => d.carta_numero === carta.numero);
+    const div = document.createElement("div");
+    div.className = "resumo-card";
+    div.innerHTML = `
+      <p style="font-size:11px;color:var(--ouro-escuro);margin:0;">Carta ${carta.numero}</p>
+      <p style="font-size:15px;font-weight:700;color:var(--ouro);margin:4px 0;">${carta.palavraChave}</p>
+      <p style="font-size:12px;margin:0;">${duplaComCarta ? duplaComCarta.nome_dupla : "Livre"}</p>
+    `;
+    grade.appendChild(div);
+  });
+}
+
+function sairProfessor() {
+  document.getElementById("tela-painel").classList.add("oculto");
+  document.getElementById("tela-login-prof").classList.remove("oculto");
+}
+
+/* ============================================================
+   INICIALIZAÇÃO
+   ============================================================ */
+window.addEventListener("DOMContentLoaded", async () => {
+  // Verificar sessão do professor
+  if (sessionStorage.getItem("anaTerraProf") === "ok") {
+    mostrarApp("app-professor");
+    document.getElementById("tela-login-prof").classList.add("oculto");
+    document.getElementById("tela-painel").classList.remove("oculto");
+    await carregarDadosProfessor();
+    return;
+  }
+  
+  // Verificar sessão do aluno
+  const duplaId = sessionStorage.getItem("anaTerraDuplaId");
+  if (duplaId) {
+    await iniciarJornada(duplaId);
+    return;
+  }
+  
+  mostrarApp("app-login");
+});
+</script>
+</body>
+</html>
