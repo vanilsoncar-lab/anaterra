@@ -1376,42 +1376,33 @@ textarea {
 
   <!-- TELA: MISSÃO -->
   <div class="tela" id="tela-missao">
+   <!-- TELA: SOBRE O GAME -->
+  <div class="tela" id="tela-sobre">
     <div class="container">
-      <div class="cartao" id="cartao-missao">
-        <p class="missao-numero" id="missao-numero"></p>
-        <h2 class="missao-palavra" id="missao-palavra"></h2>
-        <div class="narrativa" id="missao-narrativa"></div>
-        <div class="pista-original">
-          <p class="pista-original-titulo">Pista</p>
-          <p style="margin:0;" id="missao-pista"></p>
+      <div class="cartao" style="margin-top:24px;">
+        <h2 class="cartao-titulo">Sobre o Game</h2>
+        <p class="cartao-descricao">O Inventariante do Tempo: A Jornada de Ana Terra</p>
+        <div class="narrativa">
+          Este objeto de aprendizagem digital foi criado para a turma do 9º ano da Escola Municipal Fundamental Estado do Amazonas, como parte das atividades do PIBID Letras da UNIJUÍ.
         </div>
-        <div id="form-resposta">
-          <p class="cartao-titulo" style="font-size:17px;">Desafio</p>
-          <p class="cartao-descricao" id="missao-desafio"></p>
-          <label for="resp-objeto">Qual objeto eu represento?</label>
-          <input type="text" id="resp-objeto" placeholder="Nome do objeto">
-          <label for="resp-justificativa">Justificativa</label>
-          <textarea id="resp-justificativa" placeholder="Explique por que este objeto representa esta palavra-chave..."></textarea>
-          <button class="botao botao-dourado" onclick="enviarResposta()" id="btn-enviar">Enviar resposta</button>
-          <div id="msg-missao"></div>
+        <div class="divisor"><span class="divisor-icone">✦ ✦ ✦</span></div>
+        <div class="habilidade-card">
+          <p class="nome" style="margin-bottom:6px;">📚 A obra</p>
+          <p class="descricao" style="margin:0;">Baseado no romance <em>O Tempo e o Vento</em>, de Érico Veríssimo, o game acompanha a trajetória de Ana Terra pelo pampa gaúcho do século XVIII.</p>
         </div>
-        <div id="resposta-registrada" class="oculto">
-          <div class="mensagem mensagem-sucesso">Missão cumprida!</div>
-          <div class="resposta-enviada">
-            <p class="resposta-enviada-titulo">Objeto</p>
-            <p class="resposta-enviada-texto" id="resp-objeto-salvo"></p>
-          </div>
-          <div class="resposta-enviada">
-            <p class="resposta-enviada-titulo">Justificativa</p>
-            <p class="resposta-enviada-texto" id="resp-justificativa-salva"></p>
-          </div>
+        <div class="habilidade-card">
+          <p class="nome" style="margin-bottom:6px;">🎯 Como funciona</p>
+          <p class="descricao" style="margin:0;">Cada dupla recebeu uma carta com uma palavra-chave da narrativa. Sua missão é identificar um objeto que represente essa palavra e justificar sua escolha com base na obra.</p>
         </div>
+        <div class="habilidade-card">
+          <p class="nome" style="margin-bottom:6px;">🏆 Pontuação</p>
+          <p class="descricao" style="margin:0;">Resposta principal: +50 XP. Habilidade especial: +15 a +25 XP. Desafio do Herói (cartas 1, 3 e 7): +30 XP.</p>
+        </div>
+        <div class="divisor"><span class="divisor-icone">✦ ✦ ✦</span></div>
+        <p class="texto-pequeno texto-central" style="margin:0;">Criado por Vanilson Cardoso | PIBID Letras, UNIJUÍ</p>
+        <p class="texto-pequeno texto-central" style="margin:4px 0 0;">Supervisora: Prof.ª Andréia Cardoso</p>
+        <button class="botao botao-secundario" onclick="mostrarTela('tela-ficha')" style="margin-top:24px;">Voltar para a ficha</button>
       </div>
-      
-      <!-- DESAFIO DO HERÓI -->
-      <div id="desafio-heroi-container"></div>
-      
-      <button class="botao botao-secundario" onclick="mostrarTela('tela-mapa')">Voltar para o mapa</button>
     </div>
   </div>
 
