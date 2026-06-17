@@ -3,14 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>O Inventariante do Tempo: A Jornada de Ana Terra - RPG</title>
+<title>O Inventariante do Tempo: A Jornada de Ana Terra</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Special+Elite&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
-   ESTILOS COMPLETOS
+   ANA TERRA: CRONICAS DO PAMPA - ESTILO RPG COM MAPA
    ============================================================ */
+
 :root {
   --pergaminho: #f2e3c6;
   --pergaminho-escuro: #dac292;
@@ -21,15 +22,19 @@
   --carvao: #1e1e1e;
   --brilho: #f5e6b0;
   --fundo: #1a1410;
+
   --fonte-titulo: 'Cinzel', serif;
   --fonte-corpo: 'Crimson Text', serif;
   --fonte-dados: 'Special Elite', 'Courier New', monospace;
+
   --raio-md: 6px;
   --raio-lg: 10px;
   --sombra-papel: 0 8px 24px rgba(0,0,0,0.7);
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 html, body {
   margin: 0;
@@ -51,14 +56,49 @@ body {
   min-height: 100vh;
 }
 
-.pagina { min-height: 100vh; display: flex; flex-direction: column; }
-.container { max-width: 480px; margin: 0 auto; padding: 24px 20px 48px; width: 100%; }
-.container-largo { max-width: 880px; margin: 0 auto; padding: 24px 20px 48px; width: 100%; }
-.oculto { display: none !important; }
-.tela { display: none; }
-.tela.ativa { display: block; animation: surgir 0.5s ease-out; }
+img, svg {
+  max-width: 100%;
+  display: block;
+}
 
-.marca { text-align: center; margin-bottom: 28px; }
+a {
+  color: var(--ouro);
+  text-decoration: underline;
+}
+
+/* ------------------------------------------------------------
+   Layout geral
+   ------------------------------------------------------------ */
+
+.pagina {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+  width: 100%;
+}
+
+.container-largo {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+  width: 100%;
+}
+
+/* ------------------------------------------------------------
+   Cabecalho / marca
+   ------------------------------------------------------------ */
+
+.marca {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
 .marca-titulo {
   font-family: var(--fonte-titulo);
   font-weight: 700;
@@ -68,6 +108,7 @@ body {
   letter-spacing: 0.04em;
   text-shadow: 0 0 20px rgba(201,160,80,0.3);
 }
+
 .marca-subtitulo {
   font-family: var(--fonte-corpo);
   font-style: italic;
@@ -75,6 +116,10 @@ body {
   color: var(--pergaminho-escuro);
   margin: 6px 0 0;
 }
+
+/* ------------------------------------------------------------
+   Cards e formularios (estilo grimório)
+   ------------------------------------------------------------ */
 
 .cartao {
   background: var(--pergaminho);
@@ -87,6 +132,28 @@ body {
   position: relative;
   animation: surgir 0.6s ease-out;
 }
+
+.cartao::before {
+  content: "⚜";
+  position: absolute;
+  top: -8px;
+  left: 12px;
+  font-size: 28px;
+  color: var(--ouro);
+  opacity: 0.4;
+  transform: rotate(-15deg);
+}
+
+.cartao::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 1px solid var(--ouro-escuro);
+  border-radius: 0 8px 0 8px;
+  pointer-events: none;
+  opacity: 0.3;
+}
+
 .cartao-titulo {
   font-family: var(--fonte-titulo);
   font-weight: 700;
@@ -94,6 +161,7 @@ body {
   margin: 0 0 4px;
   color: var(--ferro);
 }
+
 .cartao-descricao {
   font-size: 15px;
   font-style: italic;
@@ -111,7 +179,10 @@ label {
   margin-top: 16px;
   color: var(--ferro);
 }
-label:first-of-type { margin-top: 0; }
+
+label:first-of-type {
+  margin-top: 0;
+}
 
 input, select, textarea {
   width: 100%;
@@ -123,12 +194,22 @@ input, select, textarea {
   background: var(--pergaminho);
   color: var(--carvao);
 }
+
 input:focus, select:focus, textarea:focus {
   outline: 2px solid var(--ouro);
   outline-offset: 1px;
   border-color: var(--ouro);
 }
-textarea { resize: vertical; min-height: 90px; }
+
+textarea {
+  resize: vertical;
+  min-height: 90px;
+  font-family: var(--fonte-corpo);
+}
+
+/* ------------------------------------------------------------
+   Botoes (estilo rúnico)
+   ------------------------------------------------------------ */
 
 .botao {
   display: inline-flex;
@@ -147,20 +228,70 @@ textarea { resize: vertical; min-height: 90px; }
   letter-spacing: 2px;
   cursor: pointer;
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
   background: transparent;
   color: var(--ouro);
   box-shadow: 0 0 12px rgba(201,160,80,0.2);
 }
-.botao:hover { transform: scale(1.02); box-shadow: 0 0 30px var(--ouro); }
-.botao:active { transform: scale(0.97); }
-.botao:disabled { opacity: 0.45; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
 
-.botao-dourado { background: var(--ouro); color: var(--carvao); border-color: var(--ouro-escuro); }
-.botao-dourado:hover { background: var(--brilho); border-color: var(--ouro); }
-.botao-secundario { background: transparent; color: var(--ouro); border: 2px solid var(--ouro-escuro); }
-.botao-secundario:hover { background: rgba(201,160,80,0.15); }
-.botao-primario { background: var(--sangue); border-color: var(--sangue); color: var(--pergaminho); }
-.botao-primario:hover { background: #8a2a2a; border-color: var(--ouro); color: var(--pergaminho); }
+.botao::before {
+  content: "✦ ";
+  opacity: 0.6;
+}
+
+.botao:active {
+  transform: scale(0.97);
+}
+
+.botao:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 30px var(--ouro);
+}
+
+.botao-primario {
+  background: var(--sangue);
+  border-color: var(--sangue);
+  color: var(--pergaminho);
+}
+
+.botao-primario:hover {
+  background: #8a2a2a;
+  border-color: var(--ouro);
+  color: var(--pergaminho);
+}
+
+.botao-dourado {
+  background: var(--ouro);
+  color: var(--carvao);
+  border-color: var(--ouro-escuro);
+}
+
+.botao-dourado:hover {
+  background: var(--brilho);
+  border-color: var(--ouro);
+}
+
+.botao-secundario {
+  background: transparent;
+  color: var(--ouro);
+  border: 2px solid var(--ouro-escuro);
+}
+
+.botao-secundario:hover {
+  background: rgba(201,160,80,0.15);
+}
+
+.botao:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* ------------------------------------------------------------
+   Mensagens de status
+   ------------------------------------------------------------ */
 
 .mensagem {
   padding: 12px 14px;
@@ -169,23 +300,29 @@ textarea { resize: vertical; min-height: 90px; }
   margin-top: 16px;
   border: 1px solid;
 }
-.mensagem-erro { background: #3a1a1a; color: #e8b8a0; border-color: var(--sangue); }
-.mensagem-sucesso { background: #1a3a2a; color: #b8d8b0; border-color: #2a5a3a; }
-.mensagem-info { background: #2a2a1a; color: var(--ouro); border-color: var(--ouro-escuro); }
 
-.link-discreto {
-  display: block;
-  text-align: center;
-  margin-top: 16px;
-  font-size: 14px;
-  font-style: italic;
-  color: var(--ouro-escuro);
+.mensagem-erro {
+  background: #3a1a1a;
+  color: #e8b8a0;
+  border-color: var(--sangue);
 }
 
-.texto-pequeno { font-size: 13px; font-style: italic; color: var(--ferro); }
-.texto-central { text-align: center; color: var(--ferro); }
+.mensagem-sucesso {
+  background: #1a3a2a;
+  color: #b8d8b0;
+  border-color: #2a5a3a;
+}
 
-/* HUD */
+.mensagem-info {
+  background: #2a2a1a;
+  color: var(--ouro);
+  border-color: var(--ouro-escuro);
+}
+
+/* ------------------------------------------------------------
+   HUD (barra de vida RPG)
+   ------------------------------------------------------------ */
+
 .hud {
   position: sticky;
   top: 0;
@@ -198,6 +335,7 @@ textarea { resize: vertical; min-height: 90px; }
   gap: 14px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.6);
 }
+
 .hud-avatar {
   width: 48px;
   height: 48px;
@@ -207,8 +345,17 @@ textarea { resize: vertical; min-height: 90px; }
   border: 2px solid var(--ouro);
   background: var(--pergaminho);
 }
-.hud-avatar svg { width: 100%; height: 100%; }
-.hud-info { flex: 1; min-width: 0; }
+
+.hud-avatar svg {
+  width: 100%;
+  height: 100%;
+}
+
+.hud-info {
+  flex: 1;
+  min-width: 0;
+}
+
 .hud-nome {
   font-family: var(--fonte-titulo);
   font-size: 15px;
@@ -218,12 +365,14 @@ textarea { resize: vertical; min-height: 90px; }
   text-overflow: ellipsis;
   color: var(--brilho);
 }
+
 .hud-barra-container {
   display: flex;
   align-items: center;
   gap: 6px;
   margin-top: 6px;
 }
+
 .hud-barra-fundo {
   flex: 1;
   height: 12px;
@@ -235,6 +384,7 @@ textarea { resize: vertical; min-height: 90px; }
   display: flex;
   align-items: center;
 }
+
 .hud-barra-progresso {
   height: 100%;
   background: linear-gradient(90deg, #b8860b, #f5d742);
@@ -242,6 +392,26 @@ textarea { resize: vertical; min-height: 90px; }
   box-shadow: 0 0 12px #f5d74288;
   transition: width 0.5s ease;
 }
+
+.hud-divisorias {
+  display: flex;
+  gap: 2px;
+  padding: 0 4px;
+  height: 100%;
+  align-items: center;
+  flex: 1;
+}
+
+.hud-divisorias span {
+  flex: 1;
+  height: 60%;
+  border-right: 1px solid rgba(255,215,0,0.15);
+}
+
+.hud-divisorias span:last-child {
+  border-right: none;
+}
+
 .hud-nivel {
   font-family: var(--fonte-dados);
   font-size: 13px;
@@ -249,6 +419,7 @@ textarea { resize: vertical; min-height: 90px; }
   text-align: right;
   white-space: nowrap;
 }
+
 .menu-btn {
   background: none;
   border: none;
@@ -262,196 +433,17 @@ textarea { resize: vertical; min-height: 90px; }
 }
 .menu-btn:hover { color: var(--ouro); }
 
-/* Menu Lateral */
-.menu-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.7);
-  z-index: 200;
-}
-.menu-overlay.aberto { display: block; }
-.menu-lateral {
-  position: fixed;
-  top: 0;
-  right: -280px;
-  width: 260px;
-  height: 100vh;
-  background: var(--carvao);
-  border-left: 3px solid var(--ouro-escuro);
-  z-index: 201;
-  transition: right 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-}
-.menu-lateral.aberto { right: 0; }
-.menu-header {
-  background: var(--ferro);
-  color: var(--brilho);
-  padding: 18px 20px 14px;
-  border-bottom: 2px solid var(--ouro-escuro);
-}
-.menu-header-titulo { font-family: var(--fonte-titulo); font-size: 17px; font-weight: 700; margin: 0 0 2px; }
-.menu-header-versao { font-family: var(--fonte-dados); font-size: 11px; color: var(--ouro); margin: 0; }
-.menu-secao { padding: 16px 20px 8px; }
-.menu-secao-titulo {
-  font-family: var(--fonte-dados);
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--ouro-escuro);
-  margin: 0 0 10px;
-}
-.menu-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  padding: 12px 0;
-  border: none;
-  border-bottom: 1px solid rgba(201,160,80,0.15);
-  background: none;
-  cursor: pointer;
-  font-family: var(--fonte-corpo);
-  font-size: 16px;
-  color: var(--pergaminho);
-  text-align: left;
-  transition: color 0.2s;
-}
-.menu-item:last-child { border-bottom: none; }
-.menu-item:hover { color: var(--ouro); }
-.menu-item-icone { font-size: 18px; width: 24px; text-align: center; flex-shrink: 0; }
-.menu-item-vermelho { color: #c97a5a; }
-.menu-item-vermelho:hover { color: #e8a080; }
-.menu-rodape {
-  margin-top: auto;
-  padding: 16px 20px;
-  border-top: 1px solid rgba(201,160,80,0.15);
-  font-family: var(--fonte-dados);
-  font-size: 10px;
-  color: var(--ouro-escuro);
-  text-align: center;
-  line-height: 1.6;
-}
+/* ------------------------------------------------------------
+   MAPA INTERATIVO (substitui a lista)
+   ------------------------------------------------------------ */
 
-/* Ficha Personagem */
-.ficha-personagem { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
-.ficha-avatar { width: 80px; height: 80px; flex-shrink: 0; }
-.ficha-nome { font-family: var(--fonte-titulo); font-weight: 700; font-size: 19px; margin: 0; color: var(--ferro); }
-.ficha-tema { font-size: 14px; font-style: italic; color: var(--ferro); margin: 2px 0 0; }
-
-.atributos { margin: 20px 0 12px; border-top: 1px solid var(--ouro-escuro); padding-top: 16px; }
-.atributo { display: flex; align-items: center; gap: 12px; margin: 6px 0; }
-.atributo span { width: 80px; font-family: var(--fonte-titulo); font-size: 13px; text-transform: uppercase; color: var(--ouro-escuro); }
-.barra-atributo { flex: 1; height: 8px; background: var(--ferro); border: 1px solid var(--ouro-escuro); border-radius: 12px; overflow: hidden; }
-.barra-atributo div { height: 100%; background: var(--ouro); border-radius: 12px; }
-
-.divisor { display: flex; align-items: center; gap: 10px; margin: 20px 0; opacity: 0.6; }
-.divisor::before, .divisor::after { content: ""; flex: 1; height: 1px; background: var(--ouro-escuro); }
-.divisor-icone { font-size: 14px; color: var(--ouro-escuro); letter-spacing: 4px; }
-
-/* Habilidades RPG */
-.habilidade-card {
-  background: var(--pergaminho);
-  border: 2px solid var(--ouro-escuro);
-  border-radius: var(--raio-md);
-  padding: 16px;
-  margin: 12px 0;
-}
-.habilidade-card .icone { font-size: 32px; }
-.habilidade-card .nome { font-family: var(--fonte-titulo); font-weight: 700; margin: 0; color: var(--ferro); }
-.habilidade-card .descricao { font-size: 13px; font-style: italic; color: var(--ferro); margin: 4px 0; }
-.habilidade-card .tipo { font-size: 12px; font-family: var(--fonte-dados); color: var(--ouro-escuro); }
-
-/* Desafio do Herói */
-.desafio-heroi-card { border-color: var(--ouro) !important; border-width: 3px !important; }
-.desafio-heroi-card .titulo { font-size: 16px; color: var(--ouro-escuro); }
-
-/* Grade de Arquétipos */
-.grade-arquetipos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 8px; }
-.opcao-arquetipo {
-  border: 2px solid var(--ouro-escuro);
-  border-radius: var(--raio-md);
-  padding: 12px;
-  cursor: pointer;
-  text-align: center;
-  background: var(--pergaminho);
-  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
-}
-.opcao-arquetipo:hover { border-color: var(--ouro); box-shadow: 0 0 16px rgba(201,160,80,0.3); }
-.opcao-arquetipo.selecionado { border-color: var(--ouro); background: rgba(201,160,80,0.15); box-shadow: 0 0 20px var(--ouro); }
-.opcao-arquetipo svg { width: 64px; height: 64px; margin: 0 auto 6px; }
-.opcao-arquetipo-nome { font-family: var(--fonte-titulo); font-size: 13px; font-weight: 700; margin: 0; color: var(--ferro); }
-
-.preview-arquetipo {
-  display: none;
-  margin-top: 14px;
-  background: var(--pergaminho);
-  border: 2px solid var(--ouro);
-  border-radius: var(--raio-lg);
-  padding: 18px 16px 14px;
-  position: relative;
-  animation: surgir 0.2s ease;
-}
-.preview-arquetipo.visivel { display: block; }
-.preview-header { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
-.preview-avatar { width: 64px; height: 64px; flex-shrink: 0; }
-.preview-nome { font-family: var(--fonte-titulo); font-weight: 700; font-size: 17px; margin: 0 0 2px; color: var(--ferro); }
-.preview-tema { font-family: var(--fonte-dados); font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ouro-escuro); margin: 0; }
-.preview-descricao { font-family: var(--fonte-corpo); font-style: italic; font-size: 15px; line-height: 1.75; color: var(--ferro); margin: 0 0 14px; border-left: 4px solid var(--ouro); padding-left: 12px; }
-.preview-fechar { position: absolute; top: 10px; right: 12px; background: none; border: none; font-size: 20px; color: var(--ferro); cursor: pointer; padding: 0 4px; line-height: 1; }
-.preview-fechar:hover { color: var(--sangue); }
-.arquetipo-confirmado {
-  margin-top: 10px; padding: 10px 14px;
-  background: rgba(201,160,80,0.12);
-  border: 2px solid var(--ouro);
-  border-radius: var(--raio-md);
-  font-family: var(--fonte-titulo);
-  font-size: 14px; font-weight: 700; color: var(--ferro);
-  display: none; text-align: center;
-}
-.arquetipo-confirmado.visivel { display: block; }
-
-/* Lista de Nomes */
-.lista-nomes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 8px; }
-.opcao-nome {
-  padding: 10px 12px;
-  border: 2px solid var(--ouro-escuro);
-  border-radius: var(--raio-md);
-  background: var(--pergaminho);
-  font-family: var(--fonte-corpo);
-  font-size: 14px;
-  color: var(--ferro);
-  cursor: pointer;
-  text-align: center;
-  transition: border-color 0.2s, background 0.2s;
-  line-height: 1.3;
-}
-.opcao-nome:hover { border-color: var(--ouro); background: rgba(201,160,80,0.08); }
-.opcao-nome.selecionado { border-color: var(--ouro); background: rgba(201,160,80,0.15); box-shadow: 0 0 12px rgba(201,160,80,0.3); }
-.nome-selecionado-label {
-  margin-top: 12px;
-  padding: 10px 14px;
-  background: var(--pergaminho);
-  border: 2px solid var(--ouro-escuro);
-  border-radius: var(--raio-md);
-  font-family: var(--fonte-titulo);
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--ferro);
-  display: none;
-}
-.nome-selecionado-label.visivel { display: block; }
-
-/* Mapa */
 .mapa-container {
   position: relative;
   width: 100%;
   max-width: 700px;
   margin: 0 auto 20px;
   aspect-ratio: 1.6 / 1;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500"><rect width="800" height="500" fill="%23d4c4a8"/><path d="M0 300 Q200 250 400 280 Q600 310 800 270 L800 500 L0 500 Z" fill="%23b8a88c"/><path d="M0 350 Q200 330 400 360 Q600 390 800 340 L800 500 L0 500 Z" fill="%239a8a6e"/><ellipse cx="400" cy="250" rx="300" ry="40" fill="%236b8a6b" opacity="0.3"/><circle cx="200" cy="180" r="8" fill="%23a57c3a"/><circle cx="300" cy="150" r="8" fill="%23a57c3a"/><circle cx="400" cy="130" r="8" fill="%23a57c3a"/><circle cx="500" cy="150" r="8" fill="%23a57c3a"/><circle cx="600" cy="180" r="8" fill="%23a57c3a"/><circle cx="650" cy="220" r="8" fill="%23a57c3a"/><circle cx="620" cy="280" r="8" fill="%23a57c3a"/><circle cx="550" cy="320" r="8" fill="%23a57c3a"/><circle cx="450" cy="340" r="8" fill="%23a57c3a"/><circle cx="350" cy="350" r="8" fill="%23a57c3a"/><circle cx="250" cy="330" r="8" fill="%23a57c3a"/><circle cx="180" cy="300" r="8" fill="%23a57c3a"/><circle cx="140" cy="260" r="8" fill="%23a57c3a"/><circle cx="160" cy="220" r="8" fill="%23a57c3a"/><circle cx="220" cy="200" r="8" fill="%23a57c3a"/><path d="M0 200 Q200 180 400 200 Q600 220 800 200" stroke="%238a7a5e" stroke-width="2" fill="none"/></svg>');
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500"><rect width="800" height="500" fill="%23d4c4a8"/><path d="M0 300 Q200 250 400 280 Q600 310 800 270 L800 500 L0 500 Z" fill="%23b8a88c"/><path d="M0 350 Q200 330 400 360 Q600 390 800 340 L800 500 L0 500 Z" fill="%239a8a6e"/><ellipse cx="400" cy="250" rx="300" ry="40" fill="%236b8a6b" opacity="0.3"/><circle cx="200" cy="180" r="8" fill="%23a57c3a"/><circle cx="300" cy="150" r="8" fill="%23a57c3a"/><circle cx="400" cy="130" r="8" fill="%23a57c3a"/><circle cx="500" cy="150" r="8" fill="%23a57c3a"/><circle cx="600" cy="180" r="8" fill="%23a57c3a"/><circle cx="650" cy="220" r="8" fill="%23a57c3a"/><circle cx="620" cy="280" r="8" fill="%23a57c3a"/><circle cx="550" cy="320" r="8" fill="%23a57c3a"/><circle cx="450" cy="340" r="8" fill="%23a57c3a"/><circle cx="350" cy="350" r="8" fill="%23a57c3a"/><circle cx="250" cy="330" r="8" fill="%23a57c3a"/><circle cx="180" cy="300" r="8" fill="%23a57c3a"/><circle cx="140" cy="260" r="8" fill="%23a57c3a"/><circle cx="160" cy="220" r="8" fill="%23a57c3a"/><circle cx="220" cy="200" r="8" fill="%23a57c3a"/><path d="M0 200 Q200 180 400 200 Q600 220 800 200" stroke="%238a7a5e" stroke-width="2" fill="none"/><text x="50" y="470" fill="%236b5a3e" font-family="Cinzel" font-size="12">Mar do Sul</text><text x="650" y="470" fill="%236b5a3e" font-family="Cinzel" font-size="12">Lagoa dos Patos</text></svg>');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -459,6 +451,7 @@ textarea { resize: vertical; min-height: 90px; }
   border-radius: var(--raio-lg);
   box-shadow: var(--sombra-papel);
 }
+
 .marcador {
   position: absolute;
   width: 34px;
@@ -479,16 +472,45 @@ textarea { resize: vertical; min-height: 90px; }
   transition: all 0.2s;
   z-index: 5;
 }
-.marcador:hover { transform: translate(-50%, -50%) scale(1.25); box-shadow: 0 0 24px var(--ouro); z-index: 10; }
-.marcador-proprio { background: var(--brilho); border-color: var(--ouro); box-shadow: 0 0 30px var(--ouro); animation: pulsar 1.5s infinite; }
+
+.marcador:hover {
+  transform: translate(-50%, -50%) scale(1.25);
+  box-shadow: 0 0 24px var(--ouro);
+  z-index: 10;
+}
+
+.marcador-proprio {
+  background: var(--brilho);
+  border-color: var(--ouro);
+  box-shadow: 0 0 30px var(--ouro);
+  animation: pulsar 1.5s infinite;
+}
+
 @keyframes pulsar {
   0% { box-shadow: 0 0 20px var(--ouro); }
   50% { box-shadow: 0 0 40px #f5d742; }
   100% { box-shadow: 0 0 20px var(--ouro); }
 }
-.marcador-concluido { background: #4caf50; border-color: #1a3a1a; color: var(--pergaminho); }
-.marcador-bloqueado { background: var(--ferro); border-color: var(--ouro-escuro); color: var(--pergaminho-escuro); opacity: 0.6; cursor: default; }
-.marcador-bloqueado:hover { transform: none !important; box-shadow: none !important; }
+
+.marcador-concluido {
+  background: #4caf50;
+  border-color: #1a3a1a;
+  color: var(--pergaminho);
+}
+
+.marcador-bloqueado {
+  background: var(--ferro);
+  border-color: var(--ouro-escuro);
+  color: var(--pergaminho-escuro);
+  opacity: 0.6;
+  cursor: default;
+}
+
+.marcador-bloqueado:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
 .marcador .tooltip {
   display: none;
   position: absolute;
@@ -506,7 +528,12 @@ textarea { resize: vertical; min-height: 90px; }
   pointer-events: none;
   z-index: 20;
 }
-.marcador:hover .tooltip { display: block; }
+
+.marcador:hover .tooltip {
+  display: block;
+}
+
+/* Fog of war (estilo névoa) */
 .marcador-bloqueado::after {
   content: "";
   position: absolute;
@@ -517,24 +544,121 @@ textarea { resize: vertical; min-height: 90px; }
   z-index: -1;
 }
 
-/* Missão */
-.missao-numero {
-  font-family: var(--fonte-dados);
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  color: var(--ouro-escuro);
-  text-transform: uppercase;
-  margin: 0 0 4px;
+/* ------------------------------------------------------------
+   Ficha de personagem (com atributos)
+   ------------------------------------------------------------ */
+
+.ficha-personagem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 8px;
 }
-.missao-palavra {
+
+.ficha-avatar {
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+}
+
+.ficha-nome {
   font-family: var(--fonte-titulo);
-  font-weight: 900;
-  font-size: 34px;
+  font-weight: 700;
+  font-size: 19px;
+  margin: 0;
   color: var(--ferro);
-  margin: 0 0 20px;
-  line-height: 1.15;
-  text-shadow: 0 0 20px rgba(201,160,80,0.2);
 }
+
+.ficha-tema {
+  font-size: 14px;
+  font-style: italic;
+  color: var(--ferro);
+  margin: 2px 0 0;
+}
+
+.atributos {
+  margin: 20px 0 12px;
+  border-top: 1px solid var(--ouro-escuro);
+  padding-top: 16px;
+}
+
+.atributo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 6px 0;
+}
+.atributo span {
+  width: 80px;
+  font-family: var(--fonte-titulo);
+  font-size: 13px;
+  text-transform: uppercase;
+  color: var(--ouro-escuro);
+}
+.barra-atributo {
+  flex: 1;
+  height: 8px;
+  background: var(--ferro);
+  border: 1px solid var(--ouro-escuro);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.barra-atributo div {
+  height: 100%;
+  background: var(--ouro);
+  border-radius: 12px;
+}
+
+/* ------------------------------------------------------------
+   Grade de arquetipos (selecao)
+   ------------------------------------------------------------ */
+
+.grade-arquetipos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.opcao-arquetipo {
+  border: 2px solid var(--ouro-escuro);
+  border-radius: var(--raio-md);
+  padding: 12px;
+  cursor: pointer;
+  text-align: center;
+  background: var(--pergaminho);
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.opcao-arquetipo:hover {
+  border-color: var(--ouro);
+  box-shadow: 0 0 16px rgba(201,160,80,0.3);
+}
+
+.opcao-arquetipo.selecionado {
+  border-color: var(--ouro);
+  background: rgba(201,160,80,0.15);
+  box-shadow: 0 0 20px var(--ouro);
+}
+
+.opcao-arquetipo svg {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 6px;
+}
+
+.opcao-arquetipo-nome {
+  font-family: var(--fonte-titulo);
+  font-size: 13px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--ferro);
+}
+
+/* ------------------------------------------------------------
+   Texto narrativo (contexto da missao)
+   ------------------------------------------------------------ */
+
 .narrativa {
   font-family: var(--fonte-corpo);
   font-style: italic;
@@ -548,6 +672,7 @@ textarea { resize: vertical; min-height: 90px; }
   padding: 12px 16px;
   border-radius: 0 6px 6px 0;
 }
+
 .pista-original {
   background: var(--pergaminho);
   border: 2px solid var(--ouro-escuro);
@@ -557,6 +682,7 @@ textarea { resize: vertical; min-height: 90px; }
   margin: 16px 0;
   position: relative;
 }
+
 .pista-original-titulo {
   font-family: var(--fonte-dados);
   font-size: 11px;
@@ -564,6 +690,144 @@ textarea { resize: vertical; min-height: 90px; }
   letter-spacing: 0.08em;
   color: var(--ouro-escuro);
   margin: 0 0 6px;
+}
+
+/* ------------------------------------------------------------
+   Selo ornamentado
+   ------------------------------------------------------------ */
+
+.selo {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+}
+
+/* ------------------------------------------------------------
+   Tabelas (painel professor)
+   ------------------------------------------------------------ */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  color: var(--pergaminho);
+}
+
+th, td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--ouro-escuro);
+}
+
+th {
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  color: var(--ouro);
+  font-size: 13px;
+}
+
+/* ------------------------------------------------------------
+   Utilidades
+   ------------------------------------------------------------ */
+
+.texto-central {
+  text-align: center;
+  color: var(--ferro);
+}
+
+.texto-pequeno {
+  font-size: 13px;
+  font-style: italic;
+  color: var(--ferro);
+}
+
+.espaco-topo {
+  margin-top: 24px;
+}
+
+.link-discreto {
+  display: block;
+  text-align: center;
+  margin-top: 16px;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--ouro-escuro);
+}
+
+.oculto {
+  display: none !important;
+}
+
+@media (max-width: 380px) {
+  .grade-arquetipos {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .marca-titulo {
+    font-size: 25px;
+  }
+
+  body {
+    font-size: 16px;
+  }
+}
+
+/* ------------------------------------------------------------
+   Animações
+   ------------------------------------------------------------ */
+
+@keyframes surgir {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.tela.ativa {
+  animation: surgir 0.5s ease-out;
+}
+
+/* ============================================================
+   ESTILOS COMPLEMENTARES DA JORNADA
+   ============================================================ */
+
+.tela { display: none; }
+.tela.ativa { display: block; }
+
+.missao-numero {
+  font-family: var(--fonte-dados);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--ouro-escuro);
+  text-transform: uppercase;
+  margin: 0 0 4px;
+}
+
+.missao-palavra {
+  font-family: var(--fonte-titulo);
+  font-weight: 900;
+  font-size: 34px;
+  color: var(--ferro);
+  margin: 0 0 20px;
+  line-height: 1.15;
+  text-shadow: 0 0 20px rgba(201,160,80,0.2);
+}
+
+.divisor {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+  opacity: 0.6;
+}
+.divisor::before, .divisor::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--ouro-escuro);
+}
+.divisor-icone {
+  font-size: 14px;
+  color: var(--ouro-escuro);
+  letter-spacing: 4px;
 }
 
 .resposta-enviada {
@@ -589,7 +853,32 @@ textarea { resize: vertical; min-height: 90px; }
   margin: 0;
 }
 
-/* Progresso Coletivo */
+.conquista-popup {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(120px);
+  background: var(--carvao);
+  color: var(--brilho);
+  padding: 16px 24px;
+  border-radius: var(--raio-lg);
+  border: 2px solid var(--ouro);
+  font-family: var(--fonte-titulo);
+  font-size: 15px;
+  font-weight: 700;
+  z-index: 999;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  max-width: 320px;
+  width: calc(100vw - 48px);
+  text-align: center;
+  opacity: 0;
+  box-shadow: 0 0 40px rgba(201,160,80,0.3);
+}
+.conquista-popup.visivel {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
 .progresso-coletivo {
   display: flex;
   align-items: center;
@@ -629,46 +918,266 @@ textarea { resize: vertical; min-height: 90px; }
   white-space: nowrap;
 }
 
-.conquista-popup {
+.menu-overlay {
+  display: none;
   position: fixed;
-  bottom: 32px;
-  left: 50%;
-  transform: translateX(-50%) translateY(120px);
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 200;
+}
+.menu-overlay.aberto { display: block; }
+
+.menu-lateral {
+  position: fixed;
+  top: 0;
+  right: -280px;
+  width: 260px;
+  height: 100vh;
   background: var(--carvao);
+  border-left: 3px solid var(--ouro-escuro);
+  z-index: 201;
+  transition: right 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.menu-lateral.aberto { right: 0; }
+
+.menu-header {
+  background: var(--ferro);
   color: var(--brilho);
-  padding: 16px 24px;
-  border-radius: var(--raio-lg);
-  border: 2px solid var(--ouro);
+  padding: 18px 20px 14px;
+  border-bottom: 2px solid var(--ouro-escuro);
+}
+.menu-header-titulo {
+  font-family: var(--fonte-titulo);
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0 0 2px;
+}
+.menu-header-versao {
+  font-family: var(--fonte-dados);
+  font-size: 11px;
+  color: var(--ouro);
+  margin: 0;
+}
+
+.menu-secao { padding: 16px 20px 8px; }
+.menu-secao-titulo {
+  font-family: var(--fonte-dados);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ouro-escuro);
+  margin: 0 0 10px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  border-bottom: 1px solid rgba(201,160,80,0.15);
+  background: none;
+  cursor: pointer;
+  font-family: var(--fonte-corpo);
+  font-size: 16px;
+  color: var(--pergaminho);
+  text-align: left;
+  transition: color 0.2s;
+}
+.menu-item:last-child { border-bottom: none; }
+.menu-item:hover { color: var(--ouro); }
+.menu-item-icone { font-size: 18px; width: 24px; text-align: center; flex-shrink: 0; }
+.menu-item-vermelho { color: #c97a5a; }
+.menu-item-vermelho:hover { color: #e8a080; }
+
+.menu-rodape {
+  margin-top: auto;
+  padding: 16px 20px;
+  border-top: 1px solid rgba(201,160,80,0.15);
+  font-family: var(--fonte-dados);
+  font-size: 10px;
+  color: var(--ouro-escuro);
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* Lista de nomes de dupla */
+.lista-nomes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-top: 8px;
+}
+.opcao-nome {
+  padding: 10px 12px;
+  border: 2px solid var(--ouro-escuro);
+  border-radius: var(--raio-md);
+  background: var(--pergaminho);
+  font-family: var(--fonte-corpo);
+  font-size: 14px;
+  color: var(--ferro);
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.2s, background 0.2s;
+  line-height: 1.3;
+}
+.opcao-nome:hover { border-color: var(--ouro); background: rgba(201,160,80,0.08); }
+.opcao-nome.selecionado {
+  border-color: var(--ouro);
+  background: rgba(201,160,80,0.15);
+  box-shadow: 0 0 12px rgba(201,160,80,0.3);
+}
+.nome-selecionado-label {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: var(--pergaminho);
+  border: 2px solid var(--ouro-escuro);
+  border-radius: var(--raio-md);
   font-family: var(--fonte-titulo);
   font-size: 15px;
   font-weight: 700;
-  z-index: 999;
-  transition: transform 0.4s ease, opacity 0.4s ease;
-  max-width: 320px;
-  width: calc(100vw - 48px);
-  text-align: center;
-  opacity: 0;
-  box-shadow: 0 0 40px rgba(201,160,80,0.3);
+  color: var(--ferro);
+  display: none;
 }
-.conquista-popup.visivel { transform: translateX(-50%) translateY(0); opacity: 1; }
+.nome-selecionado-label.visivel { display: block; }
 
-/* Painel Professor */
+/* Preview arquétipo */
+.preview-arquetipo {
+  display: none;
+  margin-top: 14px;
+  background: var(--pergaminho);
+  border: 2px solid var(--ouro);
+  border-radius: var(--raio-lg);
+  padding: 18px 16px 14px;
+  position: relative;
+  animation: surgir 0.2s ease;
+}
+.preview-arquetipo.visivel { display: block; }
+.preview-header { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
+.preview-avatar { width: 64px; height: 64px; flex-shrink: 0; }
+.preview-nome { font-family: var(--fonte-titulo); font-weight: 700; font-size: 17px; margin: 0 0 2px; color: var(--ferro); }
+.preview-tema { font-family: var(--fonte-dados); font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ouro-escuro); margin: 0; }
+.preview-descricao { font-family: var(--fonte-corpo); font-style: italic; font-size: 15px; line-height: 1.75; color: var(--ferro); margin: 0 0 14px; border-left: 4px solid var(--ouro); padding-left: 12px; }
+.preview-fechar { position: absolute; top: 10px; right: 12px; background: none; border: none; font-size: 20px; color: var(--ferro); cursor: pointer; padding: 0 4px; line-height: 1; }
+.preview-fechar:hover { color: var(--sangue); }
+.arquetipo-confirmado {
+  margin-top: 10px; padding: 10px 14px;
+  background: rgba(201,160,80,0.12);
+  border: 2px solid var(--ouro);
+  border-radius: var(--raio-md);
+  font-family: var(--fonte-titulo);
+  font-size: 14px; font-weight: 700; color: var(--ferro);
+  display: none; text-align: center;
+}
+.arquetipo-confirmado.visivel { display: block; }
+
+/* Painel professor */
 .resumo-grade { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
 .resumo-card { background: var(--pergaminho); color: var(--ferro); border: 2px solid var(--ouro-escuro); border-radius: var(--raio-md); padding: 14px; text-align: center; }
 .resumo-numero { font-family: var(--fonte-dados); font-size: 28px; color: var(--ouro); display: block; }
 .resumo-label { font-size: 12px; font-style: italic; color: var(--ferro); opacity: 0.7; }
+.filtro-turma { margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+.filtro-turma label { margin: 0; white-space: nowrap; color: var(--pergaminho); }
+.badge-status { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-family: var(--fonte-dados); }
+.badge-concluida { background: #1a3a2a; color: #8fdf8f; border: 1px solid #4caf50; }
+.badge-pendente { background: #3a2a1a; color: var(--ouro); border: 1px solid var(--ouro-escuro); }
+.badge-sem-carta { background: var(--ferro); color: var(--pergaminho-escuro); border: 1px solid var(--ouro-escuro); }
+.resposta-bloco { background: var(--pergaminho); color: var(--ferro); border: 1px solid var(--ouro-escuro); border-radius: var(--raio-md); padding: 12px 14px; margin-top: 6px; font-size: 14px; font-style: italic; display: none; }
+.resposta-bloco.aberta { display: block; }
+.btn-ver-resposta { background: none; border: none; font-family: var(--fonte-corpo); font-size: 13px; font-style: italic; color: var(--ouro); cursor: pointer; padding: 0; text-decoration: underline; }
+.btn-desvincular { background: none; border: none; font-family: var(--fonte-corpo); font-size: 12px; color: #c97a5a; cursor: pointer; padding: 0; text-decoration: underline; }
+.aba-nav { display: flex; gap: 8px; margin-bottom: 20px; }
+.aba-btn { flex: 1; padding: 10px; border: 2px solid var(--ouro-escuro); border-radius: var(--raio-md); background: transparent; font-family: var(--fonte-titulo); font-size: 14px; font-weight: 700; cursor: pointer; color: var(--pergaminho); transition: background 0.2s, color 0.2s; }
+.aba-btn.ativa { background: var(--ouro); color: var(--carvao); border-color: var(--ouro); }
+.aba-conteudo { display: none; }
+.aba-conteudo.ativa { display: block; }
+table td { vertical-align: top; }
 
-@keyframes surgir {
-  from { opacity: 0; transform: translateY(20px) scale(0.95); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+/* ============================================================
+   ESTILOS DO SISTEMA DE HABILIDADES E RPG
+   ============================================================ */
+
+.habilidade-card {
+  background: var(--pergaminho);
+  border: 2px solid var(--ouro-escuro);
+  border-radius: var(--raio-md);
+  padding: 16px;
+  margin: 12px 0;
+}
+
+.habilidade-card .icone {
+  font-size: 32px;
+}
+
+.habilidade-card .nome {
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  margin: 0;
+  color: var(--ferro);
+}
+
+.habilidade-card .descricao {
+  font-size: 13px;
+  font-style: italic;
+  color: var(--ferro);
+  margin: 4px 0;
+}
+
+.habilidade-card .tipo {
+  font-size: 12px;
+  font-family: var(--fonte-dados);
+  color: var(--ouro-escuro);
+}
+
+/* Desafio do Herói */
+.desafio-heroi-card {
+  border-color: var(--ouro) !important;
+}
+
+.desafio-heroi-card .titulo {
+  font-size: 16px;
+}
+
+/* Cooldown */
+.cooldown {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--ferro);
+  color: var(--pergaminho-escuro);
+  font-size: 11px;
+  font-family: var(--fonte-dados);
+}
+
+/* Combate Narrativo */
+.combate-turno {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+}
+
+.combate-turno .numero {
+  font-family: var(--fonte-dados);
+  font-size: 18px;
+  color: var(--ouro);
+}
+
+.combate-turno .total {
+  font-size: 14px;
+  color: var(--ferro);
 }
 
 @media (max-width: 480px) {
-  .grade-arquetipos { grid-template-columns: 1fr 1fr; }
+  .resumo-grade { grid-template-columns: repeat(2, 1fr); }
+  .lista-nomes { grid-template-columns: 1fr 1fr; }
   .marca-titulo { font-size: 25px; }
   body { font-size: 16px; }
   .marcador { width: 28px; height: 28px; font-size: 10px; }
-  .lista-nomes { grid-template-columns: 1fr 1fr; }
 }
 </style>
 </head>
@@ -767,6 +1276,9 @@ textarea { resize: vertical; min-height: 90px; }
       <div class="hud-barra-container">
         <div class="hud-barra-fundo">
           <div class="hud-barra-progresso" id="hud-barra" style="width:0%"></div>
+          <div class="hud-divisorias">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
         </div>
       </div>
     </div>
@@ -778,7 +1290,7 @@ textarea { resize: vertical; min-height: 90px; }
   <div class="menu-overlay" id="menu-overlay" onclick="fecharMenu()"></div>
   <nav class="menu-lateral" id="menu-lateral">
     <div class="menu-header">
-      <p class="menu-header-titulo">O Inventariante do Tempo</p>
+      <p class="menu-header-titulo">O Inventariante do Tempo: A Jornada de Ana Terra</p>
       <p class="menu-header-versao">Versão 3.0 - RPG</p>
     </div>
     <div class="menu-secao">
@@ -791,7 +1303,7 @@ textarea { resize: vertical; min-height: 90px; }
       <p class="menu-secao-titulo">Sessão</p>
       <button class="menu-item menu-item-vermelho" onclick="confirmarSair()"><span class="menu-item-icone">&#8594;</span> Sair</button>
     </div>
-    <div class="menu-rodape">Criado por Vanilson Cardoso</div>
+    <div class="menu-rodape">Criado por Vanilson Cardoso, com apoio de Claude IA para construção do código fonte.</div>
   </nav>
 
   <!-- TELA: FICHA -->
@@ -809,6 +1321,7 @@ textarea { resize: vertical; min-height: 90px; }
         <div class="divisor"><span class="divisor-icone">* * *</span></div>
         <p class="texto-pequeno" id="ficha-integrantes" style="margin:0 0 4px; color: var(--ferro);"></p>
         <p class="texto-pequeno" id="ficha-turma" style="margin:0 0 16px; color: var(--ferro);"></p>
+        <p class="cartao-descricao" style="margin:0;">Sua missão aguarda. A jornada de Ana Terra se desdobra em 15 estações, e a sua dupla é guardiã de uma delas. Avance para o mapa e cumpra seu papel nesta crônica do pampa.</p>
         
         <!-- Atributos RPG -->
         <div class="atributos">
@@ -902,27 +1415,60 @@ textarea { resize: vertical; min-height: 90px; }
     <div class="container" style="padding-top:40px;">
       <div class="marca">
         <h1 class="marca-titulo">Painel do Professor</h1>
+        <p class="marca-subtitulo">O Inventariante do Tempo: A Jornada de Ana Terra</p>
       </div>
       <div class="cartao">
         <h2 class="cartao-titulo">Acesso restrito</h2>
+        <p class="cartao-descricao">Informe suas credenciais para acessar o painel.</p>
         <label for="prof-nome">Nome</label>
         <input type="text" id="prof-nome" autocomplete="off">
         <label for="prof-senha">Senha</label>
         <input type="password" id="prof-senha" autocomplete="current-password">
         <button class="botao botao-dourado" onclick="logarProfessor()" id="btn-login-prof">Entrar</button>
         <div id="msg-login-prof"></div>
-        <a href="#" onclick="mostrarApp('app-login');return false;" class="link-discreto">&#8592; Voltar</a>
+        <a href="#" onclick="mostrarApp('app-login');return false;" class="link-discreto" style="display:block;text-align:center;margin-top:12px;font-style:italic;color:var(--ouro-escuro);text-decoration:none;font-size:14px;">&#8592; Voltar para a página dos alunos</a>
       </div>
     </div>
   </div>
   <div id="tela-painel" class="oculto">
+    <div class="hud">
+      <div class="hud-info"><div class="hud-nome">Painel do Professor</div></div>
+      <button onclick="sairProfessor()" style="background:none;border:none;color:var(--ouro);font-family:var(--fonte-dados);font-size:13px;cursor:pointer;">Sair</button>
+    </div>
     <div class="container-largo" style="padding-top:24px;">
       <div class="resumo-grade">
-        <div class="resumo-card"><span class="resumo-numero" id="res-duplas">0</span><span class="resumo-label">Duplas</span></div>
-        <div class="resumo-card"><span class="resumo-numero" id="res-concluidas">0</span><span class="resumo-label">Concluídas</span></div>
-        <div class="resumo-card"><span class="resumo-numero" id="res-cartas">0/15</span><span class="resumo-label">Cartas</span></div>
+        <div class="resumo-card"><span class="resumo-numero" id="res-duplas">0</span><span class="resumo-label">Duplas cadastradas</span></div>
+        <div class="resumo-card"><span class="resumo-numero" id="res-concluidas">0</span><span class="resumo-label">Missões concluídas</span></div>
+        <div class="resumo-card"><span class="resumo-numero" id="res-cartas">0/15</span><span class="resumo-label">Cartas registradas</span></div>
       </div>
-      <div id="grade-cartas" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;"></div>
+      <div class="aba-nav">
+        <button class="aba-btn ativa" onclick="abrirAba('aba-duplas', this)">Duplas</button>
+        <button class="aba-btn" onclick="abrirAba('aba-respostas', this)">Respostas</button>
+        <button class="aba-btn" onclick="abrirAba('aba-cartas', this)">Cartas</button>
+      </div>
+      <div class="aba-conteudo ativa" id="aba-duplas">
+        <div class="filtro-turma">
+          <label for="filtro-turma-input" style="margin-top:0;">Turma:</label>
+          <input type="text" id="filtro-turma-input" placeholder="Filtrar por turma" style="max-width:200px;padding:8px 12px;font-size:14px;background:var(--pergaminho);color:var(--carvao);border:2px solid var(--ouro-escuro);" oninput="filtrarDuplas()">
+        </div>
+        <div style="overflow-x:auto;">
+          <table id="tabela-duplas">
+            <thead><tr><th>Dupla</th><th>Turma</th><th>Carta</th><th>Arquétipo</th><th>XP</th><th>Status</th><th>Ações</th></tr></thead>
+            <tbody id="tbody-duplas"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="aba-conteudo" id="aba-respostas">
+        <div style="overflow-x:auto;">
+          <table id="tabela-respostas">
+            <thead><tr><th>Dupla</th><th>Turma</th><th>Carta</th><th>Palavra-chave</th><th>Resposta / Justificativa</th></tr></thead>
+            <tbody id="tbody-respostas"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="aba-conteudo" id="aba-cartas">
+        <div id="grade-cartas" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -930,40 +1476,43 @@ textarea { resize: vertical; min-height: 90px; }
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 /* ============================================================
-   CONFIGURAÇÃO SUPABASE
+   CONFIGURACAO SUPABASE
    ============================================================ */
 const SUPABASE_URL = "https://betfuvirdfikkhcuyweg.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJldGZ1dmlyZGZpa2toY3V5d2VnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1NTY2MjMsImV4cCI6MjA5NzEzMjYyM30.ymiJTQ3mQDYCdu7ShW4_7x2yH95wyS-L30uxzlH9Fxw";
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 /* ============================================================
-   DADOS DOS ARQUÉTIPOS E MEDALHÕES
+   ICONES E ARQUETIPOS (MEDALHOES COMPLETOS)
    ============================================================ */
 const MEDALHOES = {
-  ana_terra: `<svg viewBox="0 0 240 240"><circle cx="120" cy="120" r="100" fill="#f3e3c3" stroke="#7a5530" stroke-width="3"/><text x="120" y="130" text-anchor="middle" font-family="Cinzel" font-size="24" fill="#6b4226">⚜</text></svg>`,
-  pedro_missioneiro: `<svg viewBox="0 0 240 240"><circle cx="120" cy="120" r="100" fill="#f3e3c3" stroke="#7a5530" stroke-width="3"/><text x="120" y="130" text-anchor="middle" font-family="Cinzel" font-size="24" fill="#6b4226">⛪</text></svg>`,
-  maneco_terra: `<svg viewBox="0 0 240 240"><circle cx="120" cy="120" r="100" fill="#f3e3c3" stroke="#7a5530" stroke-width="3"/><text x="120" y="130" text-anchor="middle" font-family="Cinzel" font-size="24" fill="#6b4226">🏛️</text></svg>`,
-  henriqueta: `<svg viewBox="0 0 240 240"><circle cx="120" cy="120" r="100" fill="#f3e3c3" stroke="#7a5530" stroke-width="3"/><text x="120" y="130" text-anchor="middle" font-family="Cinzel" font-size="24" fill="#6b4226">🌾</text></svg>`,
-  horacio: `<svg viewBox="0 0 240 240"><circle cx="120" cy="120" r="100" fill="#f3e3c3" stroke="#7a5530" stroke-width="3"/><text x="120" y="130" text-anchor="middle" font-family="Cinzel" font-size="24" fill="#6b4226">⚖️</text></svg>`,
-  pedro_terra: `<svg viewBox="0 0 240 240"><circle cx="120" cy="120" r="100" fill="#f3e3c3" stroke="#7a5530" stroke-width="3"/><text x="120" y="130" text-anchor="middle" font-family="Cinzel" font-size="24" fill="#6b4226">🌿</text></svg>`
+  ana_terra: `<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="skyAna" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f3e3c3"/><stop offset="100%" stop-color="#e8cfa0"/></linearGradient><clipPath id="clipAna"><circle cx="120" cy="120" r="94"/></clipPath></defs><rect width="240" height="240" fill="#f3e3c3"/><circle cx="120" cy="120" r="104" fill="url(#skyAna)" stroke="#7a5530" stroke-width="3"/><circle cx="120" cy="120" r="94" fill="none" stroke="#c08a3e" stroke-width="1.5"/><circle cx="120" cy="120" r="100" fill="none" stroke="#a9784f" stroke-width="0.5" stroke-dasharray="2 3"/><g clip-path="url(#clipAna)"><path d="M0 175 Q60 155 120 172 Q180 188 240 168 L240 240 L0 240 Z" fill="#b08858" opacity="0.55"/><path d="M0 195 Q70 180 130 195 Q190 208 240 192 L240 240 L0 240 Z" fill="#8c6239" opacity="0.7"/><g transform="translate(120,108)"><path d="M-2 -58 L-2 18" stroke="#6b4226" stroke-width="3" stroke-linecap="round"/><path d="M-2 -52 C 30 -56, 52 -38, 50 -10 C 48 18, 14 30, -10 12 C -28 -2, -22 -34, -2 -52 Z" fill="#caa467" stroke="#7a5530" stroke-width="1.2"/><path d="M-2 -52 C -34 -44, -42 -14, -22 8 C -10 20, 14 16, 22 -2" fill="none" stroke="#9c7846" stroke-width="0.8" opacity="0.6"/><path d="M6 -46 C 26 -42, 40 -24, 36 -2" fill="none" stroke="#9c7846" stroke-width="0.8" opacity="0.6"/><line x1="-2" x2="-2" y1="16" y2="34" stroke="#6b4226" stroke-width="3" stroke-linecap="round"/></g></g></svg>`,
+  pedro_missioneiro: `<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="skyPedroM" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f3e3c3"/><stop offset="100%" stop-color="#e8cfa0"/></linearGradient><clipPath id="clipPedroM"><circle cx="120" cy="120" r="94"/></clipPath></defs><rect width="240" height="240" fill="#f3e3c3"/><circle cx="120" cy="120" r="104" fill="url(#skyPedroM)" stroke="#7a5530" stroke-width="3"/><circle cx="120" cy="120" r="94" fill="none" stroke="#c08a3e" stroke-width="1.5"/><circle cx="120" cy="120" r="100" fill="none" stroke="#a9784f" stroke-width="0.5" stroke-dasharray="2 3"/><g clip-path="url(#clipPedroM)"><path d="M0 180 Q60 162 120 178 Q180 194 240 174 L240 240 L0 240 Z" fill="#b08858" opacity="0.55"/><path d="M0 198 Q70 184 130 198 Q190 210 240 196 L240 240 L0 240 Z" fill="#8c6239" opacity="0.7"/><g transform="translate(120,110) rotate(-30)"><path d="M0 -60 A 60 60 0 0 1 0 60" fill="none" stroke="#7a5530" stroke-width="3" stroke-linecap="round"/><line x1="0" y1="-60" x2="0" y2="60" stroke="#5b3b22" stroke-width="1.2"/><line x1="-3" y1="-58" x2="3" y2="-62" stroke="#5b3b22" stroke-width="1.2"/><line x1="-3" y1="58" x2="3" y2="62" stroke="#5b3b22" stroke-width="1.2"/></g><g transform="translate(120,110) rotate(30)"><path d="M-26 -54 L 4 56" stroke="#6b4226" stroke-width="2.5" stroke-linecap="round"/><path d="M-26 -54 C -36 -44, -38 -32, -28 -26 C -20 -32, -14 -42, -16 -52 Z" fill="#caa467" stroke="#7a5530" stroke-width="1"/><path d="M-20 -38 C -30 -28, -32 -16, -22 -10 C -14 -16, -8 -26, -10 -36 Z" fill="#d8bd8a" stroke="#7a5530" stroke-width="1"/><path d="M-14 -22 C -24 -12, -26 0, -16 6 C -8 0, -2 -10, -4 -20 Z" fill="#caa467" stroke="#7a5530" stroke-width="1"/></g></g></svg>`,
+  maneco_terra: `<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="skyManeco" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f3e3c3"/><stop offset="100%" stop-color="#e8cfa0"/></linearGradient><clipPath id="clipManeco"><circle cx="120" cy="120" r="94"/></clipPath></defs><rect width="240" height="240" fill="#f3e3c3"/><circle cx="120" cy="120" r="104" fill="url(#skyManeco)" stroke="#7a5530" stroke-width="3"/><circle cx="120" cy="120" r="94" fill="none" stroke="#c08a3e" stroke-width="1.5"/><circle cx="120" cy="120" r="100" fill="none" stroke="#a9784f" stroke-width="0.5" stroke-dasharray="2 3"/><g clip-path="url(#clipManeco)"><path d="M0 178 Q60 160 120 176 Q180 192 240 172 L240 240 L0 240 Z" fill="#b08858" opacity="0.55"/><path d="M0 198 Q70 184 130 198 Q190 210 240 196 L240 240 L0 240 Z" fill="#8c6239" opacity="0.7"/><g transform="translate(120,112)"><ellipse cx="0" cy="14" rx="62" ry="14" fill="#9c7846" stroke="#6b4226" stroke-width="1.2"/><path d="M-34 14 C -34 -22, 34 -22, 34 14 C 34 24, -34 24, -34 14 Z" fill="#caa467" stroke="#6b4226" stroke-width="1.2"/><ellipse cx="0" cy="2" rx="26" ry="7" fill="none" stroke="#7a5530" stroke-width="1"/></g><g transform="translate(168,98)"><line x1="0" y1="0" x2="0" y2="70" stroke="#6b4226" stroke-width="3" stroke-linecap="round"/><path d="M-10 0 C -10 -10, 10 -10, 10 0 C 10 8, -10 8, -10 0 Z" fill="#caa467" stroke="#6b4226" stroke-width="1.2"/></g></g></svg>`,
+  henriqueta: `<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="skyHenriqueta" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f3e3c3"/><stop offset="100%" stop-color="#e8cfa0"/></linearGradient><clipPath id="clipHenriqueta"><circle cx="120" cy="120" r="94"/></clipPath></defs><rect width="240" height="240" fill="#f3e3c3"/><circle cx="120" cy="120" r="104" fill="url(#skyHenriqueta)" stroke="#7a5530" stroke-width="3"/><circle cx="120" cy="120" r="94" fill="none" stroke="#c08a3e" stroke-width="1.5"/><circle cx="120" cy="120" r="100" fill="none" stroke="#a9784f" stroke-width="0.5" stroke-dasharray="2 3"/><g clip-path="url(#clipHenriqueta)"><path d="M0 180 Q60 162 120 178 Q180 194 240 174 L240 240 L0 240 Z" fill="#b08858" opacity="0.55"/><path d="M0 198 Q70 184 130 198 Q190 210 240 196 L240 240 L0 240 Z" fill="#8c6239" opacity="0.7"/><g transform="translate(90,118)"><path d="M-50 -10 L0 40 L50 -10 C 50 -40, -50 -40, -50 -10 Z" fill="#caa467" stroke="#6b4226" stroke-width="1.2"/><path d="M-50 -10 C -50 -38, 50 -38, 50 -10" fill="none" stroke="#9c7846" stroke-width="0.8" opacity="0.7"/><line x1="-38" y1="-22" x2="-26" y2="6" stroke="#9c7846" stroke-width="0.8" opacity="0.6"/><line x1="-12" y1="-30" x2="0" y2="14" stroke="#9c7846" stroke-width="0.8" opacity="0.6"/><line x1="14" y1="-30" x2="26" y2="6" stroke="#9c7846" stroke-width="0.8" opacity="0.6"/><line x1="38" y1="-22" x2="26" y2="6" stroke="#9c7846" stroke-width="0.8" opacity="0.6"/></g><g transform="translate(170,128)"><path d="M-26 30 L-14 -6 L14 -6 L26 30 Z" fill="#9c7846" stroke="#6b4226" stroke-width="1.2"/><rect x="-30" y="26" width="60" height="8" rx="2" fill="#7a5530"/><path d="M-6 -10 C -10 -22, 2 -24, -2 -36 C 6 -28, 10 -16, 4 -8 C 0 -14, -6 -16, -6 -10 Z" fill="#c97c4a" stroke="#9c5a32" stroke-width="0.6"/></g></g></svg>`,
+  horacio: `<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="skyHoracio" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f3e3c3"/><stop offset="100%" stop-color="#e8cfa0"/></linearGradient><clipPath id="clipHoracio"><circle cx="120" cy="120" r="94"/></clipPath></defs><rect width="240" height="240" fill="#f3e3c3"/><circle cx="120" cy="120" r="104" fill="url(#skyHoracio)" stroke="#7a5530" stroke-width="3"/><circle cx="120" cy="120" r="94" fill="none" stroke="#c08a3e" stroke-width="1.5"/><circle cx="120" cy="120" r="100" fill="none" stroke="#a9784f" stroke-width="0.5" stroke-dasharray="2 3"/><g clip-path="url(#clipHoracio)"><path d="M0 185 Q60 168 120 184 Q180 200 240 180 L240 240 L0 240 Z" fill="#b08858" opacity="0.55"/><path d="M0 202 Q70 188 130 202 Q190 214 240 200 L240 240 L0 240 Z" fill="#8c6239" opacity="0.7"/><g stroke="#6b4226" stroke-width="2.5" stroke-linecap="round"><line x1="40" y1="120" x2="40" y2="180"/><line x1="90" y1="110" x2="90" y2="180"/><line x1="140" y1="120" x2="140" y2="180"/><line x1="190" y1="110" x2="190" y2="180"/></g><g stroke="#7a5530" stroke-width="3" stroke-linecap="round"><line x1="36" y1="140" x2="194" y2="132"/><line x1="36" y1="160" x2="194" y2="154"/></g><g transform="translate(150,84)"><circle cx="0" cy="0" r="26" fill="#caa467" stroke="#6b4226" stroke-width="2"/><circle cx="0" cy="0" r="20" fill="none" stroke="#9c7846" stroke-width="0.8"/><line x1="0" y1="0" x2="0" y2="-12" stroke="#5b3b22" stroke-width="1.5" stroke-linecap="round"/><line x1="0" y1="0" x2="9" y2="4" stroke="#5b3b22" stroke-width="1.5" stroke-linecap="round"/><line x1="0" y1="-26" x2="0" y2="-32" stroke="#6b4226" stroke-width="2" stroke-linecap="round"/></g></g></svg>`,
+  pedro_terra: `<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="skyPedroT" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f3e3c3"/><stop offset="100%" stop-color="#e8cfa0"/></linearGradient><clipPath id="clipPedroT"><circle cx="120" cy="120" r="94"/></clipPath></defs><rect width="240" height="240" fill="#f3e3c3"/><circle cx="120" cy="120" r="104" fill="url(#skyPedroT)" stroke="#7a5530" stroke-width="3"/><circle cx="120" cy="120" r="94" fill="none" stroke="#c08a3e" stroke-width="1.5"/><circle cx="120" cy="120" r="100" fill="none" stroke="#a9784f" stroke-width="0.5" stroke-dasharray="2 3"/><g clip-path="url(#clipPedroT)"><path d="M0 178 Q60 160 120 176 Q180 192 240 172 L240 240 L0 240 Z" fill="#b08858" opacity="0.55"/><path d="M0 198 Q70 184 130 198 Q190 210 240 196 L240 240 L0 240 Z" fill="#8c6239" opacity="0.7"/><path d="M40 230 C 70 190, 110 200, 130 160 C 150 122, 180 110, 205 80" fill="none" stroke="#7a5530" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 6"/><g transform="translate(70,196)"><ellipse cx="0" cy="6" rx="10" ry="4" fill="#9c7846" opacity="0.6"/><path d="M0 6 C 0 -6, -10 -10, -14 -20" fill="none" stroke="#6b4226" stroke-width="2" stroke-linecap="round"/><ellipse cx="-14" cy="-22" rx="7" ry="10" fill="#c9b27a" stroke="#7a5530" stroke-width="0.8"/></g><g transform="translate(120,150)"><ellipse cx="0" cy="8" rx="12" ry="5" fill="#9c7846" opacity="0.6"/><path d="M0 8 C 0 -8, 10 -16, 8 -32" fill="none" stroke="#6b4226" stroke-width="2.5" stroke-linecap="round"/><ellipse cx="8" cy="-34" rx="9" ry="13" fill="#c9b27a" stroke="#7a5530" stroke-width="0.8"/><path d="M0 -2 C -8 -8, -14 -6, -18 -14" fill="none" stroke="#6b4226" stroke-width="1.5" stroke-linecap="round"/><ellipse cx="-18" cy="-16" rx="6" ry="8" fill="#caa467" stroke="#7a5530" stroke-width="0.6"/></g><g transform="translate(195,86)"><ellipse cx="0" cy="10" rx="14" ry="5" fill="#9c7846" opacity="0.6"/><path d="M0 10 L0 -34" stroke="#6b4226" stroke-width="3" stroke-linecap="round"/><path d="M0 -10 C -16 -16, -20 -32, -10 -44 C 0 -32, 4 -18, 0 -10 Z" fill="#caa467" stroke="#7a5530" stroke-width="1"/><path d="M0 0 C 16 -6, 20 -22, 10 -34 C 0 -22, -4 -8, 0 0 Z" fill="#d8bd8a" stroke="#7a5530" stroke-width="1"/></g></g></svg>`
 };
 
+/* ============================================================
+   METADADOS DOS ARQUETIPOS
+   ============================================================ */
 const ARQUETIPOS = [
   { id: "ana_terra", nome: "Ana Terra", tema: "Resistência feminina" },
-  { id: "pedro_missioneiro", nome: "Pedro Missioneiro", tema: "Miscigenação" },
-  { id: "maneco_terra", nome: "Maneco Terra", tema: "Autoridade patriarcal" },
+  { id: "pedro_missioneiro", nome: "Pedro Missioneiro", tema: "Miscigenação e origem do povo gaúcho" },
+  { id: "maneco_terra", nome: "Maneco Terra", tema: "Autoridade patriarcal e tradição" },
   { id: "henriqueta", nome: "Henriqueta", tema: "Preservação dos costumes" },
   { id: "horacio", nome: "Horácio", tema: "Conservadorismo social" },
   { id: "pedro_terra", nome: "Pedro Terra", tema: "Continuidade das gerações" }
 ];
 
 const DESCRICOES_ARQUETIPOS = {
-  ana_terra: "Mulher que enfrenta perdas e preconceitos sem se deixar vencer.",
-  pedro_missioneiro: "Filho do encontro entre culturas diferentes, origem da identidade gaúcha.",
-  maneco_terra: "Representa o comando da família e a manutenção das regras do passado.",
-  henriqueta: "Guarda os hábitos e modos de viver que sustentam a vida na estância.",
-  horacio: "Representa a resistência às mudanças e a defesa das normas sociais.",
-  pedro_terra: "Representa a passagem do tempo entre gerações e a continuidade da história."
+  ana_terra: "Mulher que enfrenta perdas, violência e preconceitos sem se deixar vencer. Representa a força de quem segue em frente mesmo diante das maiores adversidades. Ana Terra é o coração desta história.",
+  pedro_missioneiro: "Filho do encontro entre culturas diferentes, carrega em si as raízes indígenas e a formação de um novo povo. Representa a mistura que dá origem à identidade gaúcha.",
+  maneco_terra: "Figura que representa o comando da família e a manutenção das regras e costumes do passado. Sua presença marca a força e o peso da tradição na vida do pampa.",
+  henriqueta: "Guarda no dia a dia os hábitos, crenças e modos de viver que sustentam a vida na estância. Representa a continuidade dos costumes através do cuidado cotidiano.",
+  horacio: "Representa a resistência às mudanças e a defesa das normas sociais estabelecidas. Simboliza as tensões entre tradição e transformação no pampa do século XVIII.",
+  pedro_terra: "Representa a passagem do tempo entre gerações, o elo entre o que foi vivido pelos antepassados e o que ainda está por vir. Simboliza a continuidade da família e da história."
 };
 
 /* ============================================================
@@ -1020,17 +1569,17 @@ const HABILIDADES = {
 const DESAFIOS_ADICIONAIS = {
   1: {
     titulo: "A Marca da Terra",
-    descricao: "Explique como a paisagem do pampa molda a personalidade de Ana Terra.",
+    descricao: "Explique como a paisagem do pampa molda a personalidade de Ana Terra e influencia suas escolhas ao longo da história.",
     bonus_xp: 30
   },
   3: {
     titulo: "Costumes que Persistem",
-    descricao: "Identifique três costumes presentes na narrativa que ainda fazem parte da cultura gaúcha.",
+    descricao: "Identifique três costumes presentes na narrativa que ainda fazem parte da cultura gaúcha contemporânea.",
     bonus_xp: 30
   },
   7: {
     titulo: "O Impacto do Encontro",
-    descricao: "Como o personagem indígena transforma a estrutura social retratada na obra?",
+    descricao: "Como o personagem indígena transforma não apenas Ana Terra, mas toda a estrutura social retratada na obra?",
     bonus_xp: 30
   }
 };
@@ -1039,27 +1588,31 @@ const DESAFIOS_ADICIONAIS = {
    CARTAS DA JORNADA
    ============================================================ */
 const CARTAS = [
-  { ordem: 1, numero: 3, palavraChave: "ORIGEM", pista: "Represento o lugar onde Ana Terra nasceu.", desafio: "Qual objeto eu represento?", narrativa: "Antes de Ana Terra, houve a terra..." },
-  { ordem: 2, numero: 1, palavraChave: "NARRATIVA", pista: "Sou o início de tudo.", desafio: "Qual objeto eu represento?", narrativa: "Toda jornada precisa de um lugar para guardar memórias..." },
-  { ordem: 3, numero: 14, palavraChave: "TRADIÇÃO", pista: "Represento costumes e hábitos gaúchos.", desafio: "Qual objeto eu represento?", narrativa: "Antes mesmo de Ana existir, já existiam os costumes..." },
-  { ordem: 4, numero: 7, palavraChave: "ENCONTRO", pista: "Minha chegada transforma o rumo da história.", desafio: "Qual objeto eu represento?", narrativa: "Um dia, alguém chega e nada é como antes..." },
-  { ordem: 5, numero: 9, palavraChave: "AMOR", pista: "Nasci da união de duas pessoas que desafiaram regras.", desafio: "Qual objeto eu represento?", narrativa: "Entre duas pessoas que a sociedade dizia não deverem se unir..." },
-  { ordem: 6, numero: 15, palavraChave: "CONFLITO", pista: "Represento guerras e disputas territoriais.", desafio: "Qual objeto eu represento?", narrativa: "As terras do pampa nunca foram pacíficas..." },
-  { ordem: 7, numero: 8, palavraChave: "MUDANÇA", pista: "Sou ligado à cultura indígena e ao amor proibido.", desafio: "Qual objeto eu represento?", narrativa: "Há quem chegue para transformar tudo..." },
-  { ordem: 8, numero: 10, palavraChave: "DOR", pista: "Represento perdas e sofrimento.", desafio: "Qual objeto eu represento?", narrativa: "Depois da transformação, vem o preço..." },
-  { ordem: 9, numero: 4, palavraChave: "SOBREVIVÊNCIA", pista: "Sou resultado do trabalho diário.", desafio: "Qual objeto eu represento?", narrativa: "Mesmo na dor, a vida continua..." },
-  { ordem: 10, numero: 6, palavraChave: "RESILIÊNCIA", pista: "Represento uma mulher forte que não desistiu.", desafio: "Qual objeto eu represento?", narrativa: "Ana Terra é, antes de tudo, uma mulher que não desiste..." },
-  { ordem: 11, numero: 11, palavraChave: "ESPERANÇA", pista: "Simbolizo a continuidade da vida.", desafio: "Qual objeto eu represento?", narrativa: "Mesmo depois de tantas tragédias, a vida encontra um jeito..." },
-  { ordem: 12, numero: 12, palavraChave: "RESISTÊNCIA", pista: "Ajudo a enfrentar momentos difíceis.", desafio: "Qual objeto eu represento?", narrativa: "Nos momentos mais difíceis, é preciso algo a que se apegar..." },
-  { ordem: 13, numero: 13, palavraChave: "RECOMEÇO", pista: "Abro caminhos para uma nova vida.", desafio: "Qual objeto eu represento?", narrativa: "Depois de tanto perder, é hora de abrir uma porta..." },
-  { ordem: 14, numero: 5, palavraChave: "LIBERDADE", pista: "Levo pessoas e sonhos pelos pampas.", desafio: "Qual objeto eu represento?", narrativa: "Pelo pampa, seguem mensagens, sonhos e pessoas em movimento..." },
-  { ordem: 15, numero: 2, palavraChave: "DESTINO", pista: "Acompanho os momentos mais importantes.", desafio: "Qual objeto eu represento?", narrativa: "No fim, olhamos para trás e vemos..." }
+  { ordem: 1, numero: 3, palavraChave: "ORIGEM", pista: "Represento o lugar onde Ana Terra nasceu e cresceu.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Antes de Ana Terra, houve a terra. Vasta, dura, generosa. E dela que tudo nasce: o sangue, o sustento, a primeira lembranca de infancia sob o ceu aberto do pampa. Aqui comeca a historia, no chao onde os pes descalcos de Ana aprenderam a caminhar." },
+  { ordem: 2, numero: 1, palavraChave: "NARRATIVA", pista: "Sou o inicio de tudo. Guardo personagens, conflitos e memorias.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Toda jornada precisa de um lugar para guardar suas memorias. Personagens nascem, conflitos se acumulam, geracoes se sucedem, e tudo isso precisa de um fio condutor, algo que une o passado ao presente e da forma a historia que esta sendo contada." },
+  { ordem: 3, numero: 14, palavraChave: "TRADIÇÃO", pista: "Represento costumes e habitos que fazem parte da identidade gaucha.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Antes mesmo de Ana Terra existir, ja existiam os costumes que a formaram: o modo de viver, de se vestir, de receber visitas, de marcar o tempo. Sao esses habitos, transmitidos de geracao em geracao, que dao identidade a um povo e moldam quem Ana se tornara." },
+  { ordem: 4, numero: 7, palavraChave: "ENCONTRO", pista: "Minha chegada transforma completamente o rumo da narrativa.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Um dia, alguem chega. E nada mais e como antes. Esse encontro muda o rumo de tudo, nao apenas da vida de Ana, mas da propria narrativa. E o ponto sem volta, o momento em que a historia ganha um novo caminho." },
+  { ordem: 5, numero: 9, palavraChave: "AMOR", pista: "Nasci da uniao de duas pessoas que desafiaram as regras de sua epoca.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Entre duas pessoas que a sociedade dizia nao deverem se unir, nasce algo verdadeiro. Esse sentimento desafia regras, costumes e expectativas, e dele surge uma nova vida, fruto de uma escolha proibida pelo seu tempo." },
+  { ordem: 6, numero: 15, palavraChave: "CONFLITO", pista: "Represento guerras, disputas territoriais e acontecimentos que influenciaram a formacao do Rio Grande do Sul.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "As terras do pampa nunca foram pacificas. Disputas territoriais, guerras e tensoes marcam a regiao onde Ana Terra vive, acontecimentos que moldaram a historia do Rio Grande do Sul e que atravessam, direta ou indiretamente, a vida da protagonista e de sua familia." },
+  { ordem: 7, numero: 8, palavraChave: "MUDANÇA", pista: "Sou um personagem ligado a cultura indigena e ao amor proibido.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Ha quem chegue para transformar tudo. Um personagem ligado a outra cultura, a outras tradicoes, envolvido em um amor que a epoca nao aceitava. Sua presenca muda o curso da narrativa e revela as tensoes entre diferentes mundos que convivem, e colidem, no pampa." },
+  { ordem: 8, numero: 10, palavraChave: "DOR", pista: "Represento perdas, sofrimento, violencia e relacoes de poder.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Depois da transformacao, vem o preco. Perdas, sofrimento, violencia, e relacoes de poder que pesam sobre quem tem menos voz. Ana Terra atravessa momentos de dor profunda, que marcam para sempre sua trajetoria." },
+  { ordem: 9, numero: 4, palavraChave: "SOBREVIVÊNCIA", pista: "Sou resultado do trabalho diario e garanto o sustento da familia.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Mesmo na dor, a vida continua, e ela exige trabalho. Dia apos dia, o sustento da familia depende do esforco sobre a terra. E essa labuta diaria, simples e essencial, que garante que Ana e os seus continuem de pe." },
+  { ordem: 10, numero: 6, palavraChave: "RESILIÊNCIA", pista: "Represento uma mulher forte que enfrentou perdas, violencia e preconceitos sem desistir.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Ana Terra e, antes de tudo, uma mulher que nao desiste. Perdas, violencia, preconceitos: nada disso a quebra por completo. Ela segue, carregando o peso do passado, mas seguindo em frente. Essa forca e o centro de quem ela e." },
+  { ordem: 11, numero: 11, palavraChave: "ESPERANÇA", pista: "Mesmo apos tantas tragedias, simbolizo a continuidade da vida.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Mesmo depois de tantas tragedias, a vida encontra um jeito de continuar. Um novo comeco se anuncia: pequeno, fragil, mas real. E a prova de que, mesmo em meio a dor, ainda ha motivo para seguir adiante." },
+  { ordem: 12, numero: 12, palavraChave: "RESISTÊNCIA", pista: "Ajudo a enfrentar momentos dificeis e manter a esperanca.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Nos momentos mais dificeis, e preciso algo a que se apegar. Algo que ajude a manter a fe, a forca e a esperanca, mesmo quando tudo parece perdido. E esse apoio, muitas vezes silencioso, que sustenta Ana Terra em sua travessia." },
+  { ordem: 13, numero: 13, palavraChave: "RECOMEÇO", pista: "Abro caminhos para uma nova vida depois das perdas.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Depois de tanto perder, e hora de abrir uma porta para o novo. Um caminho diferente se apresenta: a chance de reconstruir a vida, de comecar de novo em outro lugar, com outra perspectiva." },
+  { ordem: 14, numero: 5, palavraChave: "LIBERDADE", pista: "Levo pessoas, mensagens e sonhos pelos pampas gauchos.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "Pelo pampa, seguem mensagens, sonhos e pessoas em movimento. Esse ir e vir constante representa a liberdade de seguir caminho, de levar consigo as historias vividas, e de buscar, em outro lugar, aquilo que falta." },
+  { ordem: 15, numero: 2, palavraChave: "DESTINO", pista: "Acompanho os momentos mais importantes da vida da protagonista.", desafio: "Qual objeto eu represento? Justifique sua resposta.", narrativa: "No fim, olhamos para tras e vemos: cada momento importante da vida de Ana Terra estava conectado. Nascimento, amor, dor, recomeco: tudo fazia parte de um caminho maior. Esse e o destino: a soma de toda uma trajetoria, vista de uma so vez." }
 ];
 
 const NOMES_DUPLA = [
   "Filhos da Terra", "Vozes do Pampa", "Herdeiros do Vento",
   "Raízes do Sul", "Sangue e Campo", "Guardiões da Memória",
-  "Sementes do Pampa", "Filhos do Encontro", "A Marca do Destino"
+  "Sementes do Pampa", "Filhos do Encontro", "A Marca do Destino",
+  "Entre Rios e Guerras", "Os Sobreviventes", "Crônicas do Campo",
+  "Herdeiros de Ana", "Sombras do Século", "Frutos da Resistência",
+  "Os Caminhantes", "Filhos da Tormenta", "Raízes Cruzadas",
+  "A Voz que Resta", "Guardiões do Pampa"
 ];
 
 /* ============================================================
@@ -1350,7 +1903,7 @@ function preencherMapa() {
 function preencherMissao() {
   const carta = getCartaPorNumero(DUPLA.carta_numero);
   if (!carta) return;
-  document.getElementById("missao-numero").textContent = "Estação " + carta.ordem + " de 15";
+  document.getElementById("missao-numero").textContent = "Estação " + carta.ordem + " de 15: Carta " + carta.numero;
   document.getElementById("missao-palavra").textContent = carta.palavraChave;
   document.getElementById("missao-narrativa").textContent = carta.narrativa;
   document.getElementById("missao-pista").textContent = carta.pista;
@@ -1382,7 +1935,7 @@ function exibirHabilidades() {
   container.innerHTML = `
     <div class="habilidade-card">
       <div style="display:flex;align-items:center;gap:12px;">
-        <span style="font-size:32px;">${hab.icone}</span>
+        <span class="icone">${hab.icone}</span>
         <div>
           <h4 class="nome">${hab.nome}</h4>
           <p class="descricao">${hab.descricao}</p>
