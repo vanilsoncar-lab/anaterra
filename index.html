@@ -1487,12 +1487,45 @@ textarea {
       <button onclick="sairProfessor()" style="background:none;border:none;color:var(--ouro);font-family:var(--fonte-dados);font-size:13px;cursor:pointer;">Sair</button>
     </div>
     <div class="container-largo" style="padding-top:24px;">
-      <div class="resumo-grade">
-        <div class="resumo-card"><span class="resumo-numero" id="res-duplas">0</span><span class="resumo-label">Duplas cadastradas</span></div>
-        <div class="resumo-card"><span class="resumo-numero" id="res-concluidas">0</span><span class="resumo-label">Missões concluídas</span></div>
-        <div class="resumo-card"><span class="resumo-numero" id="res-cartas">0/15</span><span class="resumo-label">Cartas registradas</span></div>
+
+      <!-- RESUMO -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px;">
+        <div class="cartao" style="text-align:center;padding:16px;">
+          <div style="font-family:var(--fonte-titulo);font-size:28px;color:var(--ouro);" id="res-duplas">0</div>
+          <div style="font-size:12px;color:var(--pergaminho-escuro);">Duplas cadastradas</div>
+        </div>
+        <div class="cartao" style="text-align:center;padding:16px;">
+          <div style="font-family:var(--fonte-titulo);font-size:28px;color:var(--ouro);" id="res-concluidas">0</div>
+          <div style="font-size:12px;color:var(--pergaminho-escuro);">Missões concluídas</div>
+        </div>
+        <div class="cartao" style="text-align:center;padding:16px;">
+          <div style="font-family:var(--fonte-titulo);font-size:28px;color:var(--ouro);" id="res-cartas">0/15</div>
+          <div style="font-size:12px;color:var(--pergaminho-escuro);">Cartas registradas</div>
+        </div>
       </div>
-      <div id="grade-cartas" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;"></div>
+
+      <!-- ABAS -->
+      <div style="display:flex;gap:8px;margin-bottom:20px;">
+        <button onclick="mudarAba('aba-duplas')" id="btn-aba-duplas" style="flex:1;padding:10px;border:1px solid var(--ouro);border-radius:var(--raio-md);background:rgba(201,160,80,0.15);color:var(--ouro);font-family:var(--fonte-titulo);font-size:12px;font-weight:700;cursor:pointer;letter-spacing:1px;">DUPLAS</button>
+        <button onclick="mudarAba('aba-respostas')" id="btn-aba-respostas" style="flex:1;padding:10px;border:1px solid rgba(201,160,80,0.2);border-radius:var(--raio-md);background:transparent;color:var(--pergaminho-escuro);font-family:var(--fonte-titulo);font-size:12px;font-weight:700;cursor:pointer;letter-spacing:1px;">RESPOSTAS</button>
+        <button onclick="mudarAba('aba-cartas')" id="btn-aba-cartas" style="flex:1;padding:10px;border:1px solid rgba(201,160,80,0.2);border-radius:var(--raio-md);background:transparent;color:var(--pergaminho-escuro);font-family:var(--fonte-titulo);font-size:12px;font-weight:700;cursor:pointer;letter-spacing:1px;">CARTAS</button>
+      </div>
+
+      <!-- ABA DUPLAS -->
+      <div id="aba-duplas">
+        <div id="lista-duplas-prof"></div>
+      </div>
+
+      <!-- ABA RESPOSTAS -->
+      <div id="aba-respostas" class="oculto">
+        <div id="lista-respostas-prof"></div>
+      </div>
+
+      <!-- ABA CARTAS -->
+      <div id="aba-cartas" class="oculto">
+        <div id="grade-cartas" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;"></div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -2178,6 +2211,9 @@ function confirmarSair() {
 /* ============================================================
    PROFESSOR
    ============================================================ */
+let DADOS_PROF = [];
+let RESPOSTAS_PROF = [];
+
 async function logarProfessor() {
   const nome = document.getElementById("prof-nome").value.trim();
   const senha = document.getElementById("prof-senha").value;
@@ -2201,29 +2237,127 @@ async function logarProfessor() {
   await carregarDadosProfessor();
 }
 
+function mudarAba(id) {
+  ["aba-duplas","aba-respostas","aba-cartas"].forEach(a => {
+    document.getElementById(a).classList.add("oculto");
+    document.getElementById("btn-" + a).style.background = "transparent";
+    document.getElementById("btn-" + a).style.color = "var(--pergaminho-escuro)";
+    document.getElementById("btn-" + a).style.borderColor = "rgba(201,160,80,0.2)";
+  });
+  document.getElementById(id).classList.remove("oculto");
+  document.getElementById("btn-" + id).style.background = "rgba(201,160,80,0.15)";
+  document.getElementById("btn-" + id).style.color = "var(--ouro)";
+  document.getElementById("btn-" + id).style.borderColor = "var(--ouro)";
+}
+
 async function carregarDadosProfessor() {
-  const { data } = await supabaseClient.rpc("listar_duplas_professor");
-  const duplas = data || [];
-  const concluidas = duplas.filter(d => d.xp_total > 0).length;
-  const comCarta = duplas.filter(d => d.carta_numero !== null).length;
+  const { data: duplas } = await supabaseClient.rpc("listar_duplas_professor");
+  DADOS_PROF = duplas || [];
   
-  document.getElementById("res-duplas").textContent = duplas.length;
+  const { data: respostas } = await supabaseClient.from("respostas")
+    .select("dupla_id, carta_numero, resposta_objeto, justificativa, criado_em");
+  RESPOSTAS_PROF = respostas || [];
+
+  const concluidas = DADOS_PROF.filter(d => d.xp_total > 0).length;
+  const comCarta = DADOS_PROF.filter(d => d.carta_numero !== null).length;
+
+  document.getElementById("res-duplas").textContent = DADOS_PROF.length;
   document.getElementById("res-concluidas").textContent = concluidas;
   document.getElementById("res-cartas").textContent = comCarta + "/15";
-  
+
+  renderizarAbaDuplas();
+  renderizarAbaRespostas();
+  renderizarAbaCartas();
+}
+
+function renderizarAbaDuplas() {
+  const container = document.getElementById("lista-duplas-prof");
+  if (!DADOS_PROF.length) {
+    container.innerHTML = '<p class="texto-pequeno texto-central">Nenhuma dupla cadastrada ainda.</p>';
+    return;
+  }
+  container.innerHTML = DADOS_PROF.map(d => `
+    <div class="cartao" style="padding:16px 20px;margin-bottom:12px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+        <div style="flex:1;min-width:0;">
+          <p style="font-family:var(--fonte-titulo);font-size:15px;font-weight:700;color:var(--brilho);margin:0;">${d.nome_dupla}</p>
+          <p style="font-size:12px;color:var(--pergaminho-escuro);margin:2px 0 0;">${d.integrantes} &nbsp;|&nbsp; Turma ${d.turma}</p>
+          <p style="font-size:12px;color:var(--pergaminho-escuro);margin:2px 0 0;">
+            Carta: <strong style="color:var(--ouro);">${d.carta_numero !== null ? d.carta_numero : "sem carta"}</strong>
+            &nbsp;|&nbsp; XP: <strong style="color:var(--ouro);">${d.xp_total || 0}</strong>
+            &nbsp;|&nbsp; Arquétipo: <strong style="color:var(--ouro);">${d.arquetipo ? d.arquetipo.replace(/_/g," ") : "não definido"}</strong>
+          </p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
+          ${d.carta_numero !== null ? `
+          <button onclick="desvincularCarta('${d.id}','${d.nome_dupla}')"
+            style="padding:6px 14px;border:1px solid rgba(201,160,80,0.3);border-radius:8px;background:rgba(201,160,80,0.08);color:var(--ouro);font-family:var(--fonte-dados);font-size:11px;cursor:pointer;">
+            &#8635; Desvincular carta
+          </button>` : ""}
+          <button onclick="deletarDupla('${d.id}','${d.nome_dupla}')"
+            style="padding:6px 14px;border:1px solid rgba(200,50,50,0.3);border-radius:8px;background:rgba(200,50,50,0.08);color:#ff8a8a;font-family:var(--fonte-dados);font-size:11px;cursor:pointer;">
+            &#128465; Excluir dupla
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderizarAbaRespostas() {
+  const container = document.getElementById("lista-respostas-prof");
+  if (!RESPOSTAS_PROF.length) {
+    container.innerHTML = '<p class="texto-pequeno texto-central">Nenhuma resposta enviada ainda.</p>';
+    return;
+  }
+  container.innerHTML = RESPOSTAS_PROF.map(r => {
+    const dupla = DADOS_PROF.find(d => d.id === r.dupla_id);
+    const carta = CARTAS.find(c => c.numero === r.carta_numero);
+    return `
+    <div class="cartao" style="padding:16px 20px;margin-bottom:12px;">
+      <p style="font-family:var(--fonte-dados);font-size:10px;color:var(--ouro-escuro);margin:0 0 4px;text-transform:uppercase;letter-spacing:0.08em;">
+        Carta ${r.carta_numero} &mdash; ${carta ? carta.palavraChave : ""} &nbsp;|&nbsp; ${dupla ? dupla.nome_dupla : "Dupla removida"}
+      </p>
+      <p style="font-size:13px;margin:4px 0 2px;"><strong style="color:var(--pergaminho);">Objeto:</strong> ${r.resposta_objeto}</p>
+      <p style="font-size:13px;font-style:italic;color:var(--pergaminho-escuro);margin:0;"><strong style="font-style:normal;color:var(--pergaminho);">Justificativa:</strong> ${r.justificativa}</p>
+    </div>`;
+  }).join("");
+}
+
+function renderizarAbaCartas() {
   const grade = document.getElementById("grade-cartas");
   grade.innerHTML = "";
   CARTAS.forEach(carta => {
-    const duplaComCarta = duplas.find(d => d.carta_numero === carta.numero);
+    const duplaComCarta = DADOS_PROF.find(d => d.carta_numero === carta.numero);
     const div = document.createElement("div");
-    div.className = "resumo-card";
+    div.className = "cartao";
+    div.style.cssText = "padding:14px;text-align:center;";
     div.innerHTML = `
-      <p style="font-size:11px;color:var(--ouro-escuro);margin:0;">Carta ${carta.numero}</p>
-      <p style="font-size:15px;font-weight:700;color:var(--ouro);margin:4px 0;">${carta.palavraChave}</p>
-      <p style="font-size:12px;margin:0;">${duplaComCarta ? duplaComCarta.nome_dupla : "Livre"}</p>
+      <p style="font-size:11px;color:var(--ouro-escuro);margin:0 0 2px;font-family:var(--fonte-dados);">Carta ${carta.numero}</p>
+      <p style="font-size:16px;font-weight:700;color:var(--ouro);margin:0 0 4px;font-family:var(--fonte-titulo);">${carta.palavraChave}</p>
+      <p style="font-size:12px;margin:0;color:${duplaComCarta ? "var(--pergaminho)" : "rgba(242,227,198,0.3)"};">
+        ${duplaComCarta ? duplaComCarta.nome_dupla : "Livre"}
+      </p>
+      ${duplaComCarta && duplaComCarta.xp_total > 0 ? '<p style="font-size:11px;color:#8aff8a;margin:4px 0 0;">&#10003; Concluída</p>' : ""}
     `;
     grade.appendChild(div);
   });
+}
+
+async function desvincularCarta(duplaId, nomeDupla) {
+  if (!confirm(`Desvincular a carta de "${nomeDupla}"?\nA resposta enviada também será removida.`)) return;
+  const { error } = await supabaseClient.rpc("desvincular_carta", { p_dupla_id: duplaId });
+  if (error) { alert("Erro ao desvincular: " + error.message); return; }
+  await carregarDadosProfessor();
+  mudarAba("aba-duplas");
+}
+
+async function deletarDupla(duplaId, nomeDupla) {
+  if (!confirm(`Excluir permanentemente a dupla "${nomeDupla}"?\nEsta ação não pode ser desfeita.`)) return;
+  const { error } = await supabaseClient.rpc("deletar_dupla", { p_dupla_id: duplaId });
+  if (error) { alert("Erro ao excluir: " + error.message); return; }
+  await carregarDadosProfessor();
+  mudarAba("aba-duplas");
 }
 
 function sairProfessor() {
