@@ -9,8 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Special+Elite&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
-   ANA TERRA: CRONICAS DO PAMPA - ESTILO RPG
-   Mantém toda a funcionalidade, mas com visual de grimório
+   ANA TERRA: CRONICAS DO PAMPA - ESTILO RPG COM MAPA
    ============================================================ */
 
 :root {
@@ -435,133 +434,114 @@ textarea {
 .menu-btn:hover { color: var(--ouro); }
 
 /* ------------------------------------------------------------
-   Trilha / mapa da jornada (estilo tabuleiro)
+   MAPA INTERATIVO (substitui a lista)
    ------------------------------------------------------------ */
 
-.trilha-wrapper {
+.mapa-container {
   position: relative;
-  padding: 20px 0 40px;
-}
-
-.estacao {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 14px 16px;
-  margin-bottom: 6px;
-  border-radius: var(--raio-md);
-  cursor: pointer;
-  border: 2px solid transparent;
-  background: transparent;
   width: 100%;
-  text-align: left;
-  font-family: var(--fonte-corpo);
-  transition: background 0.2s, border-color 0.2s;
+  max-width: 700px;
+  margin: 0 auto 20px;
+  aspect-ratio: 1.6 / 1; /* proporção do mapa histórico */
+  background-image: url('mapa.jpg'); /* <-- renomeie para o nome do seu arquivo */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 3px solid var(--ouro-escuro);
+  border-radius: var(--raio-lg);
+  box-shadow: var(--sombra-papel);
 }
 
-.estacao:hover {
-  background: rgba(201,160,80,0.08);
-}
-
-.estacao-numero {
-  width: 48px;
-  height: 48px;
+.marcador {
+  position: absolute;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
+  background: var(--ouro);
+  border: 2px solid var(--carvao);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--fonte-titulo);
-  font-size: 18px;
   font-weight: 700;
-  flex-shrink: 0;
-  background: radial-gradient(circle, var(--pergaminho-escuro), var(--ferro));
-  border: 2px solid var(--ouro);
-  color: var(--ouro);
-  box-shadow: 0 0 12px rgba(201,160,80,0.4);
-  position: relative;
-}
-
-.estacao-numero::before {
-  content: "⚔";
-  position: absolute;
-  top: -6px;
-  right: -6px;
   font-size: 12px;
-  color: var(--ouro);
-  opacity: 0.6;
-}
-
-.estacao-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.estacao-palavra {
-  font-family: var(--fonte-titulo);
-  font-weight: 700;
-  font-size: 17px;
-  margin: 0;
-  color: var(--ouro);
-}
-
-.estacao-status {
-  font-size: 13px;
-  font-style: italic;
-  color: var(--pergaminho-escuro);
-  margin: 2px 0 0;
-  opacity: 0.8;
-}
-
-.estacao-propria .estacao-numero {
-  background: radial-gradient(circle, var(--ouro), var(--ouro-escuro));
-  border-color: var(--brilho);
   color: var(--carvao);
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 12px rgba(201,160,80,0.5);
+  transition: all 0.2s;
+  z-index: 5;
+}
+
+.marcador:hover {
+  transform: translate(-50%, -50%) scale(1.25);
   box-shadow: 0 0 24px var(--ouro);
+  z-index: 10;
 }
 
-.estacao-propria {
+.marcador-proprio {
+  background: var(--brilho);
   border-color: var(--ouro);
-  background: rgba(201,160,80,0.12);
+  box-shadow: 0 0 30px var(--ouro);
+  animation: pulsar 1.5s infinite;
 }
 
-.estacao-concluida .estacao-numero {
-  background: radial-gradient(circle, #2a5a2a, #1a3a1a);
-  border-color: #4caf50;
-  color: #8fdf8f;
+@keyframes pulsar {
+  0% { box-shadow: 0 0 20px var(--ouro); }
+  50% { box-shadow: 0 0 40px #f5d742; }
+  100% { box-shadow: 0 0 20px var(--ouro); }
 }
 
-.estacao-concluida .estacao-numero::before {
-  content: "✓";
-  color: #4caf50;
+.marcador-concluido {
+  background: #4caf50;
+  border-color: #1a3a1a;
+  color: var(--pergaminho);
 }
 
-.estacao-bloqueada {
+.marcador-bloqueado {
+  background: var(--ferro);
+  border-color: var(--ouro-escuro);
+  color: var(--pergaminho-escuro);
+  opacity: 0.6;
   cursor: default;
 }
 
-.estacao-bloqueada .estacao-numero {
-  opacity: 0.5;
-  filter: grayscale(0.4);
+.marcador-bloqueado:hover {
+  transform: none !important;
+  box-shadow: none !important;
 }
 
-.estacao-bloqueada .estacao-palavra,
-.estacao-bloqueada .estacao-status {
-  opacity: 0.5;
+.marcador .tooltip {
+  display: none;
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--carvao);
+  color: var(--pergaminho);
+  padding: 6px 12px;
+  border-radius: var(--raio-md);
+  font-family: var(--fonte-titulo);
+  font-size: 11px;
+  white-space: nowrap;
+  border: 1px solid var(--ouro-escuro);
+  pointer-events: none;
+  z-index: 20;
 }
 
-.estacao-conector {
-  width: 2px;
-  height: 32px;
-  background: repeating-linear-gradient(
-    to bottom,
-    var(--ouro-escuro) 0px,
-    var(--ouro-escuro) 4px,
-    transparent 4px,
-    transparent 8px
-  );
-  margin: 0 auto;
-  opacity: 0.6;
+.marcador:hover .tooltip {
+  display: block;
+}
+
+/* Fog of war (estilo névoa) */
+.marcador-bloqueado::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(2px);
+  z-index: -1;
 }
 
 /* ------------------------------------------------------------
@@ -713,7 +693,7 @@ textarea {
 }
 
 /* ------------------------------------------------------------
-   Selo ornamentado (numero da estacao em destaque)
+   Selo ornamentado
    ------------------------------------------------------------ */
 
 .selo {
@@ -752,13 +732,13 @@ th {
 
 .texto-central {
   text-align: center;
-  color: var(--ferro); /* agora escuro para legibilidade */
+  color: var(--ferro);
 }
 
 .texto-pequeno {
   font-size: 13px;
   font-style: italic;
-  color: var(--ferro); /* escurecido para contraste */
+  color: var(--ferro);
 }
 
 .espaco-topo {
@@ -1019,9 +999,10 @@ th {
   padding: 16px 20px;
   border-top: 1px solid rgba(201,160,80,0.15);
   font-family: var(--fonte-dados);
-  font-size: 11px;
+  font-size: 10px;
   color: var(--ouro-escuro);
   text-align: center;
+  line-height: 1.6;
 }
 
 /* Lista de nomes de dupla */
@@ -1121,6 +1102,7 @@ table td { vertical-align: top; }
   .lista-nomes { grid-template-columns: 1fr 1fr; }
   .marca-titulo { font-size: 25px; }
   body { font-size: 16px; }
+  .marcador { width: 28px; height: 28px; font-size: 10px; }
 }
 </style>
 </head>
@@ -1232,7 +1214,7 @@ table td { vertical-align: top; }
   <nav class="menu-lateral" id="menu-lateral">
     <div class="menu-header">
       <p class="menu-header-titulo">O Inventariante do Tempo: A Jornada de Ana Terra</p>
-      <p class="menu-header-versao">Versão 2.1 &nbsp;|&nbsp; PIBID Letras</p>
+      <p class="menu-header-versao">Versão 2.1</p>
     </div>
     <div class="menu-secao">
       <p class="menu-secao-titulo">Navegação</p>
@@ -1249,7 +1231,9 @@ table td { vertical-align: top; }
       <p class="menu-secao-titulo">Sessão</p>
       <button class="menu-item menu-item-vermelho" onclick="confirmarSair()"><span class="menu-item-icone">&#8594;</span> Sair</button>
     </div>
-    <div class="menu-rodape">Escola Municipal Fundamental Estado do Amazonas<br>9º ano de Língua Portuguesa</div>
+    <div class="menu-rodape">
+      Criado por Vanilson Cardoso, com apoio de Claude IA para construção do código fonte.
+    </div>
   </nav>
 
   <div class="menu-overlay" id="modal-sobre-overlay" onclick="fecharModal('modal-sobre')" style="z-index:300;"></div>
@@ -1275,7 +1259,6 @@ table td { vertical-align: top; }
   <div class="tela ativa" id="tela-ficha">
     <div class="container">
       <div class="cartao" style="margin-top:24px;">
-        <!-- Texto agora com cor escura para legibilidade -->
         <p class="texto-pequeno texto-central" style="margin:0 0 16px; color: var(--ferro);">Bem-vindo de volta, viajante</p>
         <div class="ficha-personagem">
           <div class="ficha-avatar" id="ficha-avatar"></div>
@@ -1311,7 +1294,10 @@ table td { vertical-align: top; }
         </div>
         <div class="progresso-coletivo-numero" id="prog-numero">0/15</div>
       </div>
-      <div class="trilha-wrapper" id="trilha"></div>
+
+      <!-- MAPA INTERATIVO -->
+      <div class="mapa-container" id="mapa-jornada"></div>
+
       <button class="botao botao-secundario" style="margin-top:0;" onclick="mostrarTela('tela-ficha')">Voltar para a ficha</button>
     </div>
   </div>
@@ -2172,7 +2158,7 @@ async function iniciarJornada(duplaId) {
   await carregarRespostaExistente();
   preencherFicha();
   preencherHUD();
-  preencherMapa();
+  preencherMapa(); // agora gera os marcadores
   preencherMissao();
   atualizarProgressoColetivo();
   mostrarApp("app-jornada");
@@ -2220,49 +2206,75 @@ function preencherHUD() {
   document.getElementById("hud-nivel").innerHTML = "Nv " + nivel + "<br>" + xp + " XP";
 }
 
+// ============================================================
+// MAPA INTERATIVO - substitui a lista de estações
+// ============================================================
 function preencherMapa() {
-  const trilha = document.getElementById("trilha");
-  trilha.innerHTML = "";
-  CARTAS.forEach((carta, i) => {
+  const container = document.getElementById("mapa-jornada");
+  container.innerHTML = "";
+
+  // Coordenadas percentuais (left%, top%) para os 15 marcadores
+  // Distribuídos sobre a região do mapa (Rio da Prata e tratados)
+  const coordenadas = [
+    { left: 18, top: 68 },   // 1 - ORIGEM
+    { left: 32, top: 52 },   // 2 - NARRATIVA
+    { left: 48, top: 38 },   // 3 - TRADIÇÃO
+    { left: 62, top: 28 },   // 4 - ENCONTRO
+    { left: 78, top: 22 },   // 5 - AMOR
+    { left: 88, top: 32 },   // 6 - CONFLITO
+    { left: 84, top: 48 },   // 7 - MUDANÇA
+    { left: 72, top: 58 },   // 8 - DOR
+    { left: 56, top: 68 },   // 9 - SOBREVIVÊNCIA
+    { left: 42, top: 78 },   // 10 - RESILIÊNCIA
+    { left: 28, top: 82 },   // 11 - ESPERANÇA
+    { left: 16, top: 74 },   // 12 - RESISTÊNCIA
+    { left: 10, top: 58 },   // 13 - RECOMEÇO
+    { left: 22, top: 42 },   // 14 - LIBERDADE
+    { left: 40, top: 30 }    // 15 - DESTINO
+  ];
+
+  CARTAS.forEach((carta, index) => {
     const duplaDestaCarta = TODAS_DUPLAS.find(d => d.carta_numero === carta.numero);
     const ehPropria = carta.numero === DUPLA.carta_numero;
     const concluida = duplaDestaCarta && duplaDestaCarta.xp_total > 0;
     const reivindicada = !!duplaDestaCarta;
 
-    let classeEstacao = "estacao";
-    let statusTexto = "Aguardando uma dupla";
+    let classe = "marcador";
+    let statusTexto = "Aguardando";
 
     if (ehPropria) {
-      classeEstacao += " estacao-propria";
+      classe += " marcador-proprio";
       statusTexto = RESPOSTA_EXISTENTE ? "Missão cumprida" : "Sua missão";
     } else if (concluida) {
-      classeEstacao += " estacao-concluida";
-      statusTexto = "Concluída por outra dupla";
+      classe += " marcador-concluido";
+      statusTexto = "Concluída";
     } else if (reivindicada) {
-      classeEstacao += " estacao-bloqueada";
-      statusTexto = "Missão em andamento";
+      classe += " marcador-bloqueado";
+      statusTexto = "Em andamento";
     } else {
-      classeEstacao += " estacao-bloqueada";
+      classe += " marcador-bloqueado";
+      statusTexto = "Livre";
     }
 
-    const btn = document.createElement("button");
-    btn.className = classeEstacao;
-    if (ehPropria) btn.onclick = () => mostrarTela("tela-missao");
+    const marcador = document.createElement("div");
+    marcador.className = classe;
+    marcador.style.left = coordenadas[index].left + "%";
+    marcador.style.top = coordenadas[index].top + "%";
+    marcador.textContent = carta.ordem;
 
-    btn.innerHTML = `
-      <div class="estacao-numero">${carta.ordem}</div>
-      <div class="estacao-info">
-        <p class="estacao-palavra">${carta.palavraChave}</p>
-        <p class="estacao-status">${statusTexto}</p>
-      </div>
-    `;
-    trilha.appendChild(btn);
+    // Tooltip
+    const tooltip = document.createElement("span");
+    tooltip.className = "tooltip";
+    tooltip.textContent = `${carta.palavraChave} (${statusTexto})`;
+    marcador.appendChild(tooltip);
 
-    if (i < CARTAS.length - 1) {
-      const conector = document.createElement("div");
-      conector.className = "estacao-conector";
-      trilha.appendChild(conector);
+    if (ehPropria) {
+      marcador.addEventListener("click", () => mostrarTela("tela-missao"));
+    } else {
+      marcador.style.cursor = "default";
     }
+
+    container.appendChild(marcador);
   });
 }
 
