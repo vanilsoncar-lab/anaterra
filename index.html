@@ -610,22 +610,86 @@ textarea {
 .barra-carisma div { background: linear-gradient(90deg, #8e44ad, #9b59b6); width: 70%; }
 
 /* ============================================================
-   MAPA MODERNO
+   MAPA HISTORICO - CONTINENTE DE SAO PEDRO (1777)
    ============================================================ */
 .mapa-container {
   position: relative;
   width: 100%;
   max-width: 700px;
   margin: 0 auto 20px;
-  aspect-ratio: 1.6 / 1;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500"><defs><radialGradient id="g1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="%23d4c4a8"/><stop offset="100%" stop-color="%23b8a88c"/></radialGradient><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%239a8a6e" stop-opacity="0.5"/><stop offset="100%" stop-color="%239a8a6e" stop-opacity="0"/></linearGradient></defs><rect width="800" height="500" fill="%23d4c4a8"/><path d="M0 300 Q200 250 400 280 Q600 310 800 270 L800 500 L0 500 Z" fill="%23b8a88c"/><path d="M0 350 Q200 330 400 360 Q600 390 800 340 L800 500 L0 500 Z" fill="%239a8a6e"/><ellipse cx="400" cy="250" rx="300" ry="40" fill="%236b8a6b" opacity="0.3"/><circle cx="200" cy="180" r="8" fill="%23a57c3a"/><circle cx="300" cy="150" r="8" fill="%23a57c3a"/><circle cx="400" cy="130" r="8" fill="%23a57c3a"/><circle cx="500" cy="150" r="8" fill="%23a57c3a"/><circle cx="600" cy="180" r="8" fill="%23a57c3a"/><circle cx="650" cy="220" r="8" fill="%23a57c3a"/><circle cx="620" cy="280" r="8" fill="%23a57c3a"/><circle cx="550" cy="320" r="8" fill="%23a57c3a"/><circle cx="450" cy="340" r="8" fill="%23a57c3a"/><circle cx="350" cy="350" r="8" fill="%23a57c3a"/><circle cx="250" cy="330" r="8" fill="%23a57c3a"/><circle cx="180" cy="300" r="8" fill="%23a57c3a"/><circle cx="140" cy="260" r="8" fill="%23a57c3a"/><circle cx="160" cy="220" r="8" fill="%23a57c3a"/><circle cx="220" cy="200" r="8" fill="%23a57c3a"/><path d="M0 200 Q200 180 400 200 Q600 220 800 200" stroke="%238a7a5e" stroke-width="2" fill="none"/><text x="50" y="470" fill="%236b5a3e" font-family="Cinzel" font-size="12">Mar do Sul</text><text x="650" y="470" fill="%236b5a3e" font-family="Cinzel" font-size="12">Lagoa dos Patos</text></svg>');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  border: 1px solid rgba(201, 160, 80, 0.2);
+  border: 2px solid rgba(139, 105, 20, 0.5);
   border-radius: var(--raio-lg);
-  box-shadow: var(--sombra-papel);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.7), inset 0 0 60px rgba(180,140,60,0.08);
   overflow: hidden;
+  background: #c4a872;
+}
+
+.mapa-container svg.mapa-historico {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Marcadores do mapa historico */
+.marc-historico {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.marc-historico circle.fundo {
+  transition: all 0.3s ease;
+}
+
+.marc-historico:hover circle.fundo {
+  r: 16;
+  filter: url(#brilho_marc);
+}
+
+.marc-historico .marc-label {
+  pointer-events: none;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  font-weight: 700;
+  fill: #1e1008;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+/* Tooltip do mapa */
+.mapa-tooltip {
+  position: absolute;
+  background: rgba(20,12,4,0.92);
+  backdrop-filter: blur(12px);
+  color: #f2e3c6;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  font-weight: 700;
+  pointer-events: none;
+  z-index: 30;
+  border: 1px solid rgba(201,160,80,0.3);
+  white-space: nowrap;
+  display: none;
+  max-width: 220px;
+  white-space: normal;
+  line-height: 1.4;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.mapa-tooltip .tip-palavra {
+  color: #c9a050;
+  font-size: 13px;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.mapa-tooltip .tip-local {
+  color: #dac292;
+  font-size: 10px;
+  font-weight: 400;
+  font-style: italic;
+  display: block;
 }
 
 .marcador {
@@ -1369,7 +1433,12 @@ textarea {
         </div>
         <div class="progresso-coletivo-numero" id="prog-numero">0/15</div>
       </div>
-      <div class="mapa-container" id="mapa-jornada"></div>
+      <div class="mapa-container" id="mapa-jornada">
+        <div class="mapa-tooltip" id="mapa-tooltip">
+          <span class="tip-palavra" id="tip-palavra"></span>
+          <span class="tip-local" id="tip-local"></span>
+        </div>
+      </div>
       <button class="botao botao-secundario" onclick="mostrarTela('tela-ficha')">Voltar para a ficha</button>
       <p class="texto-pequeno texto-central" style="opacity:0.4;margin-top:8px;">Vers. 3.1</p>
     </div>
@@ -1921,35 +1990,184 @@ function preencherHUD() {
 
 function preencherMapa() {
   const container = document.getElementById("mapa-jornada");
-  container.innerHTML = "";
-  
-  const coords = [
-    { left: 18, top: 68 }, { left: 32, top: 52 }, { left: 48, top: 38 },
-    { left: 62, top: 28 }, { left: 78, top: 22 }, { left: 88, top: 32 },
-    { left: 84, top: 48 }, { left: 72, top: 58 }, { left: 56, top: 68 },
-    { left: 42, top: 78 }, { left: 28, top: 82 }, { left: 16, top: 74 },
-    { left: 10, top: 58 }, { left: 22, top: 42 }, { left: 40, top: 30 }
+  const ns = "http://www.w3.org/2000/svg";
+
+  const svgStr = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 560" class="mapa-historico">
+<defs>
+  <radialGradient id="bg_g" cx="45%" cy="50%" r="65%">
+    <stop offset="0%" stop-color="#e8d5a8"/>
+    <stop offset="100%" stop-color="#c4a872"/>
+  </radialGradient>
+  <filter id="brilho_marc">
+    <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#c9a050" flood-opacity="0.9"/>
+  </filter>
+</defs>
+<rect width="800" height="560" fill="url(#bg_g)"/>
+<path d="M 700 0 L 800 0 L 800 560 L 600 560 L 540 500 L 520 440 L 530 380 L 560 320 L 590 260 L 620 200 L 650 140 L 670 80 L 680 40 Z" fill="#7a9fb5" opacity="0.65"/>
+<rect x="0" y="0" width="62" height="560" fill="#b8a878" opacity="0.35"/>
+<path d="M 62 0 L 62 180 L 78 260 L 62 340 L 78 420 L 62 560" stroke="#7a5a14" stroke-width="2.5" stroke-dasharray="9,5" fill="none" opacity="0.6"/>
+<path d="M 80 8 L 680 8 L 700 38 L 718 98 L 708 158 L 688 208 L 658 258 L 638 308 L 618 358 L 588 398 L 558 428 L 528 453 L 498 468 L 458 488 L 418 508 L 378 523 L 338 533 L 298 538 L 258 536 L 218 528 L 178 513 L 148 498 L 118 478 L 98 453 L 82 428 L 72 398 L 68 358 L 62 318 L 60 278 L 60 238 L 62 198 L 68 158 L 72 118 L 76 78 L 80 8" fill="#d4b87a" opacity="0.88"/>
+<path d="M 82 75 Q 200 55 320 65 Q 440 75 558 60 Q 638 50 680 65" stroke="#9a7030" stroke-width="2.5" fill="none" opacity="0.35"/>
+<path d="M 88 98 Q 202 82 322 90 Q 432 96 542 82 Q 618 72 668 85" stroke="#9a7030" stroke-width="1.5" fill="none" opacity="0.22"/>
+<path d="M 130 175 Q 255 162 375 170 Q 475 178 568 162" stroke="#9a7030" stroke-width="1.2" fill="none" opacity="0.18"/>
+<ellipse cx="638" cy="418" rx="43" ry="88" fill="#7a9fb5" opacity="0.72"/>
+<text x="614" y="392" font-family="serif" font-size="6.5" fill="#2a4f65" opacity="0.85" transform="rotate(-75,638,418)">Lagoa dos Patos</text>
+<ellipse cx="588" cy="506" rx="26" ry="43" fill="#7a9fb5" opacity="0.62"/>
+<text x="563" y="488" font-family="serif" font-size="5.5" fill="#2a4f65" opacity="0.75" transform="rotate(-70,588,506)">L. Mirim</text>
+<path d="M 98 228 Q 158 218 218 226 Q 298 236 378 223 Q 448 212 518 220 Q 568 226 598 216 Q 623 208 643 213 L 648 228" stroke="#5a8fa8" stroke-width="5" fill="none" opacity="0.75" stroke-linecap="round"/>
+<path d="M 98 228 Q 158 218 218 226 Q 298 236 378 223 Q 448 212 518 220 Q 568 226 598 216 Q 623 208 643 213 L 648 228" stroke="#aadaf0" stroke-width="1.5" fill="none" opacity="0.4" stroke-linecap="round"/>
+<text x="338" y="210" font-family="serif" font-size="8" fill="#2a4f65" opacity="0.85" font-style="italic">Rio Jacuí</text>
+<path d="M 66 8 Q 88 58 83 118 Q 80 168 86 218 Q 93 268 78 318 Q 66 363 73 408 Q 80 453 68 508" stroke="#5a8fa8" stroke-width="5" fill="none" opacity="0.75" stroke-linecap="round"/>
+<path d="M 66 8 Q 88 58 83 118 Q 80 168 86 218 Q 93 268 78 318 Q 66 363 73 408 Q 80 453 68 508" stroke="#aadaf0" stroke-width="1.5" fill="none" opacity="0.4" stroke-linecap="round"/>
+<text x="20" y="185" font-family="serif" font-size="7.5" fill="#2a4f65" opacity="0.8" font-style="italic" transform="rotate(-88,30,238)">Rio Uruguai</text>
+<path d="M 76 318 Q 138 308 218 316 Q 298 324 358 313 Q 408 304 438 310" stroke="#5a8fa8" stroke-width="2.5" fill="none" opacity="0.5" stroke-linecap="round"/>
+<text x="218" y="303" font-family="serif" font-size="6.5" fill="#2a4f65" opacity="0.65" font-style="italic">R. Ibicuí</text>
+<path d="M 300 290 Q 344 275 388 260 Q 340 282 270 310 Q 300 325 330 340 Q 320 350 310 360 Q 285 355 260 345 Q 250 320 240 295 Q 295 330 355 370 Q 338 385 320 400 Q 303 390 285 380 Q 292 405 300 432 Q 275 348 250 262 Q 225 300 200 342 Q 210 290 220 237 Q 188 192 155 147" stroke="#c9a050" stroke-width="1.5" stroke-dasharray="5,4" fill="none" opacity="0.45"/>
+<text x="93" y="46" font-family="serif" font-size="7" fill="#5a2a00" opacity="0.6" font-style="italic">Sete Povos</text>
+<text x="93" y="56" font-family="serif" font-size="7" fill="#5a2a00" opacity="0.6" font-style="italic">das Missoes</text>
+<line x1="100" y1="68" x2="100" y2="79" stroke="#5a2a00" stroke-width="1.5" opacity="0.55"/>
+<line x1="95" y1="73" x2="105" y2="73" stroke="#5a2a00" stroke-width="1.5" opacity="0.55"/>
+<line x1="126" y1="66" x2="126" y2="77" stroke="#5a2a00" stroke-width="1.5" opacity="0.55"/>
+<line x1="121" y1="71" x2="131" y2="71" stroke="#5a2a00" stroke-width="1.5" opacity="0.55"/>
+<line x1="152" y1="64" x2="152" y2="75" stroke="#5a2a00" stroke-width="1.5" opacity="0.55"/>
+<line x1="147" y1="69" x2="157" y2="69" stroke="#5a2a00" stroke-width="1.5" opacity="0.55"/>
+<rect x="383" y="246" width="6" height="6" fill="#6b2a00" opacity="0.75"/>
+<text x="392" y="252" font-family="serif" font-size="7" fill="#3a1500" opacity="0.8">Rio Pardo</text>
+<rect x="608" y="272" width="5" height="5" fill="#6b2a00" opacity="0.6"/>
+<text x="615" y="278" font-family="serif" font-size="6.5" fill="#3a1500" opacity="0.7">Viamaon</text>
+<rect x="656" y="488" width="5" height="5" fill="#6b2a00" opacity="0.6"/>
+<text x="633" y="498" font-family="serif" font-size="6" fill="#3a1500" opacity="0.7">V. Rio Grande</text>
+<text x="748" y="310" font-family="serif" font-size="8.5" fill="#2a4f65" opacity="0.6" font-style="italic" transform="rotate(90,748,310)">Oceano Atlantico</text>
+<text x="18" y="135" font-family="serif" font-size="7" fill="#4a3010" opacity="0.6" font-style="italic" transform="rotate(-90,22,180)">Dom. Espanhol</text>
+<text x="400" y="549" font-family="serif" font-size="8.5" fill="#4a2a08" opacity="0.65" text-anchor="middle" font-style="italic">Continente de Sao Pedro do Rio Grande - c. 1777</text>
+<rect x="2" y="2" width="796" height="556" fill="none" stroke="#7a5a14" stroke-width="3" opacity="0.55"/>
+<rect x="6" y="6" width="788" height="548" fill="none" stroke="#7a5a14" stroke-width="1" opacity="0.35"/>
+<g transform="translate(728,90)" opacity="0.55">
+  <text x="-4" y="-25" font-family="serif" font-size="10" fill="#4a2a08" font-weight="bold">N</text>
+  <line x1="0" y1="-20" x2="0" y2="-8" stroke="#4a2a08" stroke-width="1.5"/>
+  <line x1="0" y1="8" x2="0" y2="20" stroke="#4a2a08" stroke-width="1.5"/>
+  <line x1="-20" y1="0" x2="-8" y2="0" stroke="#4a2a08" stroke-width="1.5"/>
+  <line x1="8" y1="0" x2="20" y2="0" stroke="#4a2a08" stroke-width="1.5"/>
+  <polygon points="0,-20 -4,-10 4,-10" fill="#4a2a08"/>
+  <circle cx="0" cy="0" r="5" fill="none" stroke="#4a2a08" stroke-width="1"/>
+  <circle cx="0" cy="0" r="2" fill="#8b6914"/>
+</g>
+<g transform="translate(668,338)">
+  <rect x="-4" y="-10" width="115" height="68" fill="rgba(200,175,110,0.85)" rx="4" stroke="#7a5a14" stroke-width="1" opacity="0.9"/>
+  <text x="4" y="4" font-family="serif" font-size="6.5" fill="#3a1a00" font-weight="bold">LEGENDA</text>
+  <circle cx="6" cy="16" r="5" fill="#c9a050"/>
+  <text x="15" y="20" font-family="serif" font-size="6" fill="#3a1a00">Sua missao</text>
+  <circle cx="6" cy="30" r="5" fill="#4caf50"/>
+  <text x="15" y="34" font-family="serif" font-size="6" fill="#3a1a00">Concluida</text>
+  <circle cx="6" cy="44" r="5" fill="#888"/>
+  <text x="15" y="48" font-family="serif" font-size="6" fill="#3a1a00">Aguardando</text>
+  <line x1="2" y1="56" x2="20" y2="56" stroke="#c9a050" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <text x="25" y="60" font-family="serif" font-size="6" fill="#3a1a00">Rota narrativa</text>
+</g>
+<g id="marcadores-svg"></g>
+</svg>`;
+
+  container.innerHTML = '<div class="mapa-tooltip" id="mapa-tooltip" style="position:absolute;display:none;z-index:30;background:rgba(20,12,4,0.92);backdrop-filter:blur(12px);color:#f2e3c6;padding:8px 14px;border-radius:10px;font-family:var(--fonte-titulo);font-size:11px;font-weight:700;pointer-events:none;border:1px solid rgba(201,160,80,0.3);max-width:220px;line-height:1.4;box-shadow:0 4px 20px rgba(0,0,0,0.5);"><span id="tip-palavra" style="color:#c9a050;font-size:13px;display:block;margin-bottom:3px;"></span><span id="tip-local" style="color:#dac292;font-size:10px;font-weight:400;font-style:italic;display:block;"></span></div>' + svgStr;
+
+  const svgEl = container.querySelector("svg.mapa-historico");
+  const grupoMarcadores = svgEl.getElementById("marcadores-svg");
+  const tooltipEl = document.getElementById("mapa-tooltip");
+
+  const PONTOS = [
+    [1,  3,  "ORIGEM",        300, 290, "Estancia Terra - berco de Ana Terra"],
+    [2,  1,  "NARRATIVA",     388, 260, "Rio Pardo - voz do mundo exterior"],
+    [3,  14, "TRADICAO",      270, 310, "Rancho de taquarucu - modos de viver"],
+    [4,  7,  "ENCONTRO",      330, 340, "A sanga - Ana encontra Pedro ferido"],
+    [5,  9,  "AMOR",          310, 360, "Mato da sanga - amor proibido"],
+    [6,  8,  "MUDANCA",       260, 345, "O rancho - noite de chuva e flauta"],
+    [7,  15, "CONFLITO",      240, 295, "Campos do Continente - guerras e invasao"],
+    [8,  10, "DOR",           355, 370, "Sob a arvore - morte de Pedro"],
+    [9,  4,  "SOBREVIVENCIA", 320, 400, "A sanga - Ana e Pedrinho"],
+    [10, 6,  "RESILIENCIA",   285, 380, "O rancho - Ana enfrenta a familia"],
+    [11, 11, "ESPERANCA",     300, 432, "Coxilha - nascimento de Pedrinho"],
+    [12, 12, "RESISTENCIA",   250, 262, "Estancia - ataque dos castelhanos"],
+    [13, 13, "RECOMEÇO",      200, 342, "Carretas de Marciano - partida"],
+    [14, 5,  "LIBERDADE",     220, 237, "Rio Jacui - travessia na balsa"],
+    [15, 2,  "DESTINO",       155, 147, "Campos do Cel. Amaral - Santa Fe"],
   ];
-  
-  CARTAS.forEach((carta, i) => {
-    const duplaDestaCarta = TODAS_DUPLAS.find(d => d.carta_numero === carta.numero);
-    const ehPropria = carta.numero === DUPLA.carta_numero;
+
+  PONTOS.forEach(([ordem, numeroCarta, palavraChave, cx, cy, localNarrativo]) => {
+    const duplaDestaCarta = TODAS_DUPLAS.find(d => d.carta_numero === numeroCarta);
+    const ehPropria = numeroCarta === DUPLA.carta_numero;
     const concluida = duplaDestaCarta && duplaDestaCarta.xp_total > 0;
-    
-    let classe = "marcador";
-    let status = "Aguardando";
-    if (ehPropria) { classe += " marcador-proprio"; status = RESPOSTA_EXISTENTE ? "Concluida" : "Sua missao"; }
-    else if (concluida) { classe += " marcador-concluido"; status = "Concluída"; }
-    else { classe += " marcador-bloqueado"; status = duplaDestaCarta ? "Em andamento" : "Livre"; }
-    
-    const marcador = document.createElement("div");
-    marcador.className = classe;
-    marcador.style.left = coords[i].left + "%";
-    marcador.style.top = coords[i].top + "%";
-    marcador.textContent = carta.ordem;
-    marcador.innerHTML += `<span class="tooltip">${carta.palavraChave} (${status})</span>`;
-    if (ehPropria) marcador.onclick = () => mostrarTela("tela-missao");
-    container.appendChild(marcador);
+
+    let corFundo = "#666";
+    let corBorda = "#333";
+    let corTexto = "#eee";
+    let pulsar   = false;
+
+    if (ehPropria) {
+      corFundo = concluida ? "#4caf50" : "#c9a050";
+      corBorda = "#1e1008";
+      corTexto = "#1e1008";
+      pulsar   = !concluida;
+    } else if (concluida) {
+      corFundo = "#4caf50";
+      corBorda = "#1e1008";
+      corTexto = "#fff";
+    }
+
+    const svgNS = "http://www.w3.org/2000/svg";
+    const g = document.createElementNS(svgNS, "g");
+    g.setAttribute("transform", `translate(${cx},${cy})`);
+    g.style.cursor = "pointer";
+
+    if (pulsar) {
+      const halo = document.createElementNS(svgNS, "circle");
+      halo.setAttribute("r", "18");
+      halo.setAttribute("fill", "none");
+      halo.setAttribute("stroke", "#c9a050");
+      halo.setAttribute("stroke-width", "2");
+      halo.setAttribute("opacity", "0");
+      halo.innerHTML = "<animate attributeName=\"r\" values=\"12;22;12\" dur=\"2s\" repeatCount=\"indefinite\"/><animate attributeName=\"opacity\" values=\"0.8;0;0.8\" dur=\"2s\" repeatCount=\"indefinite\"/>";
+      g.appendChild(halo);
+    }
+
+    const sombra = document.createElementNS(svgNS, "circle");
+    sombra.setAttribute("r", "13");
+    sombra.setAttribute("fill", "#000");
+    sombra.setAttribute("opacity", "0.3");
+    sombra.setAttribute("transform", "translate(1,2)");
+    g.appendChild(sombra);
+
+    const circ = document.createElementNS(svgNS, "circle");
+    circ.setAttribute("r", "12");
+    circ.setAttribute("fill", corFundo);
+    circ.setAttribute("stroke", corBorda);
+    circ.setAttribute("stroke-width", ehPropria ? "2.5" : "1.5");
+    if (ehPropria && !concluida) circ.setAttribute("filter", "url(#brilho_marc)");
+    g.appendChild(circ);
+
+    const txt = document.createElementNS(svgNS, "text");
+    txt.setAttribute("fill", corTexto);
+    txt.setAttribute("font-size", "9");
+    txt.setAttribute("text-anchor", "middle");
+    txt.setAttribute("dominant-baseline", "central");
+    txt.setAttribute("font-family", "Cinzel, serif");
+    txt.setAttribute("font-weight", "700");
+    txt.textContent = String(ordem);
+    g.appendChild(txt);
+
+    g.addEventListener("mouseenter", (e) => {
+      tooltipEl.style.display = "block";
+      document.getElementById("tip-palavra").textContent = palavraChave;
+      document.getElementById("tip-local").textContent = localNarrativo;
+    });
+    g.addEventListener("mousemove", (e) => {
+      const rect = container.getBoundingClientRect();
+      tooltipEl.style.left = Math.min(e.clientX - rect.left + 14, rect.width - 230) + "px";
+      tooltipEl.style.top  = Math.max(e.clientY - rect.top - 65, 4) + "px";
+    });
+    g.addEventListener("mouseleave", () => { tooltipEl.style.display = "none"; });
+
+    if (ehPropria) g.addEventListener("click", () => mostrarTela("tela-missao"));
+
+    grupoMarcadores.appendChild(g);
   });
 }
 
