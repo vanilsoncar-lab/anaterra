@@ -4,7 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jornada | Ana Terra: Crônicas do Pampa</title>
-<link rel="stylesheet" href="assets/style.css">
+<!-- CSS removido temporariamente -->
+<style>
+/* Estilos básicos de fallback */
+body{font-family:Georgia,serif;background:#f3e3c3;color:#3d2f1f;margin:0;padding:0}
+.container{max-width:480px;margin:0 auto;padding:24px 20px;width:100%}
+.cartao{background:#e8cfa0;border:1px solid #7a5530;border-radius:10px;padding:24px;margin-bottom:20px}
+.botao{width:100%;padding:13px 20px;margin-top:20px;border:1px solid #7a5530;border-radius:6px;font-family:Georgia,serif;font-size:15px;font-weight:600;cursor:pointer}
+.botao-dourado{background:#c08a3e;color:#3d2f1f}
+.hud{background:#2f4a36;color:#f3e3c3;padding:14px 20px;display:flex;align-items:center;gap:14px}
+.hud-avatar{width:48px;height:48px;border-radius:50%;background:#e8cfa0;display:flex;align-items:center;justify-content:center;font-size:30px}
+.hud-info{flex:1}
+.hud-nome{font-weight:600}
+.hud-barra-fundo{height:7px;border-radius:999px;background:rgba(243,227,195,.18);margin-top:6px;overflow:hidden}
+.hud-barra-progresso{height:100%;background:#c08a3e;transition:width .4s ease}
+.tela{display:none}
+.tela.ativa{display:block}
+</style>
 <style>
   .tela { display: none; }
   .tela.ativa { display: block; }
