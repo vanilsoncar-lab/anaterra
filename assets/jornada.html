@@ -3,369 +3,162 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jornada | Ana Terra: Crônicas do Pampa</title>
-<!-- CSS removido temporariamente -->
+<title>Jornada | Ana Terra</title>
 <style>
-/* Estilos básicos de fallback */
-body{font-family:Georgia,serif;background:#f3e3c3;color:#3d2f1f;margin:0;padding:0}
-.container{max-width:480px;margin:0 auto;padding:24px 20px;width:100%}
-.cartao{background:#e8cfa0;border:1px solid #7a5530;border-radius:10px;padding:24px;margin-bottom:20px}
-.botao{width:100%;padding:13px 20px;margin-top:20px;border:1px solid #7a5530;border-radius:6px;font-family:Georgia,serif;font-size:15px;font-weight:600;cursor:pointer}
-.botao-dourado{background:#c08a3e;color:#3d2f1f}
-.hud{background:#2f4a36;color:#f3e3c3;padding:14px 20px;display:flex;align-items:center;gap:14px}
-.hud-avatar{width:48px;height:48px;border-radius:50%;background:#e8cfa0;display:flex;align-items:center;justify-content:center;font-size:30px}
+/* TUDO EMBUTIDO AQUI - SEM ARQUIVOS EXTERNOS */
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Georgia,serif;background:#f3e3c3;color:#3d2f1f;line-height:1.6}
+.container{max-width:480px;margin:0 auto;padding:20px;width:100%}
+.cartao{background:#e8cfa0;border:1px solid #7a5530;border-radius:10px;padding:20px;margin-bottom:20px}
+.cartao-titulo{font-size:20px;font-weight:700;margin:0 0 4px;color:#3d2f1f}
+.cartao-descricao{font-size:15px;font-style:italic;color:#8a6f52;margin:0 0 16px}
+.texto-pequeno{font-size:13px;font-style:italic;color:#8a6f52}
+.texto-central{text-align:center}
+.botao{display:block;width:100%;padding:13px 20px;margin-top:16px;border:1px solid #7a5530;border-radius:6px;font-family:Georgia,serif;font-size:15px;font-weight:600;cursor:pointer;background:#c08a3e;color:#3d2f1f;border-color:#7a5530}
+.botao-secundario{background:0 0;color:#3d2f1f}
+.hud{position:sticky;top:0;z-index:10;background:#2f4a36;color:#f3e3c3;padding:12px 16px;display:flex;align-items:center;gap:12px;border-bottom:2px solid #7a5530}
+.hud-avatar{width:40px;height:40px;border-radius:50%;background:#e8cfa0;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
 .hud-info{flex:1}
-.hud-nome{font-weight:600}
-.hud-barra-fundo{height:7px;border-radius:999px;background:rgba(243,227,195,.18);margin-top:6px;overflow:hidden}
-.hud-barra-progresso{height:100%;background:#c08a3e;transition:width .4s ease}
+.hud-nome{font-weight:600;font-size:14px}
+.hud-barra-fundo{height:6px;border-radius:999px;background:rgba(243,227,195,.2);margin-top:4px;overflow:hidden}
+.hud-barra-progresso{height:100%;background:#c08a3e;transition:width .3s ease}
+.hud-nivel{font-family:monospace;font-size:12px;color:#d8ab66;text-align:right}
+.estacao{display:flex;align-items:center;gap:12px;padding:12px 14px;margin-bottom:4px;border-radius:6px;border:1px solid transparent;background:0 0;width:100%;text-align:left;cursor:pointer}
+.estacao:hover{background:rgba(192,138,62,.08)}
+.estacao-numero{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:monospace;font-size:12px;flex-shrink:0;background:#e8cfa0;border:2px solid #7a5530;color:#7a5530}
+.estacao-info{flex:1}
+.estacao-palavra{font-weight:600;font-size:15px;margin:0;color:#3d2f1f}
+.estacao-status{font-size:12px;font-style:italic;color:#8a6f52;margin:0}
+.estacao-propria .estacao-numero{background:#c08a3e;border-color:#7a5530;color:#3d2f1f}
+.estacao-propria{border-color:#c08a3e;background:rgba(192,138,62,.1)}
+.estacao-concluida .estacao-numero{background:#2f4a36;border-color:#2f4a36;color:#f3e3c3}
+.estacao-concluida .estacao-status{color:#2f4a36}
+.estacao-conector{width:2px;height:16px;background:#7a5530;margin-left:28px;opacity:.3}
+.divisor{display:flex;align-items:center;gap:10px;margin:16px 0;opacity:.4}
+.divisor::before,.divisor::after{content:"";flex:1;height:1px;background:#7a5530}
+.divisor-icone{font-size:12px;color:#7a5530;letter-spacing:3px}
+.ficha-personagem{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+.ficha-avatar{width:60px;height:60px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:40px;background:#e8cfa0;border-radius:50%;border:2px solid #7a5530}
+.ficha-nome{font-weight:600;font-size:18px;margin:0;color:#3d2f1f}
+.ficha-tema{font-size:13px;font-style:italic;color:#8a6f52;margin:0}
+.menu-btn{background:0 0;border:none;cursor:pointer;color:#f3e3c3;font-size:20px;padding:0 6px;line-height:1}
+.menu-btn:hover{opacity:.8}
+.menu-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200}
+.menu-overlay.aberto{display:block}
+.menu-lateral{position:fixed;top:0;right:-260px;width:250px;height:100vh;background:#e8cfa0;border-left:2px solid #7a5530;z-index:201;transition:right .3s ease;display:flex;flex-direction:column;overflow-y:auto}
+.menu-lateral.aberto{right:0}
+.menu-header{background:#2f4a36;color:#f3e3c3;padding:16px 18px;border-bottom:2px solid #7a5530}
+.menu-header-titulo{font-size:16px;font-weight:600;margin:0}
+.menu-header-versao{font-family:monospace;font-size:10px;color:#d8ab66;margin:0}
+.menu-secao{padding:12px 18px 4px}
+.menu-secao-titulo{font-family:monospace;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:#8a6f52;margin:0 0 8px}
+.menu-item{display:flex;align-items:center;gap:10px;width:100%;padding:10px 0;border:none;border-bottom:1px solid rgba(122,85,48,.15);background:0 0;cursor:pointer;font-family:Georgia,serif;font-size:15px;color:#3d2f1f;text-align:left}
+.menu-item:hover{color:#2f4a36}
+.menu-item-icone{font-size:16px;width:22px;text-align:center;flex-shrink:0}
+.menu-item-vermelho{color:#9c5a32}
+.menu-rodape{margin-top:auto;padding:12px 18px;border-top:1px solid rgba(122,85,48,.15);font-family:monospace;font-size:10px;color:#8a6f52;text-align:center}
 .tela{display:none}
 .tela.ativa{display:block}
-</style>
-<style>
-  .tela { display: none; }
-  .tela.ativa { display: block; }
-
-  .estacao-conector { width: 2px; height: 20px; background: var(--couro); margin-left: 35px; opacity: 0.3; }
-
-  .missao-numero { font-family: var(--fonte-dados); font-size: 12px; letter-spacing: 0.1em; color: var(--texto-secundario); text-transform: uppercase; margin: 0 0 4px; }
-  .missao-palavra { font-family: var(--fonte-display); font-weight: 700; font-size: 34px; color: var(--tinta); margin: 0 0 20px; line-height: 1.15; }
-
-  .divisor { display: flex; align-items: center; gap: 10px; margin: 20px 0; opacity: 0.45; }
-  .divisor::before, .divisor::after { content: ""; flex: 1; height: 1px; background: var(--couro); }
-  .divisor-icone { font-size: 14px; color: var(--couro); letter-spacing: 4px; }
-
-  .missoes-aba-nav {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-  }
-  .missoes-aba-btn {
-    flex: 1;
-    min-width: 100px;
-    padding: 10px 8px;
-    border: 1px solid var(--couro);
-    border-radius: var(--raio-md);
-    background: var(--papel-claro);
-    font-family: var(--fonte-display);
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    color: var(--tinta);
-    text-align: center;
-    transition: all 0.2s ease;
-  }
-  .missoes-aba-btn.concluida {
-    background: var(--verde-pampa);
-    color: var(--papel-claro);
-    border-color: var(--verde-pampa);
-  }
-  .missoes-aba-btn.ativa {
-    background: var(--dourado);
-    color: var(--tinta);
-    border-color: var(--dourado);
-  }
-  .missoes-aba-btn.bloqueada {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-  .missoes-aba-conteudo {
-    display: none;
-    animation: fadeInUp 0.2s ease;
-  }
-  .missoes-aba-conteudo.ativa {
-    display: block;
-  }
-
-  .alternativas-lista {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin: 16px 0;
-  }
-  .alternativa-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-    border: 1px solid var(--couro);
-    border-radius: var(--raio-md);
-    background: var(--papel-claro);
-    cursor: pointer;
-    transition: all 0.15s ease;
-  }
-  .alternativa-item:hover {
-    background: rgba(192, 138, 62, 0.08);
-    border-color: var(--dourado);
-  }
-  .alternativa-item.selecionada {
-    background: rgba(192, 138, 62, 0.2);
-    border-color: var(--dourado);
-    box-shadow: 0 0 0 2px rgba(192, 138, 62, 0.25);
-  }
-  .alternativa-radio {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 2px solid var(--couro);
-    background: white;
-    flex-shrink: 0;
-  }
-  .alternativa-item.selecionada .alternativa-radio {
-    background: var(--dourado);
-    border-color: var(--dourado);
-    box-shadow: inset 0 0 0 3px white;
-  }
-  .alternativa-texto {
-    font-family: var(--fonte-corpo);
-    font-size: 16px;
-    color: var(--tinta);
-  }
-
-  .fragmento-container {
-    background: linear-gradient(135deg, var(--papel-medio) 0%, var(--papel-escuro) 100%);
-    border: 2px solid var(--dourado);
-    border-radius: var(--raio-lg);
-    padding: 20px;
-    margin: 16px 0;
-    position: relative;
-  }
-  .fragmento-titulo {
-    font-family: var(--fonte-dados);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--dourado);
-    margin: 0 0 12px;
-  }
-  .fragmento-texto {
-    font-family: var(--fonte-corpo);
-    font-style: italic;
-    font-size: 16px;
-    line-height: 1.7;
-    color: var(--tinta);
-    margin: 0;
-  }
-  .fragmento-selo {
-    position: absolute;
-    bottom: 10px;
-    right: 15px;
-    font-size: 32px;
-    opacity: 0.3;
-  }
-
-  .progresso-carta {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 20px;
-    padding: 12px;
-    background: var(--papel-claro);
-    border-radius: var(--raio-md);
-    border: 1px solid var(--couro);
-  }
-  .progresso-carta-item {
-    flex: 1;
-    text-align: center;
-    font-size: 12px;
-    font-family: var(--fonte-dados);
-    color: var(--texto-secundario);
-  }
-  .progresso-carta-item.concluido {
-    color: var(--verde-pampa);
-  }
-  .progresso-carta-item.concluido::before {
-    content: "✓ ";
-    color: var(--verde-pampa);
-  }
-
-  .resposta-enviada {
-    background: var(--papel-claro);
-    border: 1px solid var(--couro);
-    border-radius: var(--raio-md);
-    padding: 16px;
-    margin-top: 16px;
-  }
-  .resposta-enviada-titulo {
-    font-family: var(--fonte-dados);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--texto-secundario);
-    margin: 0 0 8px;
-  }
-  .resposta-enviada-texto {
-    font-family: var(--fonte-corpo);
-    font-style: italic;
-    font-size: 16px;
-    color: var(--tinta);
-    margin: 0;
-  }
-
-  .conquista-popup {
-    position: fixed;
-    bottom: 32px;
-    left: 50%;
-    transform: translateX(-50%) translateY(120px);
-    background: var(--verde-pampa);
-    color: var(--papel-claro);
-    padding: 16px 24px;
-    border-radius: var(--raio-lg);
-    border: 2px solid var(--dourado);
-    font-family: var(--fonte-display);
-    font-size: 15px;
-    font-weight: 600;
-    z-index: 999;
-    transition: transform 0.4s ease, opacity 0.4s ease;
-    max-width: 320px;
-    width: calc(100vw - 48px);
-    text-align: center;
-    opacity: 0;
-    box-shadow: 0 4px 20px rgba(31, 46, 35, 0.35);
-  }
-  .conquista-popup.visivel {
-    transform: translateX(-50%) translateY(0);
-    opacity: 1;
-  }
-
-  .progresso-coletivo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: var(--papel-medio);
-    border: 1px solid var(--couro);
-    border-radius: var(--raio-md);
-    padding: 12px 16px;
-    margin-bottom: 20px;
-  }
-  .progresso-coletivo-texto { flex: 1; }
-  .progresso-coletivo-titulo { font-family: var(--fonte-display); font-weight: 600; font-size: 14px; margin: 0 0 4px; }
-  .progresso-coletivo-barra { height: 6px; border-radius: 999px; background: rgba(122, 85, 48, 0.2); overflow: hidden; }
-  .progresso-coletivo-fill { height: 100%; background: var(--dourado); border-radius: 999px; transition: width 0.4s ease; }
-  .progresso-coletivo-numero { font-family: var(--fonte-dados); font-size: 22px; color: var(--dourado); white-space: nowrap; }
-
-  .menu-btn { background: none; border: none; cursor: pointer; color: var(--papel-claro); font-size: 22px; padding: 4px 8px; line-height: 1; flex-shrink: 0; }
-  .menu-btn:hover { opacity: 0.8; }
-  .menu-overlay { display: none; position: fixed; inset: 0; background: rgba(31, 46, 35, 0.5); z-index: 200; }
-  .menu-overlay.aberto { display: block; }
-  .menu-lateral { position: fixed; top: 0; right: -280px; width: 260px; height: 100vh; background: var(--papel-medio); border-left: 2px solid var(--couro); z-index: 201; transition: right 0.3s ease; display: flex; flex-direction: column; overflow-y: auto; }
-  .menu-lateral.aberto { right: 0; }
-  .menu-header { background: var(--verde-pampa); color: var(--papel-claro); padding: 18px 20px 14px; border-bottom: 2px solid var(--couro); }
-  .menu-header-titulo { font-family: var(--fonte-display); font-size: 17px; font-weight: 600; margin: 0 0 2px; }
-  .menu-header-versao { font-family: var(--fonte-dados); font-size: 11px; color: var(--dourado-claro); margin: 0; }
-  .menu-secao { padding: 16px 20px 8px; }
-  .menu-secao-titulo { font-family: var(--fonte-dados); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--texto-secundario); margin: 0 0 10px; }
-  .menu-item { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 0; border: none; border-bottom: 1px solid rgba(122, 85, 48, 0.2); background: none; cursor: pointer; font-family: var(--fonte-corpo); font-size: 16px; color: var(--tinta); text-align: left; }
-  .menu-item:last-child { border-bottom: none; }
-  .menu-item:hover { color: var(--verde-pampa); }
-  .menu-item-icone { font-size: 18px; width: 24px; text-align: center; flex-shrink: 0; }
-  .menu-item-vermelho { color: var(--terracota); }
-  .menu-item-vermelho:hover { color: #7a2e10; }
-  .menu-rodape { margin-top: auto; padding: 16px 20px; border-top: 1px solid rgba(122, 85, 48, 0.2); font-family: var(--fonte-dados); font-size: 11px; color: var(--texto-secundario); text-align: center; }
-
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .fragmentos-coletados {
-    background: var(--papel-escuro);
-    border-radius: var(--raio-md);
-    padding: 8px 12px;
-    margin-bottom: 16px;
-    text-align: center;
-    font-family: var(--fonte-dados);
-    font-size: 12px;
-    color: var(--tinta);
-  }
-  .fragmentos-coletados strong {
-    color: var(--dourado);
-    font-size: 18px;
-  }
+.oculto{display:none}
+.trilha-wrapper{padding:12px 0 24px}
+.progresso-coletivo{display:flex;align-items:center;gap:12px;background:#e8cfa0;border:1px solid #7a5530;border-radius:6px;padding:10px 14px;margin-bottom:16px}
+.progresso-coletivo-texto{flex:1}
+.progresso-coletivo-titulo{font-weight:600;font-size:13px;margin:0 0 2px}
+.progresso-coletivo-barra{height:5px;border-radius:999px;background:rgba(122,85,48,.2);overflow:hidden}
+.progresso-coletivo-fill{height:100%;background:#c08a3e;transition:width .3s ease}
+.progresso-coletivo-numero{font-family:monospace;font-size:18px;color:#c08a3e}
+.missao-numero{font-family:monospace;font-size:11px;letter-spacing:.1em;color:#8a6f52;text-transform:uppercase;margin:0 0 2px}
+.missao-palavra{font-weight:700;font-size:28px;color:#3d2f1f;margin:0 0 12px;line-height:1.1}
+.narrativa{font-style:italic;font-size:16px;line-height:1.7;color:#3d2f1f;border-left:3px solid #c08a3e;padding-left:14px;margin:12px 0}
+.pista-original{background:#f3e3c3;border:1px solid #7a5530;border-radius:6px;padding:12px 14px;font-size:14px;margin:12px 0}
+.pista-original-titulo{font-family:monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#8a6f52;margin:0 0 4px}
+.fragmento-container{background:linear-gradient(135deg,#e8cfa0,#dcc190);border:2px solid #c08a3e;border-radius:10px;padding:16px;margin:12px 0;position:relative}
+.fragmento-titulo{font-family:monospace;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#c08a3e;margin:0 0 8px}
+.fragmento-texto{font-style:italic;font-size:15px;line-height:1.6;color:#3d2f1f;margin:0}
+.fragmento-selo{position:absolute;bottom:8px;right:12px;font-size:28px;opacity:.3}
+.progresso-carta{display:flex;align-items:center;gap:6px;margin-bottom:16px;padding:10px;background:#f3e3c3;border-radius:6px;border:1px solid #7a5530}
+.progresso-carta-item{flex:1;text-align:center;font-size:10px;font-family:monospace;color:#8a6f52}
+.progresso-carta-item.concluido{color:#2f4a36}
+.progresso-carta-item.concluido::before{content:"✓ ";color:#2f4a36}
+.alternativa-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid #7a5530;border-radius:6px;background:#f3e3c3;cursor:pointer;margin-bottom:6px}
+.alternativa-item:hover{background:rgba(192,138,62,.1);border-color:#c08a3e}
+.alternativa-item.selecionada{background:rgba(192,138,62,.2);border-color:#c08a3e;box-shadow:0 0 0 2px rgba(192,138,62,.2)}
+.alternativa-radio{width:18px;height:18px;border-radius:50%;border:2px solid #7a5530;background:#fff;flex-shrink:0}
+.alternativa-item.selecionada .alternativa-radio{background:#c08a3e;border-color:#c08a3e}
+.alternativa-texto{font-size:15px;color:#3d2f1f}
+.mensagem{padding:10px 12px;border-radius:6px;font-size:13px;margin-top:12px;border:1px solid}
+.mensagem-sucesso{background:#dde6da;color:#2f4a36;border-color:#b9cdb2}
+.mensagem-erro{background:#f1ddd0;color:#7a3318;border-color:#d6ad8f}
+.mensagem-info{background:#ecd9b8;color:#9c5a32;border-color:#d8bd8a}
+.fragmentos-coletados{background:#dcc190;border-radius:6px;padding:6px 12px;margin-bottom:12px;text-align:center;font-family:monospace;font-size:11px;color:#3d2f1f}
+.fragmentos-coletados strong{color:#c08a3e;font-size:16px}
+.conquista-popup{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:#2f4a36;color:#f3e3c3;padding:12px 20px;border-radius:10px;border:2px solid #c08a3e;font-family:Georgia,serif;font-size:14px;font-weight:600;z-index:999;transition:transform .4s ease,opacity .4s ease;max-width:300px;width:calc(100vw - 40px);text-align:center;opacity:0;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.conquista-popup.visivel{transform:translateX(-50%) translateY(0);opacity:1}
+.missoes-aba-nav{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.missoes-aba-btn{flex:1;min-width:70px;padding:8px 6px;border:1px solid #7a5530;border-radius:6px;background:#f3e3c3;font-family:Georgia,serif;font-size:11px;font-weight:600;cursor:pointer;color:#3d2f1f;text-align:center}
+.missoes-aba-btn.concluida{background:#2f4a36;color:#f3e3c3;border-color:#2f4a36}
+.missoes-aba-btn.ativa{background:#c08a3e;color:#3d2f1f;border-color:#c08a3e}
+.missoes-aba-btn.bloqueada{opacity:.4;cursor:not-allowed}
+.missoes-aba-conteudo{display:none}
+.missoes-aba-conteudo.ativa{display:block}
+input,textarea{width:100%;padding:10px 12px;border:1px solid #7a5530;border-radius:6px;font-family:Georgia,serif;font-size:15px;background:#f3e3c3;color:#3d2f1f}
+textarea{min-height:80px;resize:vertical}
 </style>
 </head>
 <body>
 
 <div class="hud" id="hud">
-  <div class="hud-avatar" id="hud-avatar"></div>
+  <div class="hud-avatar" id="hud-avatar">🧣</div>
   <div class="hud-info">
     <div class="hud-nome" id="hud-nome">Carregando...</div>
-    <div class="hud-barra-fundo">
-      <div class="hud-barra-progresso" id="hud-barra" style="width:0%"></div>
-    </div>
+    <div class="hud-barra-fundo"><div class="hud-barra-progresso" id="hud-barra" style="width:0%"></div></div>
   </div>
   <div class="hud-nivel" id="hud-nivel">Nv 1<br>0 XP</div>
-  <button class="menu-btn" onclick="toggleMenu()" title="Menu" aria-label="Abrir menu">&#9776;</button>
+  <button class="menu-btn" onclick="toggleMenu()">☰</button>
 </div>
 
 <div class="menu-overlay" id="menu-overlay" onclick="fecharMenu()"></div>
-<nav class="menu-lateral" id="menu-lateral" aria-label="Menu de navegação">
+<nav class="menu-lateral" id="menu-lateral">
   <div class="menu-header">
-    <p class="menu-header-titulo">Ana Terra: Crônicas do Pampa</p>
-    <p class="menu-header-versao">Versão 4.0 &nbsp;|&nbsp; PIBID Letras</p>
+    <p class="menu-header-titulo">Ana Terra</p>
+    <p class="menu-header-versao">Jornada | PIBID</p>
   </div>
   <div class="menu-secao">
     <p class="menu-secao-titulo">Navegação</p>
-    <button class="menu-item" onclick="irPara('tela-ficha')"><span class="menu-item-icone">&#128100;</span> Minha ficha</button>
-    <button class="menu-item" onclick="irPara('tela-mapa')"><span class="menu-item-icone">&#128506;</span> Mapa da jornada</button>
-    <button class="menu-item" onclick="irPara('tela-missao')"><span class="menu-item-icone">&#9876;</span> Minha missão</button>
-  </div>
-  <div class="menu-secao">
-    <p class="menu-secao-titulo">Informações</p>
-    <button class="menu-item" onclick="mostrarSobre()"><span class="menu-item-icone">&#9432;</span> Sobre o projeto</button>
-    <button class="menu-item" onclick="mostrarAjuda()"><span class="menu-item-icone">&#10067;</span> Como funciona</button>
+    <button class="menu-item" onclick="irPara('tela-ficha')"><span class="menu-item-icone">👤</span> Minha ficha</button>
+    <button class="menu-item" onclick="irPara('tela-mapa')"><span class="menu-item-icone">🗺️</span> Mapa</button>
+    <button class="menu-item" onclick="irPara('tela-missao')"><span class="menu-item-icone">⚔️</span> Missão</button>
   </div>
   <div class="menu-secao">
     <p class="menu-secao-titulo">Sessão</p>
-    <button class="menu-item menu-item-vermelho" onclick="confirmarSair()"><span class="menu-item-icone">&#8594;</span> Sair</button>
+    <button class="menu-item menu-item-vermelho" onclick="confirmarSair()"><span class="menu-item-icone">🚪</span> Sair</button>
   </div>
-  <div class="menu-rodape">Escola Municipal Fundamental Estado do Amazonas<br>9º ano de Língua Portuguesa</div>
+  <div class="menu-rodape">Escola Municipal</div>
 </nav>
 
-<div class="menu-overlay" id="modal-sobre-overlay" onclick="fecharModal('modal-sobre')" style="z-index:300;"></div>
-<div id="modal-sobre" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--papel-medio);border:1px solid var(--couro);border-radius:var(--raio-lg);padding:24px;max-width:420px;width:90%;z-index:301;box-shadow:0 4px 24px rgba(31,46,35,0.25);">
-  <h2 style="font-family:var(--fonte-display);font-size:19px;margin:0 0 12px;">Sobre o projeto</h2>
-  <p style="font-family:var(--fonte-corpo);font-size:15px;line-height:1.7;margin:0 0 10px;">Este objeto digital de aprendizagem foi desenvolvido no contexto do PIBID Letras da UNIJUÍ, sob supervisão docente na Escola Municipal Fundamental Estado do Amazonas.</p>
-  <p style="font-family:var(--fonte-corpo);font-size:15px;line-height:1.7;margin:0 0 16px;">A atividade integra a obra <em>Ana Terra</em>, de Érico Veríssimo, com uma jornada gamificada em que cada dupla explora uma palavra-chave da narrativa através de 4 missões.</p>
-  <p style="font-family:var(--fonte-dados);font-size:12px;color:var(--texto-secundario);margin:0;">Versão 4.0 - Missões RPG</p>
-  <button class="botao botao-secundario" style="margin-top:14px;" onclick="fecharModal('modal-sobre')">Fechar</button>
-</div>
-
-<div class="menu-overlay" id="modal-ajuda-overlay" onclick="fecharModal('modal-ajuda')" style="z-index:300;"></div>
-<div id="modal-ajuda" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--papel-medio);border:1px solid var(--couro);border-radius:var(--raio-lg);padding:24px;max-width:420px;width:90%;z-index:301;box-shadow:0 4px 24px rgba(31,46,35,0.25);">
-  <h2 style="font-family:var(--fonte-display);font-size:19px;margin:0 0 12px;">Como funciona</h2>
-  <p style="font-family:var(--fonte-corpo);font-size:15px;line-height:1.7;margin:0 0 8px;"><strong>🎲 Missão 1 - Descoberta:</strong> Escolha o objeto correto entre as alternativas.</p>
-  <p style="font-family:var(--fonte-corpo);font-size:15px;line-height:1.7;margin:0 0 8px;"><strong>📝 Missão 2 - Justificativa:</strong> Escreva por que este objeto representa a palavra-chave.</p>
-  <p style="font-family:var(--fonte-corpo);font-size:15px;line-height:1.7;margin:0 0 8px;"><strong>📖 Missão 3 - Conexão:</strong> Relacione o objeto a um acontecimento da obra.</p>
-  <p style="font-family:var(--fonte-corpo);font-size:15px;line-height:1.7;margin:0 0 16px;"><strong>🏆 Missão 4 - Fragmento:</strong> Libere um fragmento da história. Ao reunir os 15 fragmentos, você reconstrói toda a trajetória de Ana Terra!</p>
-  <button class="botao botao-secundario" style="margin-top:0;" onclick="fecharModal('modal-ajuda')">Fechar</button>
-</div>
-
-<!-- TELA 1: FICHA -->
-<div class="tela ativa" id="tela-ficha">
-  <div class="container">
-    <div class="cartao" style="margin-top:24px;">
-      <p class="texto-pequeno texto-central" style="margin:0 0 16px;">Bem-vindo de volta, viajante</p>
+<div class="container">
+  <!-- TELA FICHA -->
+  <div class="tela ativa" id="tela-ficha">
+    <div class="cartao" style="margin-top:16px;">
+      <p class="texto-pequeno texto-central" style="margin:0 0 12px;">Bem-vindo de volta!</p>
       <div class="ficha-personagem">
-        <div class="ficha-avatar" id="ficha-avatar"></div>
+        <div class="ficha-avatar" id="ficha-avatar">🧣</div>
         <div>
-          <h2 class="ficha-nome" id="ficha-nome-dupla">...</h2>
+          <h2 class="ficha-nome" id="ficha-nome-dupla">Carregando...</h2>
           <p class="ficha-tema" id="ficha-arquetipo-tema">...</p>
         </div>
       </div>
       <div class="divisor"><span class="divisor-icone">* * *</span></div>
-      <p class="texto-pequeno" id="ficha-integrantes" style="margin:0 0 4px;"></p>
-      <p class="texto-pequeno" id="ficha-turma" style="margin:0 0 16px;"></p>
+      <p class="texto-pequeno" id="ficha-integrantes"></p>
+      <p class="texto-pequeno" id="ficha-turma"></p>
       <div id="fragmentos-resumo" class="fragmentos-coletados" style="display:none;"></div>
-      <p class="cartao-descricao" style="margin:0;">Sua missão aguarda. Complete as 4 missões da sua carta e conquiste o fragmento da história!</p>
-      <button class="botao botao-dourado" onclick="mostrarTela('tela-mapa')">Ver o mapa da jornada</button>
+      <p class="cartao-descricao">Complete as 4 missões da sua carta!</p>
+      <button class="botao" onclick="mostrarTela('tela-mapa')">Ver mapa</button>
     </div>
   </div>
-</div>
 
-<!-- TELA 2: MAPA -->
-<div class="tela" id="tela-mapa">
-  <div class="container">
+  <!-- TELA MAPA -->
+  <div class="tela" id="tela-mapa">
     <div class="progresso-coletivo">
       <div class="progresso-coletivo-texto">
         <p class="progresso-coletivo-titulo">Progresso da turma</p>
@@ -374,23 +167,16 @@ body{font-family:Georgia,serif;background:#f3e3c3;color:#3d2f1f;margin:0;padding
       <div class="progresso-coletivo-numero" id="prog-numero">0/15</div>
     </div>
     <div class="trilha-wrapper" id="trilha"></div>
-    <button class="botao botao-secundario" style="margin-top:0;" onclick="mostrarTela('tela-ficha')">Voltar para a ficha</button>
+    <button class="botao botao-secundario" onclick="mostrarTela('tela-ficha')">Voltar</button>
   </div>
-</div>
 
-<!-- TELA 3: MISSAO -->
-<div class="tela" id="tela-missao">
-  <div class="container">
+  <!-- TELA MISSAO -->
+  <div class="tela" id="tela-missao">
     <div class="cartao" id="cartao-missao">
       <p class="missao-numero" id="missao-numero"></p>
       <h2 class="missao-palavra" id="missao-palavra"></h2>
-
       <div class="narrativa" id="missao-narrativa"></div>
-      <div class="pista-original">
-        <p class="pista-original-titulo">Pista</p>
-        <p style="margin:0;" id="missao-pista"></p>
-      </div>
-
+      <div class="pista-original"><p class="pista-original-titulo">📌 Pista</p><p id="missao-pista"></p></div>
       <div class="divisor"><span class="divisor-icone">* * *</span></div>
 
       <div class="progresso-carta" id="progresso-carta">
@@ -402,80 +188,77 @@ body{font-family:Georgia,serif;background:#f3e3c3;color:#3d2f1f;margin:0;padding
 
       <div class="missoes-aba-nav" id="missoes-aba-nav"></div>
 
-      <!-- MISSÃO 1 -->
       <div class="missoes-aba-conteudo" id="missao1-conteudo">
-        <p class="cartao-titulo" style="font-size:17px;margin-bottom:8px;">🔍 Missão 1: Descoberta</p>
-        <p class="cartao-descricao" style="margin-bottom:16px;">Qual objeto representa esta palavra-chave?</p>
+        <p class="cartao-titulo" style="font-size:16px;margin-bottom:6px;">🔍 Missão 1: Descoberta</p>
+        <p class="cartao-descricao">Qual objeto representa esta palavra-chave?</p>
         <div class="alternativas-lista" id="alternativas-lista"></div>
-        <button class="botao botao-dourado" onclick="enviarMissao1()" id="btn-missao1">Confirmar resposta</button>
+        <button class="botao" onclick="enviarMissao1()" id="btn-missao1">Confirmar resposta</button>
         <div id="msg-missao1"></div>
       </div>
 
-      <!-- MISSÃO 2 -->
       <div class="missoes-aba-conteudo" id="missao2-conteudo">
-        <p class="cartao-titulo" style="font-size:17px;margin-bottom:8px;">📝 Missão 2: Justificativa</p>
-        <p class="cartao-descricao" style="margin-bottom:16px;">Explique por que este objeto representa a palavra-chave na obra de Érico Veríssimo.</p>
-        <textarea id="justificativa-texto" placeholder="Escreva sua justificativa aqui..." rows="5" style="width:100%;padding:12px 14px;border:1px solid var(--couro);border-radius:var(--raio-md);font-family:var(--fonte-corpo);font-size:16px;background:var(--papel-claro);color:var(--tinta);"></textarea>
-        <button class="botao botao-dourado" onclick="enviarMissao2()" id="btn-missao2">Enviar justificativa</button>
+        <p class="cartao-titulo" style="font-size:16px;margin-bottom:6px;">📝 Missão 2: Justificativa</p>
+        <p class="cartao-descricao">Explique por que este objeto representa a palavra-chave. <strong>Mínimo 25 palavras.</strong></p>
+        <textarea id="justificativa-texto" placeholder="Escreva sua justificativa..."></textarea>
+        <button class="botao" onclick="enviarMissao2()" id="btn-missao2">Enviar</button>
         <div id="msg-missao2"></div>
       </div>
 
-      <!-- MISSÃO 3 -->
       <div class="missoes-aba-conteudo" id="missao3-conteudo">
-        <p class="cartao-titulo" style="font-size:17px;margin-bottom:8px;">📖 Missão 3: Conexão</p>
-        <p class="cartao-descricao" id="missao3-pergunta" style="margin-bottom:16px;"></p>
-        <textarea id="conexao-texto" placeholder="Relacione o objeto a um acontecimento da história de Ana Terra..." rows="5" style="width:100%;padding:12px 14px;border:1px solid var(--couro);border-radius:var(--raio-md);font-family:var(--fonte-corpo);font-size:16px;background:var(--papel-claro);color:var(--tinta);"></textarea>
-        <button class="botao botao-dourado" onclick="enviarMissao3()" id="btn-missao3">Enviar conexão</button>
+        <p class="cartao-titulo" style="font-size:16px;margin-bottom:6px;">📖 Missão 3: Conexão</p>
+        <p class="cartao-descricao" id="missao3-pergunta"></p>
+        <textarea id="conexao-texto" placeholder="Relacione com um acontecimento da obra..."></textarea>
+        <button class="botao" onclick="enviarMissao3()" id="btn-missao3">Enviar</button>
         <div id="msg-missao3"></div>
       </div>
 
-      <!-- MISSÃO 4 -->
       <div class="missoes-aba-conteudo" id="missao4-conteudo">
-        <p class="cartao-titulo" style="font-size:17px;margin-bottom:8px;">🏆 Missão 4: Fragmento</p>
-        <p class="cartao-descricao" style="margin-bottom:16px;">Parabéns! Complete as missões anteriores e conquiste o fragmento REAL do livro.</p>
+        <p class="cartao-titulo" style="font-size:16px;margin-bottom:6px;">🏆 Missão 4: Fragmento</p>
+        <p class="cartao-descricao">Complete as missões anteriores e conquiste o fragmento.</p>
         <div id="fragmento-container"></div>
-        <button class="botao botao-dourado" onclick="conquistarFragmento()" id="btn-missao4">Conquistar fragmento</button>
+        <button class="botao" onclick="conquistarFragmento()" id="btn-missao4">Conquistar fragmento</button>
         <div id="msg-missao4"></div>
       </div>
 
       <div id="carta-completa" style="display:none;">
-        <div class="mensagem mensagem-sucesso" style="margin-top:16px;">🎉 Carta completa! Você conquistou um fragmento real do livro! 🎉</div>
+        <div class="mensagem mensagem-sucesso" style="margin-top:12px;">🎉 Carta completa! 🎉</div>
       </div>
     </div>
-    <button class="botao botao-secundario" style="margin-top:0;" onclick="mostrarTela('tela-mapa')">Voltar para o mapa</button>
+    <button class="botao botao-secundario" onclick="mostrarTela('tela-mapa')">Voltar</button>
   </div>
 </div>
 
 <div class="conquista-popup" id="conquista-popup"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
 <script>
 // ============================================================
-// SUPABASE CONFIG - EMBUTIDO
+// SUPABASE CONFIG
 // ============================================================
 const SUPABASE_URL = "https://betfuvirdfikkhcuyweg.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJldGZ1dmlyZGZpa2toY3V5d2VnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1NTY2MjMsImV4cCI6MjA5NzEzMjYyM30.ymiJTQ3mQDYCdu7ShW4_7x2yH95wyS-L30uxzlH9Fxw";
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // ============================================================
-// DADOS DAS CARTAS (EMBUTIDO)
+// DADOS DAS CARTAS
 // ============================================================
 const CARTAS = [
-  {ordem:1,numero:1,palavraChave:"NARRATIVA",pista:"Toda jornada começa comigo. Guardo personagens, conflitos, sonhos e memórias que atravessam gerações.",desafio:"Identifique o objeto que representa o início desta aventura e explique sua importância para a história.",narrativa:"Antes de qualquer palavra ser escrita, antes mesmo de Ana Terra existir como personagem, já havia a narrativa. É ela quem guarda os conflitos, os sonhos, as memórias que atravessam gerações.",alternativas:["Um livro","Um mapa","Uma carta","Um diário"],alternativaCorreta:"Um livro",acontecimento:"Como a narrativa oral e escrita preserva a história da família Terra?",fragmento:"📖 FRAGMENTO 1/15 - NARRATIVA (p.6): 'Sempre que me acontece alguma coisa importante, está ventando', costumava dizer Ana Terra."},
-  {ordem:2,numero:2,palavraChave:"DESTINO",pista:"Estou presente quando a vida muda de direção. Alguns me sentem antes mesmo de perceber o que está por vir.",desafio:"Qual objeto simboliza os acontecimentos que transformam a vida da protagonista?",narrativa:"Há momentos em que a vida vira de cabeça para baixo. Um encontro, uma perda, uma escolha: tudo pode levar a um caminho novo. O destino não é algo que se escolhe, mas algo que acontece.",alternativas:["Uma bússola","Um relógio","Um fio de lã","Uma estrada"],alternativaCorreta:"Um fio de lã",acontecimento:"De que forma o destino de Ana Terra se entrelaça com o de Pedro Missioneiro?",fragmento:"📖 FRAGMENTO 2/15 - DESTINO (p.6): 'Devia ter sido em 1777: ela se lembrava bem porque esse fora o ano da expulsão dos castelhanos do território do Continente.'"},
-  {ordem:3,numero:3,palavraChave:"ORIGEM",pista:"Antes das viagens, das perdas e dos recomeços, existia um lugar onde tudo começou.",desafio:"Descubra qual objeto representa as raízes da família Terra.",narrativa:"Antes de Ana Terra, houve a terra. Vasta, dura, generosa. Foi dela que tudo nasceu: o sangue, o sustento, a primeira lembrança de infância sob o céu aberto do pampa.",alternativas:["Uma árvore","O chão de terra batida","Uma semente","Um rio"],alternativaCorreta:"O chão de terra batida",acontecimento:"Como a terra (o lugar) influencia a formação da identidade dos personagens?",fragmento:"📖 FRAGMENTO 3/15 - ORIGEM (p.7): 'Moravam num rancho de paredes de taquaruçu e barro, coberto de palha e com chão de terra batida.'"},
-  {ordem:4,numero:4,palavraChave:"SOBREVIVENCIA",pista:"Sou fruto do trabalho diário. Sem mim, a família não teria como enfrentar os desafios da fronteira.",desafio:"Identifique o objeto que garante o sustento dos personagens.",narrativa:"Mesmo na dor, a vida continua, e ela exige trabalho. Dia após dia, o sustento da família depende do esforço sobre a terra. É essa labuta diária, simples e essencial, que garante que Ana e os seus continuem de pé.",alternativas:["Um arado","Um moinho","Uma plantação de trigo","Um facão"],alternativaCorreta:"Uma plantação de trigo",acontecimento:"Qual é o papel do trabalho da terra na sobrevivência da família durante os conflitos?",fragmento:"📖 FRAGMENTO 4/15 - SOBREVIVÊNCIA (p.8): 'Não havia outro remédio — achava ela — senão trabalhar para esquecer o medo, a tristeza, a aflição... Acordava e pulava da cama, mal raiava o dia.'"},
-  {ordem:5,numero:5,palavraChave:"LIBERDADE",pista:"Levo pessoas por campos sem fim. Aproximo distâncias e abro caminhos para novas descobertas.",desafio:"Qual objeto representa os caminhos dos pampas?",narrativa:"Pelo pampa, seguem mensagens, sonhos e pessoas em movimento. Esse ir e vir constante representa a liberdade de seguir caminho, de levar consigo as histórias vividas, e de buscar, em outro lugar, aquilo que falta.",alternativas:["Um cavalo","Uma carroça","O vento","As estrelas"],alternativaCorreta:"Um cavalo",acontecimento:"Como o cavalo representa a liberdade e a ligação com o território gaúcho?",fragmento:"📖 FRAGMENTO 5/15 - LIBERDADE (p.7): 'Casando poderia ao menos ter alguma esperança de sair daquele cafundó, ir morar no Rio Pardo, em Viamão ou até mesmo voltar para a Capitania de São Paulo, onde nascera.'"},
-  {ordem:6,numero:6,palavraChave:"RESILIENCIA",pista:"Mesmo diante da dor, continuo em frente. Minha força não está na ausência do sofrimento, mas na capacidade de superá-lo.",desafio:"Encontre o objeto que representa a protagonista da história.",narrativa:"Ana Terra é, antes de tudo, uma mulher que não desiste. Perdas, violência, preconceitos: nada disso a quebra por completo. Ela segue, carregando o peso do passado, mas seguindo em frente.",alternativas:["Uma âncora","Uma fênix","Uma oliveira","Uma pedra"],alternativaCorreta:"Uma oliveira",acontecimento:"Em quais momentos Ana Terra demonstra resiliência e como isso define sua trajetória?",fragmento:"📖 FRAGMENTO 6/15 - RESILIÊNCIA (p.55): 'Tinha dentro de si uma espécie de vazio: sabia que nunca mais teria vontade de rir nem de chorar. Queria viver, isso queria, e em grande parte por causa de Pedrinho.'"},
-  {ordem:7,numero:7,palavraChave:"ENCONTRO",pista:"Minha chegada altera o rumo dos acontecimentos e inicia uma nova fase da narrativa.",desafio:"Qual objeto representa a chegada de alguém que mudará tudo?",narrativa:"Um dia, alguém chega. E nada mais é como antes. Esse encontro muda o rumo de tudo, não apenas da vida de Ana, mas da própria narrativa. É o ponto sem volta, o momento em que a história ganha um novo caminho.",alternativas:["Uma carta","Um cavaleiro ao longe","Uma flor","Um terço"],alternativaCorreta:"Um cavaleiro ao longe",acontecimento:"Como a chegada de Pedro Missioneiro transforma a vida de Ana e sua família?",fragmento:"📖 FRAGMENTO 7/15 - ENCONTRO (p.12): 'De súbito ali ao pé do poço Ana Terra teve a impressão de que não estava só.'"},
-  {ordem:8,numero:8,palavraChave:"MUDANCA",pista:"Venho de um mundo diferente e carrego conhecimentos que transformam vidas.",desafio:"Descubra o objeto ligado ao personagem que desafia os costumes da época.",narrativa:"Há quem chegue para transformar tudo. Alguém ligado a outra cultura, a outras tradições, envolto em um amor que a época não aceitava. Sua presença muda o curso da narrativa e revela as tensões entre diferentes mundos que convivem, e colidem, no pampa.",alternativas:["Uma missanga","Uma cruz missioneira","Um cocar","Um cachimbo"],alternativaCorreta:"Uma cruz missioneira",acontecimento:"Qual é o legado cultural deixado pelos missioneiros na região do pampa?",fragmento:"📖 FRAGMENTO 8/15 - MUDANÇA (p.16): 'Tinha ele uma cara moça e trigueira, de maçãs muito salientes. Era uma face lisa, sem um único fio de barba, e dum bonito que chamava a atenção por não ser comum.'"},
-  {ordem:9,numero:9,palavraChave:"AMOR",pista:"Nasci da união de duas pessoas que enfrentaram barreiras e preconceitos para ficarem juntas.",desafio:"Identifique o símbolo que representa esse sentimento.",narrativa:"Entre duas pessoas que a sociedade dizia não deverem se unir, nasce algo verdadeiro. Esse sentimento desafia regras, costumes e expectativas, e dele surge uma nova vida, fruto de uma escolha proibida pelo seu tempo.",alternativas:["Um lenço","Uma pulseira de troca","Um beijo","Um abraço"],alternativaCorreta:"Uma pulseira de troca",acontecimento:"Como o amor entre Ana e Pedro desafia as convenções sociais da época?",fragmento:"📖 FRAGMENTO 9/15 - AMOR (p.38): 'O que ela queria era macho. E pensava em Pedro só porque, além do pai e dos irmãos, ele era o único homem que havia na estância.'"},
-  {ordem:10,numero:10,palavraChave:"DOR",pista:"Minha presença marca uma perda irreparável. Depois de mim, nada volta a ser como antes.",desafio:"Qual objeto simboliza o sofrimento que mudou a vida da protagonista?",narrativa:"Depois da transformação, vem o preço. Perdas, sofrimento, violência, e relações de poder que pesam sobre quem tem menos voz. Ana Terra atravessa momentos de dor profunda, que marcam para sempre sua trajetória.",alternativas:["Uma lágrima","Um lenço ensanguentado","Uma vela","Uma cruz de madeira"],alternativaCorreta:"Um lenço ensanguentado",acontecimento:"Quais foram as maiores perdas que Ana Terra enfrentou e como elas a transformaram?",fragmento:"📖 FRAGMENTO 10/15 - DOR (p.49): 'Os dias que se seguiram foram para Ana Terra dias de vergonha, constrangimento e medo.'"},
-  {ordem:11,numero:11,palavraChave:"ESPERANCA",pista:"Quando tudo parecia perdido, trouxe um motivo para continuar lutando.",desafio:"Encontre o objeto que representa a continuidade da vida.",narrativa:"Mesmo depois de tantas tragédias, a vida encontra um jeito de continuar. Um novo começo se anuncia: pequeno, frágil, mas real. É a prova de que, mesmo em meio à dor, ainda há motivo para seguir adiante.",alternativas:["Um berço","Uma criança","Uma semente brotando","O nascer do sol"],alternativaCorreta:"Uma criança",acontecimento:"De que forma a maternidade representa a esperança para Ana Terra?",fragmento:"📖 FRAGMENTO 11/15 - ESPERANÇA (p.50): 'Ela trazia Pedro dentro de si. Pedro ia nascer de novo e portanto tudo estava bem e o mundo no fim de contas não era tão mau.'"},
-  {ordem:12,numero:12,palavraChave:"RESISTENCIA",pista:"Ajudo a enfrentar o medo, a solidão e as dificuldades. Sou a força que impede a desistência.",desafio:"Qual objeto representa a capacidade de seguir em frente apesar das adversidades?",narrativa:"Nos momentos mais difíceis, é preciso algo a que se apegar. Algo que ajude a manter a fé, a força e a esperança, mesmo quando tudo parece perdido. É esse apoio, muitas vezes silencioso, que sustenta Ana Terra em sua travessia.",alternativas:["Uma oração","Um terço","Uma carta nunca enviada","Uma fotografia"],alternativaCorreta:"Um terço",acontecimento:"Como a fé e a espiritualidade ajudam Ana a resistir às adversidades?",fragmento:"📖 FRAGMENTO 12/15 - RESISTÊNCIA (p.55): 'Ana Terra sacudiu a cabeça lentamente, concordando, pois tivera o mesmo pensamento.'"},
-  {ordem:13,numero:13,palavraChave:"CONFLITO",pista:"Represento invasões, ataques e disputas que destruíram lares e mudaram destinos.",desafio:"Identifique os objetos ligados às guerras de fronteira.",narrativa:"As terras do pampa nunca foram pacíficas. Disputas territoriais, invasões, ataques e tensões marcam a região onde Ana Terra vive. Esses conflitos moldaram a história do Rio Grande do Sul e atravessam, direta ou indiretamente, a vida da protagonista e de sua família.",alternativas:["Uma espada e um escudo","Um mosquete e uma baioneta","Uma lança e um facão","Canhões e sabres"],alternativaCorreta:"Um mosquete e uma baioneta",acontecimento:"Como as guerras de fronteira afetaram a vida da família Terra?",fragmento:"📖 FRAGMENTO 13/15 - CONFLITO (p.7): 'De quando em quando grupos de índios coroados desciam das bandas da coxilha de Botucaraí... atacando as estâncias e os viajantes. Havia também as 'arriadas', partidas de ladrões de gado.'"},
-  {ordem:14,numero:14,palavraChave:"RECOMECO",pista:"Depois das perdas, é preciso encontrar coragem para abrir novos caminhos.",desafio:"Qual objeto simboliza a construção de uma nova vida?",narrativa:"Depois de tanto perder, é hora de abrir uma porta para o novo. Um caminho diferente se apresenta: a chance de reconstruir a vida, de começar de novo em outro lugar, com outra perspectiva.",alternativas:["Uma casa nova","Uma mala de viagem","Uma estrada bifurcada","Uma chave"],alternativaCorreta:"Uma chave",acontecimento:"De que forma Ana Terra recomeça sua vida após as tragédias?",fragmento:"📖 FRAGMENTO 14/15 - RECOMEÇO (p.87): 'Puseram-se a caminho. As rodas rechinaram. E assim Ana Terra viu ir ficando para trás a estância do pai.'"},
-  {ordem:15,numero:15,palavraChave:"LEGADO",pista:"Sou aquilo que permanece quando uma geração se vai. Carrego memórias, valores e histórias que continuam vivas.",desafio:"Descubra o objeto que representa a herança deixada por Ana Terra para o futuro.",narrativa:"No fim, olhamos para trás e vemos: cada momento importante da vida de Ana Terra estava conectado. Nascimento, amor, dor, recomeço: tudo fazia parte de um caminho maior. O que fica é o legado: memórias, valores e histórias que continuam vivas, atravessando gerações.",alternativas:["Um livro de memórias","Um baú de histórias","Uma árvore plantada","Um colar de família"],alternativaCorreta:"Um livro de memórias",acontecimento:"Qual é a importância de preservar a memória de Ana Terra para as futuras gerações?",fragmento:"📖 FRAGMENTO 15/15 - LEGADO (p.114-115): 'Achava que tudo agora estava bem. O filho era um homem direito e tinha casado com uma mulher séria e trabalhadora.'"}
+  {ordem:1,numero:1,palavraChave:"NARRATIVA",pista:"Toda jornada começa comigo.",desafio:"Identifique o objeto.",narrativa:"Antes de qualquer palavra, já havia a narrativa.",alternativas:["Um livro","Um mapa","Uma carta","Um diário"],alternativaCorreta:"Um livro",acontecimento:"Como a narrativa preserva a história?",fragmento:"📖 'Sempre que me acontece algo importante, está ventando' - p.6"},
+  {ordem:2,numero:2,palavraChave:"DESTINO",pista:"Quando a vida muda de direção.",desafio:"Qual objeto simboliza a transformação?",narrativa:"Há momentos em que a vida vira de cabeça para baixo.",alternativas:["Uma bússola","Um relógio","Um fio de lã","Uma estrada"],alternativaCorreta:"Um fio de lã",acontecimento:"Como o destino de Ana se entrelaça com Pedro?",fragmento:"📖 'Devia ter sido em 1777...' - p.6"},
+  {ordem:3,numero:3,palavraChave:"ORIGEM",pista:"O lugar onde tudo começou.",desafio:"Descubra as raízes da família.",narrativa:"Antes de Ana, houve a terra.",alternativas:["Uma árvore","Chão de terra batida","Uma semente","Um rio"],alternativaCorreta:"Chão de terra batida",acontecimento:"Como a terra influencia a identidade?",fragmento:"📖 'Moravam num rancho de taquaruçu e barro...' - p.7"},
+  {ordem:4,numero:4,palavraChave:"SOBREVIVENCIA",pista:"Fruto do trabalho diário.",desafio:"O que garante o sustento?",narrativa:"Mesmo na dor, a vida continua.",alternativas:["Um arado","Um moinho","Plantação de trigo","Um facão"],alternativaCorreta:"Plantação de trigo",acontecimento:"Papel do trabalho na sobrevivência?",fragmento:"📖 'Não havia outro remédio senão trabalhar...' - p.8"},
+  {ordem:5,numero:5,palavraChave:"LIBERDADE",pista:"Campos sem fim.",desafio:"O que representa os caminhos?",narrativa:"Pelo pampa, seguem sonhos.",alternativas:["Um cavalo","Uma carroça","O vento","As estrelas"],alternativaCorreta:"Um cavalo",acontecimento:"Como o cavalo representa liberdade?",fragmento:"📖 'Casando poderia ter esperança de sair daquele cafundó...' - p.7"},
+  {ordem:6,numero:6,palavraChave:"RESILIENCIA",pista:"Mesmo diante da dor.",desafio:"O que representa a protagonista?",narrativa:"Ana não desiste.",alternativas:["Âncora","Fênix","Oliveira","Pedra"],alternativaCorreta:"Oliveira",acontecimento:"Quando Ana demonstra resiliência?",fragmento:"📖 'Queria viver, isso queria...' - p.55"},
+  {ordem:7,numero:7,palavraChave:"ENCONTRO",pista:"Alguém que muda tudo.",desafio:"O que representa a chegada?",narrativa:"Um dia, alguém chega.",alternativas:["Uma carta","Cavaleiro ao longe","Uma flor","Um terço"],alternativaCorreta:"Cavaleiro ao longe",acontecimento:"Como Pedro transforma a vida de Ana?",fragmento:"📖 'De súbito Ana teve a impressão de que não estava só.' - p.12"},
+  {ordem:8,numero:8,palavraChave:"MUDANCA",pista:"Venho de um mundo diferente.",desafio:"Objeto que desafia os costumes.",narrativa:"Alguém que transforma tudo.",alternativas:["Missanga","Cruz missioneira","Cocar","Cachimbo"],alternativaCorreta:"Cruz missioneira",acontecimento:"Legado dos missioneiros?",fragmento:"📖 'Uma cara moça e trigueira...' - p.16"},
+  {ordem:9,numero:9,palavraChave:"AMOR",pista:"União que enfrentou barreiras.",desafio:"Símbolo do sentimento.",narrativa:"Nasce algo verdadeiro.",alternativas:["Lenço","Pulseira de troca","Beijo","Abraço"],alternativaCorreta:"Pulseira de troca",acontecimento:"Como o amor desafia convenções?",fragmento:"📖 'O que ela queria era macho...' - p.38"},
+  {ordem:10,numero:10,palavraChave:"DOR",pista:"Perda irreparável.",desafio:"O que simboliza o sofrimento?",narrativa:"Depois da transformação, vem o preço.",alternativas:["Lágrima","Lenço ensanguentado","Vela","Cruz"],alternativaCorreta:"Lenço ensanguentado",acontecimento:"Maiores perdas de Ana?",fragmento:"📖 'Dias de vergonha, constrangimento e medo.' - p.49"},
+  {ordem:11,numero:11,palavraChave:"ESPERANCA",pista:"Motivo para continuar.",desafio:"O que representa a continuidade?",narrativa:"A vida encontra um jeito.",alternativas:["Berço","Uma criança","Semente","Nascer do sol"],alternativaCorreta:"Uma criança",acontecimento:"Maternidade como esperança?",fragmento:"📖 'Ela trazia Pedro dentro de si.' - p.50"},
+  {ordem:12,numero:12,palavraChave:"RESISTENCIA",pista:"Força contra o medo.",desafio:"O que representa seguir em frente?",narrativa:"É preciso algo a que se apegar.",alternativas:["Oração","Terço","Carta","Fotografia"],alternativaCorreta:"Terço",acontecimento:"Fé e espiritualidade ajudam Ana?",fragmento:"📖 'Ana Terra sacudiu a cabeça lentamente...' - p.55"},
+  {ordem:13,numero:13,palavraChave:"CONFLITO",pista:"Invasões e ataques.",desafio:"Objetos das guerras de fronteira.",narrativa:"O pampa nunca foi pacífico.",alternativas:["Espada e escudo","Mosquete e baioneta","Lança e facão","Canhões"],alternativaCorreta:"Mosquete e baioneta",acontecimento:"Como as guerras afetaram a família?",fragmento:"📖 'Índios coroados atacando estâncias...' - p.7"},
+  {ordem:14,numero:14,palavraChave:"RECOMECO",pista:"Coragem para novos caminhos.",desafio:"O que simboliza a nova vida?",narrativa:"Hora de abrir uma porta.",alternativas:["Casa nova","Mala de viagem","Estrada","Chave"],alternativaCorreta:"Chave",acontecimento:"Como Ana recomeça?",fragmento:"📖 'Puseram-se a caminho. As rodas rechinaram.' - p.87"},
+  {ordem:15,numero:15,palavraChave:"LEGADO",pista:"O que permanece.",desafio:"Herança de Ana Terra.",narrativa:"Cada momento estava conectado.",alternativas:["Livro de memórias","Baú de histórias","Árvore","Colar"],alternativaCorreta:"Livro de memórias",acontecimento:"Importância de preservar a memória?",fragmento:"📖 'Achava que tudo agora estava bem.' - p.114"}
 ];
 
 function getCartaPorNumero(n){for(var i=0;i<CARTAS.length;i++){if(CARTAS[i].numero===n)return CARTAS[i]}return null}
@@ -485,103 +268,35 @@ function getCartaPorNumero(n){for(var i=0;i<CARTAS.length;i++){if(CARTAS[i].nume
 // ============================================================
 const ARQUETIPOS = [
   {id:"ana_terra",nome:"Ana Terra",tema:"Resistência feminina"},
-  {id:"pedro_missioneiro",nome:"Pedro Missioneiro",tema:"Miscigenação e origem do povo gaúcho"},
-  {id:"maneco_terra",nome:"Maneco Terra",tema:"Tradição, Patriarcado e Autoridade"},
+  {id:"pedro_missioneiro",nome:"Pedro Missioneiro",tema:"Miscigenação"},
+  {id:"maneco_terra",nome:"Maneco Terra",tema:"Tradição e Autoridade"},
   {id:"henriqueta",nome:"Henriqueta",tema:"Preservação dos costumes"},
-  {id:"horacio",nome:"Horácio",tema:"Conservadorismo social"},
-  {id:"pedro_terra",nome:"Pedro Terra",tema:"Continuidade das gerações"}
+  {id:"horacio",nome:"Horácio",tema:"Conservadorismo"},
+  {id:"pedro_terra",nome:"Pedro Terra",tema:"Continuidade"}
 ];
 
 // ============================================================
-// MEDALHOES (SIMPLIFICADOS)
+// VARIÁVEIS
 // ============================================================
-const MEDALHOES = {
-  ana_terra: '<div style="width:100%;height:100%;background:#e8cfa0;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;">🧣</div>',
-  pedro_missioneiro: '<div style="width:100%;height:100%;background:#e8cfa0;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;">⛪</div>',
-  maneco_terra: '<div style="width:100%;height:100%;background:#e8cfa0;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;">👨</div>',
-  henriqueta: '<div style="width:100%;height:100%;background:#e8cfa0;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;">👩</div>',
-  horacio: '<div style="width:100%;height:100%;background:#e8cfa0;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;">🎩</div>',
-  pedro_terra: '<div style="width:100%;height:100%;background:#e8cfa0;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;">🌾</div>'
-};
+let DUPLA=null,CARTA_ATUAL=null,alternativaSelecionada=null,TODAS_DUPLAS=[];
+let PROGRESSO_MISSOES={missao1_concluida:false,missao2_concluida:false,missao3_concluida:false,missao4_concluida:false,resposta_objeto:null,justificativa:null,conexao:null,fragmento_conquistado:false};
 
 // ============================================================
-// VARIÁVEIS GLOBAIS
+// NAVEGAÇÃO
 // ============================================================
-let DUPLA = null;
-let CARTA_ATUAL = null;
-let PROGRESSO_MISSOES = {
-  missao1_concluida: false,
-  missao2_concluida: false,
-  missao3_concluida: false,
-  missao4_concluida: false,
-  resposta_objeto: null,
-  justificativa: null,
-  conexao: null,
-  fragmento_conquistado: false
-};
-let TODAS_DUPLAS = [];
-let alternativaSelecionada = null;
-
-// ============================================================
-// FUNÇÕES DE NAVEGAÇÃO
-// ============================================================
-function mostrarTela(id){
-  document.querySelectorAll(".tela").forEach(function(t){t.classList.remove("ativa")});
-  document.getElementById(id).classList.add("ativa");
-  window.scrollTo(0,0);
-  if(id==="tela-missao") atualizarInterfaceMissoes();
-}
-
-function toggleMenu(){
-  document.getElementById("menu-lateral").classList.toggle("aberto");
-  document.getElementById("menu-overlay").classList.toggle("aberto");
-}
-
-function fecharMenu(){
-  document.getElementById("menu-lateral").classList.remove("aberto");
-  document.getElementById("menu-overlay").classList.remove("aberto");
-}
-
-function irPara(tela){
-  fecharMenu();
-  mostrarTela(tela);
-}
-
-function fecharModal(id){
-  document.getElementById(id).style.display = "none";
-  document.getElementById(id+"-overlay").style.display = "none";
-}
-
-function mostrarSobre(){
-  fecharMenu();
-  document.getElementById("modal-sobre").style.display = "block";
-  document.getElementById("modal-sobre-overlay").style.display = "block";
-}
-
-function mostrarAjuda(){
-  fecharMenu();
-  document.getElementById("modal-ajuda").style.display = "block";
-  document.getElementById("modal-ajuda-overlay").style.display = "block";
-}
-
-function confirmarSair(){
-  fecharMenu();
-  if(confirm("Deseja sair? Seu progresso está salvo.")){
-    sessionStorage.clear();
-    window.location.href = "index.html";
-  }
-}
+function mostrarTela(id){document.querySelectorAll('.tela').forEach(function(t){t.classList.remove('ativa')});document.getElementById(id).classList.add('ativa');window.scrollTo(0,0);if(id==='tela-missao')atualizarInterfaceMissoes()}
+function toggleMenu(){document.getElementById('menu-lateral').classList.toggle('aberto');document.getElementById('menu-overlay').classList.toggle('aberto')}
+function fecharMenu(){document.getElementById('menu-lateral').classList.remove('aberto');document.getElementById('menu-overlay').classList.remove('aberto')}
+function irPara(t){fecharMenu();mostrarTela(t)}
+function confirmarSair(){fecharMenu();if(confirm('Deseja sair?')){sessionStorage.clear();window.location.href='index.html'}}
 
 // ============================================================
 // INICIALIZAÇÃO
 // ============================================================
-window.addEventListener("DOMContentLoaded", async function(){
-  var duplaId = sessionStorage.getItem("anaTerraDuplaId");
-  console.log("duplaId:", duplaId);
-  if(!duplaId){
-    window.location.href = "index.html";
-    return;
-  }
+window.addEventListener('DOMContentLoaded', async function(){
+  var duplaId = sessionStorage.getItem('anaTerraDuplaId');
+  console.log('duplaId:', duplaId);
+  if(!duplaId){window.location.href='index.html';return}
   try{
     await carregarDadosDupla(duplaId);
     await carregarTodasDuplas();
@@ -592,350 +307,171 @@ window.addEventListener("DOMContentLoaded", async function(){
     preencherMissao();
     atualizarProgressoColetivo();
     atualizarResumoFragmentos();
-  }catch(e){
-    console.log("Erro ao carregar:", e);
-    document.getElementById("hud-nome").textContent = "Erro ao carregar dados";
-  }
+  }catch(e){console.log('Erro:',e);document.getElementById('hud-nome').textContent='Erro ao carregar'}
 });
 
 // ============================================================
 // FUNÇÕES DE CARREGAMENTO
 // ============================================================
 async function carregarDadosDupla(id){
-  console.log("Buscando dupla:", id);
-  var {data, error} = await supabaseClient.rpc("buscar_dupla", {p_dupla_id:id});
-  console.log("Resposta:", data, error);
-  if(error || !data || data.length===0){
-    sessionStorage.clear();
-    window.location.href="index.html";
-    return;
-  }
-  DUPLA = data[0];
-  CARTA_ATUAL = getCartaPorNumero(DUPLA.carta_numero);
-  console.log("DUPLA carregada:", DUPLA);
+  var {data,error} = await supabaseClient.rpc('buscar_dupla',{p_dupla_id:id});
+  console.log('buscar_dupla resposta:', data, error);
+  if(error || !data || data.length===0){sessionStorage.clear();window.location.href='index.html';return}
+  DUPLA=data[0];
+  CARTA_ATUAL=getCartaPorNumero(DUPLA.carta_numero);
+  console.log('DUPLA carregada:', DUPLA);
 }
 
 async function carregarTodasDuplas(){
-  var {data} = await supabaseClient.from("duplas").select("carta_numero, xp_total").eq("turma", DUPLA.turma);
-  TODAS_DUPLAS = data || [];
+  var {data} = await supabaseClient.from('duplas').select('carta_numero, xp_total').eq('turma', DUPLA.turma);
+  TODAS_DUPLAS=data||[];
 }
 
 async function carregarProgressoMissoes(){
-  var {data} = await supabaseClient.from("progresso_missoes").select("*").eq("dupla_id", DUPLA.id).eq("carta_numero", DUPLA.carta_numero).maybeSingle();
-  if(data){
-    PROGRESSO_MISSOES = {
-      missao1_concluida: data.missao1_concluida || false,
-      missao2_concluida: data.missao2_concluida || false,
-      missao3_concluida: data.missao3_concluida || false,
-      missao4_concluida: data.missao4_concluida || false,
-      resposta_objeto: data.resposta_objeto || null,
-      justificativa: data.justificativa || null,
-      conexao: data.conexao || null,
-      fragmento_conquistado: data.fragmento_conquistado || false
-    };
-  }
+  var {data} = await supabaseClient.from('progresso_missoes').select('*').eq('dupla_id', DUPLA.id).eq('carta_numero', DUPLA.carta_numero).maybeSingle();
+  if(data){PROGRESSO_MISSOES={missao1_concluida:data.missao1_concluida||false,missao2_concluida:data.missao2_concluida||false,missao3_concluida:data.missao3_concluida||false,missao4_concluida:data.missao4_concluida||false,resposta_objeto:data.resposta_objeto||null,justificativa:data.justificativa||null,conexao:data.conexao||null,fragmento_conquistado:data.fragmento_conquistado||false}}
 }
 
 // ============================================================
-// FUNÇÕES DE PREENCHIMENTO
+// PREENCHIMENTO
 // ============================================================
 function preencherFicha(){
-  var arq = ARQUETIPOS.find(function(a){return a.id===DUPLA.arquetipo});
-  document.getElementById("ficha-avatar").innerHTML = MEDALHOES[DUPLA.arquetipo] || "";
-  document.getElementById("ficha-nome-dupla").textContent = DUPLA.nome_dupla || "...";
-  document.getElementById("ficha-arquetipo-tema").textContent = arq ? arq.nome + ": " + arq.tema : "";
-  document.getElementById("ficha-integrantes").textContent = "Integrantes: " + (DUPLA.integrantes || "");
-  document.getElementById("ficha-turma").textContent = "Turma: " + (DUPLA.turma || "");
+  var arq=ARQUETIPOS.find(function(a){return a.id===DUPLA.arquetipo});
+  document.getElementById('ficha-avatar').textContent=getEmoji(DUPLA.arquetipo);
+  document.getElementById('ficha-nome-dupla').textContent=DUPLA.nome_dupla||'...';
+  document.getElementById('ficha-arquetipo-tema').textContent=arq?arq.nome+': '+arq.tema:'';
+  document.getElementById('ficha-integrantes').textContent='Integrantes: '+(DUPLA.integrantes||'');
+  document.getElementById('ficha-turma').textContent='Turma: '+(DUPLA.turma||'');
 }
 
+function getEmoji(id){var m={ana_terra:'🧣',pedro_missioneiro:'⛪',maneco_terra:'👨',henriqueta:'👩',horacio:'🎩',pedro_terra:'🌾'};return m[id]||'🧣'}
+
 function preencherHUD(){
-  document.getElementById("hud-avatar").innerHTML = MEDALHOES[DUPLA.arquetipo] || "";
-  document.getElementById("hud-nome").textContent = DUPLA.nome_dupla || "...";
-  var xp = DUPLA.xp_total || 0;
-  var nivel = DUPLA.nivel || 1;
-  var pct = Math.min(100, Math.round(((xp % 100) / 100) * 100));
-  document.getElementById("hud-barra").style.width = pct + "%";
-  document.getElementById("hud-nivel").innerHTML = "Nv "+nivel+"<br>"+xp+" XP";
+  document.getElementById('hud-avatar').textContent=getEmoji(DUPLA.arquetipo);
+  document.getElementById('hud-nome').textContent=DUPLA.nome_dupla||'...';
+  var xp=DUPLA.xp_total||0,n=DUPLA.nivel||1,p=Math.min(100,Math.round(((xp%100)/100)*100));
+  document.getElementById('hud-barra').style.width=p+'%';
+  document.getElementById('hud-nivel').innerHTML='Nv '+n+'<br>'+xp+' XP';
 }
 
 function preencherMapa(){
-  var trilha = document.getElementById("trilha");
-  trilha.innerHTML = "";
-  CARTAS.forEach(function(carta, i){
-    var duplaDestaCarta = TODAS_DUPLAS.find(function(d){return d.carta_numero === carta.numero});
-    var ehPropria = carta.numero === DUPLA.carta_numero;
-    var concluida = duplaDestaCarta && duplaDestaCarta.xp_total > 0;
-    var classe = "estacao";
-    var statusTexto = "Aguardando uma dupla";
-    if(ehPropria){
-      classe += " estacao-propria";
-      statusTexto = PROGRESSO_MISSOES.missao4_concluida ? "Fragmento conquistado!" : (PROGRESSO_MISSOES.missao1_concluida ? "Em andamento" : "Sua missão");
-    } else if(concluida){
-      classe += " estacao-concluida";
-      statusTexto = "Concluída";
-    } else {
-      classe += " estacao-bloqueada";
-    }
-    var btn = document.createElement("button");
-    btn.className = classe;
-    btn.style.width = "100%";
-    btn.style.background = "none";
-    btn.style.border = "none";
-    btn.style.textAlign = "left";
-    btn.style.cursor = "pointer";
-    if(ehPropria) btn.onclick = function(){mostrarTela("tela-missao")};
-    btn.innerHTML = '<div style="display:flex;align-items:center;gap:16px;padding:14px 16px;border-radius:6px;border:1px solid transparent;background:transparent;width:100%;">' +
-                    '<div class="estacao-numero">'+carta.ordem+'</div>' +
-                    '<div class="estacao-info"><p class="estacao-palavra">'+carta.palavraChave+'</p><p class="estacao-status">'+statusTexto+'</p></div>' +
-                    '</div>';
-    trilha.appendChild(btn);
-    if(i < CARTAS.length - 1){
-      var conector = document.createElement("div");
-      conector.className = "estacao-conector";
-      trilha.appendChild(conector);
-    }
+  var t=document.getElementById('trilha');t.innerHTML='';
+  CARTAS.forEach(function(c,i){
+    var d=TODAS_DUPLAS.find(function(x){return x.carta_numero===c.numero});
+    var e=c.numero===DUPLA.carta_numero,o=d&&d.xp_total>0;
+    var cls='estacao',sts='Aguardando';
+    if(e){cls+=' estacao-propria';sts=PROGRESSO_MISSOES.missao4_concluida?'Completa!':PROGRESSO_MISSOES.missao1_concluida?'Em andamento':'Sua missão'}
+    else if(o){cls+=' estacao-concluida';sts='Concluída'}
+    else{cls+=' estacao-bloqueada'}
+    var b=document.createElement('button');b.className=cls;b.style.cssText='width:100%;background:none;border:none;text-align:left;cursor:pointer;padding:0';
+    if(e)b.onclick=function(){mostrarTela('tela-missao')};
+    b.innerHTML='<div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:6px;border:1px solid transparent;background:'+(e?'rgba(192,138,62,.1)':'transparent')+'">'+
+      '<div class="estacao-numero">'+c.ordem+'</div>'+
+      '<div class="estacao-info"><p class="estacao-palavra">'+c.palavraChave+'</p><p class="estacao-status">'+sts+'</p></div></div>';
+    t.appendChild(b);
+    if(i<14){var l=document.createElement('div');l.className='estacao-conector';t.appendChild(l)}
   });
 }
 
 function preencherMissao(){
-  if(!CARTA_ATUAL) return;
-  document.getElementById("missao-numero").textContent = "Estação "+CARTA_ATUAL.ordem+" de 15: Carta "+CARTA_ATUAL.numero;
-  document.getElementById("missao-palavra").textContent = CARTA_ATUAL.palavraChave;
-  document.getElementById("missao-narrativa").textContent = CARTA_ATUAL.narrativa;
-  document.getElementById("missao-pista").textContent = CARTA_ATUAL.pista;
-  document.getElementById("missao3-pergunta").textContent = CARTA_ATUAL.acontecimento;
+  if(!CARTA_ATUAL)return;
+  document.getElementById('missao-numero').textContent='Estação '+CARTA_ATUAL.ordem+' de 15';
+  document.getElementById('missao-palavra').textContent=CARTA_ATUAL.palavraChave;
+  document.getElementById('missao-narrativa').textContent=CARTA_ATUAL.narrativa;
+  document.getElementById('missao-pista').textContent=CARTA_ATUAL.pista;
+  document.getElementById('missao3-pergunta').textContent=CARTA_ATUAL.acontecimento;
 
-  var altDiv = document.getElementById("alternativas-lista");
-  altDiv.innerHTML = "";
-  CARTA_ATUAL.alternativas.forEach(function(alt){
-    var item = document.createElement("div");
-    item.className = "alternativa-item";
-    item.onclick = function(){
-      document.querySelectorAll(".alternativa-item").forEach(function(a){a.classList.remove("selecionada")});
-      item.classList.add("selecionada");
-      alternativaSelecionada = alt;
-    };
-    item.innerHTML = '<div class="alternativa-radio"></div><div class="alternativa-texto">'+alt+'</div>';
-    altDiv.appendChild(item);
+  var d=document.getElementById('alternativas-lista');d.innerHTML='';
+  CARTA_ATUAL.alternativas.forEach(function(a){
+    var item=document.createElement('div');item.className='alternativa-item';
+    item.onclick=function(){document.querySelectorAll('.alternativa-item').forEach(function(x){x.classList.remove('selecionada')});item.classList.add('selecionada');alternativaSelecionada=a};
+    item.innerHTML='<div class="alternativa-radio"></div><div class="alternativa-texto">'+a+'</div>';
+    d.appendChild(item);
   });
-
-  if(PROGRESSO_MISSOES.resposta_objeto) alternativaSelecionada = PROGRESSO_MISSOES.resposta_objeto;
-  if(PROGRESSO_MISSOES.justificativa) document.getElementById("justificativa-texto").value = PROGRESSO_MISSOES.justificativa;
-  if(PROGRESSO_MISSOES.conexao) document.getElementById("conexao-texto").value = PROGRESSO_MISSOES.conexao;
+  if(PROGRESSO_MISSOES.resposta_objeto)alternativaSelecionada=PROGRESSO_MISSOES.resposta_objeto;
+  if(PROGRESSO_MISSOES.justificativa)document.getElementById('justificativa-texto').value=PROGRESSO_MISSOES.justificativa;
+  if(PROGRESSO_MISSOES.conexao)document.getElementById('conexao-texto').value=PROGRESSO_MISSOES.conexao;
 }
 
 function atualizarInterfaceMissoes(){
-  document.getElementById("missao1-status").classList.toggle("concluido", PROGRESSO_MISSOES.missao1_concluida);
-  document.getElementById("missao2-status").classList.toggle("concluido", PROGRESSO_MISSOES.missao2_concluida);
-  document.getElementById("missao3-status").classList.toggle("concluido", PROGRESSO_MISSOES.missao3_concluida);
-  document.getElementById("missao4-status").classList.toggle("concluido", PROGRESSO_MISSOES.missao4_concluida);
+  document.getElementById('missao1-status').classList.toggle('concluido',PROGRESSO_MISSOES.missao1_concluida);
+  document.getElementById('missao2-status').classList.toggle('concluido',PROGRESSO_MISSOES.missao2_concluida);
+  document.getElementById('missao3-status').classList.toggle('concluido',PROGRESSO_MISSOES.missao3_concluida);
+  document.getElementById('missao4-status').classList.toggle('concluido',PROGRESSO_MISSOES.missao4_concluida);
 
-  var abaAtiva = 1;
-  if(!PROGRESSO_MISSOES.missao1_concluida) abaAtiva = 1;
-  else if(!PROGRESSO_MISSOES.missao2_concluida) abaAtiva = 2;
-  else if(!PROGRESSO_MISSOES.missao3_concluida) abaAtiva = 3;
-  else if(!PROGRESSO_MISSOES.missao4_concluida) abaAtiva = 4;
-  else abaAtiva = 4;
-
-  for(var i=1; i<=4; i++){
-    var c = document.getElementById("missao"+i+"-conteudo");
-    if(c) c.classList.toggle("ativa", i===abaAtiva);
-  }
+  var a=1;if(!PROGRESSO_MISSOES.missao1_concluida)a=1;else if(!PROGRESSO_MISSOES.missao2_concluida)a=2;else if(!PROGRESSO_MISSOES.missao3_concluida)a=3;else if(!PROGRESSO_MISSOES.missao4_concluida)a=4;else a=4;
+  for(var i=1;i<=4;i++){var c=document.getElementById('missao'+i+'-conteudo');if(c)c.classList.toggle('ativa',i===a)}
 
   if(PROGRESSO_MISSOES.fragmento_conquistado){
-    document.getElementById("fragmento-container").innerHTML = '<div class="fragmento-container"><p class="fragmento-titulo">📜 FRAGMENTO REAL DO LIVRO</p><p class="fragmento-texto">'+CARTA_ATUAL.fragmento+'</p><div class="fragmento-selo">🏆</div></div>';
-    document.getElementById("btn-missao4").style.display = "none";
+    document.getElementById('fragmento-container').innerHTML='<div class="fragmento-container"><p class="fragmento-titulo">📜 FRAGMENTO</p><p class="fragmento-texto">'+CARTA_ATUAL.fragmento+'</p><div class="fragmento-selo">🏆</div></div>';
+    document.getElementById('btn-missao4').style.display='none';
   }
-  if(PROGRESSO_MISSOES.missao4_concluida){
-    document.getElementById("carta-completa").style.display = "block";
-  }
+  if(PROGRESSO_MISSOES.missao4_concluida)document.getElementById('carta-completa').style.display='block';
 }
 
 function atualizarProgressoColetivo(){
-  var concluidas = TODAS_DUPLAS.filter(function(d){return d.xp_total > 0}).length;
-  var pct = Math.round((concluidas / 15) * 100);
-  document.getElementById("prog-fill").style.width = pct + "%";
-  document.getElementById("prog-numero").textContent = concluidas + "/15";
+  var c=TODAS_DUPLAS.filter(function(d){return d.xp_total>0}).length,p=Math.round((c/15)*100);
+  document.getElementById('prog-fill').style.width=p+'%';
+  document.getElementById('prog-numero').textContent=c+'/15';
 }
 
 async function atualizarResumoFragmentos(){
-  var {data} = await supabaseClient.from("progresso_missoes").select("carta_numero, fragmento_conquistado").eq("dupla_id", DUPLA.id).eq("fragmento_conquistado", true);
-  var count = data ? data.length : 0;
-  var div = document.getElementById("fragmentos-resumo");
-  if(div){
-    if(count > 0){
-      div.style.display = "block";
-      div.innerHTML = '📜 Fragmentos coletados: <strong>'+count+'/15</strong> '+(count===15 ? '🎉 História completa! 🎉' : '');
-    } else {
-      div.style.display = "none";
-    }
-  }
+  var {data}=await supabaseClient.from('progresso_missoes').select('carta_numero, fragmento_conquistado').eq('dupla_id',DUPLA.id).eq('fragmento_conquistado',true);
+  var count=data?data.length:0,div=document.getElementById('fragmentos-resumo');
+  if(div){if(count>0){div.style.display='block';div.innerHTML='📜 Fragmentos: <strong>'+count+'/15</strong>'+(count===15?' 🎉':'')}else{div.style.display='none'}}
 }
 
 // ============================================================
-// FUNÇÕES DE ENVIO DE MISSÕES
+// ENVIO DE MISSÕES
 // ============================================================
-function exibirMensagemMissao(id, texto, tipo){
-  document.getElementById(id).innerHTML = '<div class="mensagem mensagem-'+tipo+'">'+texto+'</div>';
-  setTimeout(function(){
-    if(document.getElementById(id)) document.getElementById(id).innerHTML = "";
-  }, 4000);
-}
-
-function exibirConquista(texto){
-  var popup = document.getElementById("conquista-popup");
-  popup.textContent = texto;
-  popup.classList.add("visivel");
-  setTimeout(function(){popup.classList.remove("visivel")}, 4000);
-}
+function exibirMensagem(id,t,type){document.getElementById(id).innerHTML='<div class="mensagem mensagem-'+type+'">'+t+'</div>';setTimeout(function(){if(document.getElementById(id))document.getElementById(id).innerHTML=''},4000)}
+function exibirConquista(t){var p=document.getElementById('conquista-popup');p.textContent=t;p.classList.add('visivel');setTimeout(function(){p.classList.remove('visivel')},4000)}
 
 async function enviarMissao1(){
-  if(!alternativaSelecionada){
-    exibirMensagemMissao("msg-missao1", "Escolha uma alternativa.", "erro");
-    return;
-  }
-  var btn = document.getElementById("btn-missao1");
-  btn.disabled = true;
-  btn.textContent = "Enviando...";
-  var correta = alternativaSelecionada === CARTA_ATUAL.alternativaCorreta;
-  var xp = correta ? 10 : 0;
-  var {data, error} = await supabaseClient.rpc("registrar_missao", {
-    p_dupla_id: DUPLA.id,
-    p_carta_numero: DUPLA.carta_numero,
-    p_missao: 1,
-    p_resposta: alternativaSelecionada,
-    p_xp: xp
-  });
-  btn.disabled = false;
-  btn.textContent = "Confirmar resposta";
-  if(error){
-    exibirMensagemMissao("msg-missao1", "Erro ao registrar. Tente novamente.", "erro");
-    return;
-  }
-  if(data === "ja_completou"){
-    exibirMensagemMissao("msg-missao1", "Você já completou esta missão!", "info");
-  } else if(data === "ok"){
-    if(correta){
-      PROGRESSO_MISSOES.missao1_concluida = true;
-      PROGRESSO_MISSOES.resposta_objeto = alternativaSelecionada;
-      DUPLA.xp_total = (DUPLA.xp_total || 0) + 10;
-      DUPLA.nivel = Math.floor(DUPLA.xp_total / 100) + 1;
-      preencherHUD();
-      exibirMensagemMissao("msg-missao1", "✅ Correto! +10 XP. Missão 1 concluída!", "sucesso");
-      exibirConquista("🎯 Missão 1 concluída! +10 XP");
-    } else {
-      exibirMensagemMissao("msg-missao1", "❌ Resposta incorreta. A resposta correta era: "+CARTA_ATUAL.alternativaCorreta, "erro");
-    }
+  if(!alternativaSelecionada){exibirMensagem('msg-missao1','Escolha uma alternativa.','erro');return}
+  var btn=document.getElementById('btn-missao1');btn.disabled=true;btn.textContent='Enviando...';
+  var correta=alternativaSelecionada===CARTA_ATUAL.alternativaCorreta,xp=correta?10:0;
+  var {data,error}=await supabaseClient.rpc('registrar_missao',{p_dupla_id:DUPLA.id,p_carta_numero:DUPLA.carta_numero,p_missao:1,p_resposta:alternativaSelecionada,p_xp:xp});
+  btn.disabled=false;btn.textContent='Confirmar resposta';
+  if(error){exibirMensagem('msg-missao1','Erro ao registrar.','erro');return}
+  if(data==='ja_completou'){exibirMensagem('msg-missao1','Você já completou!','info')}
+  else if(data==='ok'){
+    if(correta){PROGRESSO_MISSOES.missao1_concluida=true;PROGRESSO_MISSOES.resposta_objeto=alternativaSelecionada;DUPLA.xp_total=(DUPLA.xp_total||0)+10;DUPLA.nivel=Math.floor(DUPLA.xp_total/100)+1;preencherHUD();exibirMensagem('msg-missao1','✅ Correto! +10 XP','sucesso');exibirConquista('🎯 Missão 1 concluída! +10 XP')}
+    else{exibirMensagem('msg-missao1','❌ Incorreto. A resposta era: '+CARTA_ATUAL.alternativaCorreta,'erro')}
     atualizarInterfaceMissoes();
   }
 }
 
 async function enviarMissao2(){
-  var just = document.getElementById("justificativa-texto").value.trim();
-  var words = just.split(/\s+/).filter(function(p){return p.length > 0});
-  if(words.length < 25){
-    exibirMensagemMissao("msg-missao2", "Mínimo 25 palavras. Você escreveu "+words.length+" palavras.", "erro");
-    return;
-  }
-  var btn = document.getElementById("btn-missao2");
-  btn.disabled = true;
-  btn.textContent = "Enviando...";
-  var {data, error} = await supabaseClient.rpc("registrar_missao", {
-    p_dupla_id: DUPLA.id,
-    p_carta_numero: DUPLA.carta_numero,
-    p_missao: 2,
-    p_resposta: just,
-    p_xp: 15
-  });
-  btn.disabled = false;
-  btn.textContent = "Enviar justificativa";
-  if(error){
-    exibirMensagemMissao("msg-missao2", "Erro ao registrar.", "erro");
-    return;
-  }
-  if(data === "ja_completou"){
-    exibirMensagemMissao("msg-missao2", "Você já completou esta missão!", "info");
-  } else if(data === "ok"){
-    PROGRESSO_MISSOES.missao2_concluida = true;
-    PROGRESSO_MISSOES.justificativa = just;
-    DUPLA.xp_total = (DUPLA.xp_total || 0) + 15;
-    DUPLA.nivel = Math.floor(DUPLA.xp_total / 100) + 1;
-    preencherHUD();
-    exibirMensagemMissao("msg-missao2", "✅ Justificativa registrada! +15 XP", "sucesso");
-    exibirConquista("📝 Missão 2 concluída! +15 XP");
-    atualizarInterfaceMissoes();
-  }
+  var j=document.getElementById('justificativa-texto').value.trim();
+  var w=j.split(/\s+/).filter(function(p){return p.length>0});
+  if(w.length<25){exibirMensagem('msg-missao2','Mínimo 25 palavras. Você escreveu '+w.length+'.','erro');return}
+  var btn=document.getElementById('btn-missao2');btn.disabled=true;btn.textContent='Enviando...';
+  var {data,error}=await supabaseClient.rpc('registrar_missao',{p_dupla_id:DUPLA.id,p_carta_numero:DUPLA.carta_numero,p_missao:2,p_resposta:j,p_xp:15});
+  btn.disabled=false;btn.textContent='Enviar';
+  if(error){exibirMensagem('msg-missao2','Erro ao registrar.','erro');return}
+  if(data==='ja_completou'){exibirMensagem('msg-missao2','Você já completou!','info')}
+  else if(data==='ok'){PROGRESSO_MISSOES.missao2_concluida=true;PROGRESSO_MISSOES.justificativa=j;DUPLA.xp_total=(DUPLA.xp_total||0)+15;DUPLA.nivel=Math.floor(DUPLA.xp_total/100)+1;preencherHUD();exibirMensagem('msg-missao2','✅ Justificativa registrada! +15 XP','sucesso');exibirConquista('📝 Missão 2 concluída! +15 XP');atualizarInterfaceMissoes()}
 }
 
 async function enviarMissao3(){
-  var con = document.getElementById("conexao-texto").value.trim();
-  if(con.length < 30){
-    exibirMensagemMissao("msg-missao3", "Escreva uma conexão mais detalhada.", "erro");
-    return;
-  }
-  var btn = document.getElementById("btn-missao3");
-  btn.disabled = true;
-  btn.textContent = "Enviando...";
-  var {data, error} = await supabaseClient.rpc("registrar_missao", {
-    p_dupla_id: DUPLA.id,
-    p_carta_numero: DUPLA.carta_numero,
-    p_missao: 3,
-    p_resposta: con,
-    p_xp: 15
-  });
-  btn.disabled = false;
-  btn.textContent = "Enviar conexão";
-  if(error){
-    exibirMensagemMissao("msg-missao3", "Erro ao registrar.", "erro");
-    return;
-  }
-  if(data === "ja_completou"){
-    exibirMensagemMissao("msg-missao3", "Você já completou esta missão!", "info");
-  } else if(data === "ok"){
-    PROGRESSO_MISSOES.missao3_concluida = true;
-    PROGRESSO_MISSOES.conexao = con;
-    DUPLA.xp_total = (DUPLA.xp_total || 0) + 15;
-    DUPLA.nivel = Math.floor(DUPLA.xp_total / 100) + 1;
-    preencherHUD();
-    exibirMensagemMissao("msg-missao3", "✅ Conexão registrada! +15 XP", "sucesso");
-    exibirConquista("📖 Missão 3 concluída! +15 XP");
-    atualizarInterfaceMissoes();
-  }
+  var c=document.getElementById('conexao-texto').value.trim();
+  if(c.length<30){exibirMensagem('msg-missao3','Escreva uma conexão mais detalhada.','erro');return}
+  var btn=document.getElementById('btn-missao3');btn.disabled=true;btn.textContent='Enviando...';
+  var {data,error}=await supabaseClient.rpc('registrar_missao',{p_dupla_id:DUPLA.id,p_carta_numero:DUPLA.carta_numero,p_missao:3,p_resposta:c,p_xp:15});
+  btn.disabled=false;btn.textContent='Enviar';
+  if(error){exibirMensagem('msg-missao3','Erro ao registrar.','erro');return}
+  if(data==='ja_completou'){exibirMensagem('msg-missao3','Você já completou!','info')}
+  else if(data==='ok'){PROGRESSO_MISSOES.missao3_concluida=true;PROGRESSO_MISSOES.conexao=c;DUPLA.xp_total=(DUPLA.xp_total||0)+15;DUPLA.nivel=Math.floor(DUPLA.xp_total/100)+1;preencherHUD();exibirMensagem('msg-missao3','✅ Conexão registrada! +15 XP','sucesso');exibirConquista('📖 Missão 3 concluída! +15 XP');atualizarInterfaceMissoes()}
 }
 
 async function conquistarFragmento(){
-  var btn = document.getElementById("btn-missao4");
-  btn.disabled = true;
-  btn.textContent = "Conquistando...";
-  var {data, error} = await supabaseClient.rpc("registrar_missao", {
-    p_dupla_id: DUPLA.id,
-    p_carta_numero: DUPLA.carta_numero,
-    p_missao: 4,
-    p_resposta: "fragmento",
-    p_xp: 10
-  });
-  btn.disabled = false;
-  btn.textContent = "Conquistar fragmento";
-  if(error){
-    exibirMensagemMissao("msg-missao4", "Erro ao conquistar fragmento.", "erro");
-    return;
-  }
-  if(data === "ja_completou"){
-    exibirMensagemMissao("msg-missao4", "Você já conquistou este fragmento!", "info");
-  } else if(data === "ok"){
-    PROGRESSO_MISSOES.missao4_concluida = true;
-    PROGRESSO_MISSOES.fragmento_conquistado = true;
-    DUPLA.xp_total = (DUPLA.xp_total || 0) + 10;
-    DUPLA.nivel = Math.floor(DUPLA.xp_total / 100) + 1;
-    preencherHUD();
-    document.getElementById("fragmento-container").innerHTML = '<div class="fragmento-container"><p class="fragmento-titulo">📜 FRAGMENTO REAL DO LIVRO</p><p class="fragmento-texto">'+CARTA_ATUAL.fragmento+'</p><div class="fragmento-selo">🏆</div></div>';
-    btn.style.display = "none";
-    exibirMensagemMissao("msg-missao4", "🏆 Fragmento conquistado! +10 XP", "sucesso");
-    exibirConquista("🏆 Fragmento "+CARTA_ATUAL.ordem+"/15 conquistado! +10 XP");
-    atualizarInterfaceMissoes();
-    atualizarResumoFragmentos();
-    preencherMapa();
-  }
+  var btn=document.getElementById('btn-missao4');btn.disabled=true;btn.textContent='Conquistando...';
+  var {data,error}=await supabaseClient.rpc('registrar_missao',{p_dupla_id:DUPLA.id,p_carta_numero:DUPLA.carta_numero,p_missao:4,p_resposta:'fragmento',p_xp:10});
+  btn.disabled=false;btn.textContent='Conquistar fragmento';
+  if(error){exibirMensagem('msg-missao4','Erro ao conquistar.','erro');return}
+  if(data==='ja_completou'){exibirMensagem('msg-missao4','Você já conquistou!','info')}
+  else if(data==='ok'){PROGRESSO_MISSOES.missao4_concluida=true;PROGRESSO_MISSOES.fragmento_conquistado=true;DUPLA.xp_total=(DUPLA.xp_total||0)+10;DUPLA.nivel=Math.floor(DUPLA.xp_total/100)+1;preencherHUD();document.getElementById('fragmento-container').innerHTML='<div class="fragmento-container"><p class="fragmento-titulo">📜 FRAGMENTO</p><p class="fragmento-texto">'+CARTA_ATUAL.fragmento+'</p><div class="fragmento-selo">🏆</div></div>';btn.style.display='none';exibirMensagem('msg-missao4','🏆 Fragmento conquistado! +10 XP','sucesso');exibirConquista('🏆 Fragmento '+CARTA_ATUAL.ordem+'/15 conquistado! +10 XP');atualizarInterfaceMissoes();atualizarResumoFragmentos();preencherMapa()}
 }
 </script>
 </body>
